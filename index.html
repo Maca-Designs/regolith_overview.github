@@ -157,12 +157,12 @@ header p {
             // 2. For each folder, load its config.json
             for (const folder of data.templates) {
                 try {
-                    const configResponse = await fetch(`./templates/${folder}/config.json`);
+                    const configResponse = await fetch(`./templates/${folder}/${folder}-config.json`);
                     const config = await configResponse.json();
                     
                     const card = document.createElement('a');
                     card.className = 'template-card';
-                    card.href = `./templates/${folder}/config.json`;
+                    card.href = `./templates/${folder}/${folder}-config.json`;
                     card.download = `${folder}-config.json`;
                     
                     // Calculate category counts
