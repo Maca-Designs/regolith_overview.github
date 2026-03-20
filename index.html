@@ -110,6 +110,22 @@ header p {
     font-size: 1rem;
 }
 
+.namespace-download {
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    background: rgb(102, 183, 161);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.namespace-download:hover {
+    background: rgb(90, 160, 140);
+}
+
 .download-btn {
     display: inline-block;
     background: rgb(102, 183, 161);
@@ -132,6 +148,8 @@ header p {
 }
 
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
 
@@ -150,56 +168,139 @@ header p {
     </main>
 <script>
 document.addEventListener('DOMContentLoaded', async function() {
+    const repo = 'regolith_overview.github';
+    const org = 'Maca-Designs';
+    
+    // Store template data globally for download function
+    window.templateData = [];
+    
     try {
-        const repo = 'regolith_overview.github';
-        
-        // 1. Get list of template folders from /templates/
-        const apiUrl = `https://api.github.com/repos/Maca-Designs/${repo}/contents/templates`;
+        const apiUrl = `https://api.github.com/repos/${org}/${repo}/contents/templates`;
         const listResponse = await fetch(apiUrl);
         const foldersData = await listResponse.json();
         
         const grid = document.getElementById('templatesGrid');
-        
-        // 2. Filter folders only (skip files)
         const folders = foldersData.filter(item => item.type === 'dir').map(item => item.name);
-        console.warn(JSON.stringify(folders))
-        // 3. For each folder, load its config.json
+        
         for (const folder of folders) {
-                const configUrl = `https://raw.githubusercontent.com/Maca-Designs/${repo}/main/templates/${folder}/${folder}-config.json`;
+            try {
+                const configUrl = `https://raw.githubusercontent.com/${org}/${repo}/main/templates/${folder}/${folder}-config.json`;
                 const configResponse = await fetch(configUrl);
                 if (!configResponse.ok) throw new Error('Config not found');
                 
                 const config = await configResponse.json();
-                console.warn(JSON.stringify(config))
                 
-                let card = document.createElement('a');
-                card.className = 'template-card';
-                card.href = `./templates/${folder}/${folder}-config.json`;
-                card.download = `${folder}-config.json`;
+                // Store full folder data for download
+                const folderData = {
+                    name: folder,
+                    config: config,
+                    apiPath: `templates/${folder}`
+                };
+                window.templateData.push(folderData);
                 
-                // Calculate category counts
-                const categories = config.categories || {};
-                const totalFiles = config.totalFiles || Object.values(categories).reduce((sum, cat) => sum + cat.length, 0);
-                
-                console.warn(totalFiles)
-                card.innerHTML = `
-                    <h3>${config.name || folder}</h3>
-                    <p>${config.description}</p>
-                    <div class="template-meta">
-                        <div>
-                            <span class="total-files">${totalFiles} files</span>
-                            <span class="download-btn">Download</span>
-                        </div>
-                    </div>
-                `;
+                const card = createTemplateCard(folderData, async () => {
+                    await downloadTemplateWithNamespace(folderData);
+                });
                 
                 grid.appendChild(card);
+            } catch (e) {
+                console.warn(`Skipping ${folder} - no config.json`);
+            }
         }
     } catch (error) {
         console.error('Failed to load templates:', error);
-        document.getElementById('templatesGrid').innerHTML = '<p>Failed to load templates. Check console for details.</p>';
+        grid.innerHTML = '<p>Failed to load templates. Check console for details.</p>';
     }
 });
+
+function createTemplateCard(folderData, onDownloadClick) {
+    const card = document.createElement('a');
+    card.className = 'template-card';
+    
+    const categories = folderData.config.categories || {};
+    const totalFiles = folderData.config.totalFiles || Object.values(categories).reduce((sum, cat) => sum + cat.length, 0);
+    
+    card.innerHTML = `
+        <h3>${folderData.config.name || folderData.name}</h3>
+        <p>${folderData.config.description}</p>
+        <div class="template-meta">
+            <span class="total-files">${totalFiles} files</span>
+            <button class="download-btn namespace-download" data-folder="${folderData.name}">Download Pack</button>
+        </div>
+    `;
+    
+    // Add click handler
+    card.querySelector('.namespace-download').addEventListener('click', (e) => {
+        e.preventDefault();
+        onDownloadClick();
+    });
+    
+    return card;
+}
+
+async function downloadTemplateWithNamespace(folderData) {
+    const newNamespace = prompt('Enter new namespace (or press Cancel for original):', 'maca_user');
+    if (!newNamespace) return; // User cancelled
+    
+    const zip = new JSZip();
+    const org = 'Maca-Designs';
+    const repo = 'regolith_overview.github';
+    
+    try {
+        // 1. Recursively fetch ALL files in the template folder
+        const files = await fetchFolderContents(zip, folderData.apiPath, '', org, repo, newNamespace);
+        
+        // 2. Generate zip filename
+        const zipName = `${folderData.name}_${newNamespace}.zip`;
+        
+        // 3. Download
+        await zip.generateAsync({type: 'blob'}).then(blob => {
+            saveAs(blob, zipName);
+        });
+        
+        console.log(`Downloaded ${files.length} files with namespace "${newNamespace}"`);
+    } catch (error) {
+        console.error('Download failed:', error);
+        alert('Download failed. Check console for details.');
+    }
+}
+
+async function fetchFolderContents(zip, apiPath, relativePath, org, repo, newNamespace) {
+    const apiUrl = `https://api.github.com/repos/${org}/${repo}/contents/${apiPath}`;
+    const response = await fetch(apiUrl);
+    const items = await response.json();
+    
+    const allFiles = [];
+    
+    for (const item of items) {
+        if (item.type === 'file') {
+            // Download and process file
+            const fileContent = await fetch(item.download_url).then(r => r.text());
+            
+            // Replace namespace: maca_templ → newNamespace
+            let processedContent = fileContent.replace(/maca_templ/g, newNamespace);
+            
+            // Add to zip
+            const filePath = relativePath ? `${relativePath}/${item.name}` : item.name;
+            zip.file(filePath, processedContent);
+            
+            allFiles.push(item.name);
+        } else if (item.type === 'dir') {
+            // Recursively process subfolder
+            const subFiles = await fetchFolderContents(
+                zip, 
+                `${apiPath}/${item.name}`, 
+                relativePath ? `${relativePath}/${item.name}` : item.name,
+                org, 
+                repo, 
+                newNamespace
+            );
+            allFiles.push(...subFiles);
+        }
+    }
+    
+    return allFiles;
+}
 </script>
 
 </body>
