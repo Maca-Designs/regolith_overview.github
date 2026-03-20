@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const listResponse = await fetch(apiUrl);
         const foldersData = await listResponse.json();
         
-        const grid = document.getElementById('templatesGrid');
+        const grid = document.getElementById('templates-grid');
         
         // 2. Filter folders only (skip files)
         const folders = foldersData.filter(item => item.type === 'dir').map(item => item.name);
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     } catch (error) {
         console.error('Failed to load templates:', error);
-        document.getElementById('templatesGrid').innerHTML = '<p>Failed to load templates. Check console for details.</p>';
+        document.getElementById('templates-grid').innerHTML = '<p>Failed to load templates. Check console for details.</p>';
     }
 });
 </script>
