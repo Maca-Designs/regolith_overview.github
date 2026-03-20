@@ -162,7 +162,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         // 3. For each folder, load its config.json
         for (const folder of folders) {
-            try {
                 const configUrl = `https://raw.githubusercontent.com/Maca-Designs/${repo}/main/templates/${folder}/${folder}-config.json`;
                 const configResponse = await fetch(configUrl);
                 
@@ -191,10 +190,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 `;
                 
                 grid.appendChild(card);
-            } catch (e) {
-                console.warn(JSON.stringify(e))
-                console.warn(`Skipping ${folder} - no config.json`);
-            }
         }
     } catch (error) {
         console.error('Failed to load templates:', error);
