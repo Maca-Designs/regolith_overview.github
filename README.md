@@ -22,7 +22,7 @@ This approach makes your addons modular, consistent, and easy to scale.
 
 Inside your project’s `Data` folder, create files like this:
 
-
+```
 {
   "items": [
     { "name": "iron_dagger", "damage": 4 },
@@ -33,46 +33,52 @@ Inside your project’s `Data` folder, create files like this:
     { "name": "zombie_mutant", "passive": true, "stats": { "health": 40 } }
   ]
 }
+```
 Each array can be referenced by your templates to automatically generate content.
 
 🧱 3. **Template File Basics (.templ)**
 Templates control how your data gets turned into final JSON files using the $files block.
 
 a. **Basic Generation**
-json
+```
 "$files": {
   "array": "mutants",
   "fileName": "{{name}}.se"
 }
+```
 ➡️ Creates one output file for each mutant.
 
 b. **Filtering Entries**
-json
+```
 "$files": {
   "array": "{{mutants.filter(x => x.passive)}}",
   "fileName": "{{name}}.se"
 }
+```
 ➡️ Only generates files for passive mutants.
 
 c. **Combining Arrays**
-json
+```
 "$files": {
   "array": "mutants + items",
   "fileName": "{{name}}.se"
 }
+```
 ➡️ Processes multiple data arrays together.
 
 ⚙️ 4. **Modules and Extensions (.modl)**
 Templates can extend one or more modules, allowing you to reuse behavior or definitions.
 
 a. **Generic Extension via Data**
-json
+```
 "$extend": ["{{extraModulesBP ? extraModulesBP : []}}"]
+```
 If your data contains an extraModulesBP array, each listed module is applied.
 
 b. **Specific Extension**
-json
+```
 "$extend": ["death_animBP", "{{extraModulesBP ? extraModulesBP : []}}"]
+```
 Mixes targeted and data-driven module inclusion.
 You can define other arrays like extraProjectileBP for specialized entity types.
 
@@ -89,32 +95,33 @@ If stats.health isn’t found, 20 is used instead.
 Conditional syntax ensures certain sections only appear when the data exists.
 
 Conditional Example
-
+```
 "{{?animations}}": {
   "{{#animations}}": {
     "{{id}}": "animation.maca_mutants.{{name}}.{{type}}"
   }
 }
+```
 If animations aren’t defined, the whole section is skipped.
 
 Example for Spawn Rules
-json
+```
 "{{#spawn}}": {
   "minecraft:spawns_{{suffix}}": "{{value}}"
 }
+```
 Used with:
-
-json
+```
 "spawn": [
   { "suffix": "on_surface", "value": true },
   { "suffix": "underground", "value": true }
 ]
-
+```
 🧭 7. **Using $scope for Local Data**
 $scope allows defining short, localized datasets within a single template — useful when one data file doesn’t make sense.
 
 Example: Copper Lantern Variants
-
+```
 "$scope": {
   "types": [
     { "lvl": 15, "stage": "", "waxed": false },
@@ -126,11 +133,12 @@ Example: Copper Lantern Variants
   "array": "{{types}}",
   "fileName": "wall_{{waxed == true ? 'waxed_' : ''}}{{stage}}copper_lantern.b"
 }
+```
 Generates multiple lantern blocks automatically with unique names.
 
 🧩 8. **File Structures**
 Template File (.templ)
-
+```
 {
   "$scope": { /* optional */ },
   "$files": {
@@ -141,9 +149,9 @@ Template File (.templ)
     // Insert block, item, or entity structure here
   }
 }
-
+```
 Module File (.modl)
-
+```
 {
   "$module": "module_name_here",
   "$template": {
@@ -155,7 +163,7 @@ Module File (.modl)
     }
   }
 }
-
+```
 Modules act as mix-ins that can be extended into multiple templates using $extend.
 
 🧠 9. Tips and Best Practices
