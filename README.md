@@ -36,6 +36,8 @@ Inside your project’s `Data` folder, create files like this:
 ```
 Each array can be referenced by your templates to automatically generate content.
 
+---
+
 🧱 3. **Template File Basics (.templ)**
 Templates control how your data gets turned into final JSON files using the $files block.
 
@@ -66,6 +68,8 @@ c. **Combining Arrays**
 ```
 ➡️ Processes multiple data arrays together.
 
+---
+
 ⚙️ 4. **Modules and Extensions (.modl)**
 Templates can extend one or more modules, allowing you to reuse behavior or definitions.
 
@@ -82,6 +86,8 @@ b. **Specific Extension**
 Mixes targeted and data-driven module inclusion.
 You can define other arrays like extraProjectileBP for specialized entity types.
 
+---
+
 🧮 5. **Using Data in Templates**
 All data references use double curly braces, including numbers and booleans:
 
@@ -90,6 +96,8 @@ To define a default when a value doesn’t exist, use the ?? operator:
 
 "minecraft:health": { "value": "{{=stats.health ?? 20}}" }
 If stats.health isn’t found, 20 is used instead.
+
+---
 
 🔄 6. **Conditional Properties**
 Conditional syntax ensures certain sections only appear when the data exists.
@@ -117,6 +125,9 @@ Used with:
   { "suffix": "underground", "value": true }
 ]
 ```
+
+---
+
 🧭 7. **Using $scope for Local Data**
 $scope allows defining short, localized datasets within a single template — useful when one data file doesn’t make sense.
 
@@ -135,6 +146,8 @@ Example: Copper Lantern Variants
 }
 ```
 Generates multiple lantern blocks automatically with unique names.
+
+---
 
 🧩 8. **File Structures**
 Template File (.templ)
@@ -165,6 +178,8 @@ Module File (.modl)
 }
 ```
 Modules act as mix-ins that can be extended into multiple templates using $extend.
+
+---
 
 🧠 9. Tips and Best Practices
 ✅ Use conditional logic and defaults to skip redundant values.
