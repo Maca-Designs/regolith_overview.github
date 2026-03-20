@@ -135,38 +135,34 @@ header p {
 <script>
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        const response = await fetch('https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/templates');
-        const folders = await response.json();
+        // 1. Get list of template folders
+        const listResponse = await fetch('./templates-list.json');
+        const data = await listResponse.json();
         
         const grid = document.getElementById('templatesGrid');
         
-        // Filter only folders (not files)
-        const folderNames = folders
-            .filter(item => item.type === 'dir')
-            .map(item => item.name);
-        
-        folderNames.forEach(folder => {
-           // Fetch the config.json for this template
-            const configResponse = await fetch(`./templates/${folder}/config.json`);
-            const config = await configResponse.json();
-            
-            const card = document.createElement('a');
-            card.className = 'template-card';
-            card.href = `./templates/${folder}/config.json`;  // Temporary - will become ZIP later
-            card.download = `${folder}-template`;
-            
-            card.innerHTML = `
-                <h3>${config.name || folder}</h3>
-                <p>${config.description || `Template files in ${folder}`}</p>
-                ${config.preview ? `<img src="./templates/${folder}/${config.preview}" alt="Preview" class="preview-img">` : ''}
-                <div class="template-meta">
-                    <span class="version">v${config.version || '1.0'}</span>
-                    <span class="download-btn">Download Template</span>
-                </div>
-            `;
-            
-            grid.appendChild(card);
-        });
+        // 2. For each folder, load its config.json
+        for (const folder of data.templates) {
+            try {
+                const configResponse = await fetch(`./templates/${folder}/config.json`);
+                const config = await configResponse.json();
+                
+                const card = document.createElement('a');
+                card.className = 'template-card';
+                card.href = `./templates/${folder}/config.json`;  // Download config for now
+                card.download = `${folder}-config.json`;
+                
+                card.innerHTML = `
+                    <h3>${config.name || folder}</h3>
+                    <p>${config.description}</p>
+                    <span class="download-btn">Download</span>
+                `;
+                
+                grid.appendChild(card);
+            } catch (e) {
+                console.warn(`Skipping ${folder} - no config.json`);
+            }
+        }
     } catch (error) {
         console.error('Failed to load templates:', error);
     }
