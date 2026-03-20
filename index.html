@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         // 2. Filter folders only (skip files)
         const folders = foldersData.filter(item => item.type === 'dir').map(item => item.name);
-        
+        console.warn(JSON.stringify(folders))
         // 3. For each folder, load its config.json
         for (const folder of folders) {
                 const configUrl = `https://raw.githubusercontent.com/Maca-Designs/${repo}/main/templates/${folder}/${folder}-config.json`;
