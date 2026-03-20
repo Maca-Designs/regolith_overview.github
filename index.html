@@ -278,7 +278,6 @@ header p {
         </div>
         <div class="readme-viewer" id="readmeViewer">
     <div class="readme-content" id="readmeContent">
-        <button class="back-btn" id="backBtn">← Back to Templates</button>
         <div id="readmeMarkdown">Loading README...</div>
     </div>
 </div>
@@ -342,24 +341,31 @@ header p {
     }
 document.addEventListener('DOMContentLoaded', async function() {
     const readmeBtn = document.getElementById('readmeBtn');
-    const backBtn = document.getElementById('backBtn');
     const readmeViewer = document.getElementById('readmeViewer');
     const searchContainer = document.querySelector('.search-container');
     const templatesGrid = document.getElementById('templatesGrid');
     
-    readmeBtn.addEventListener('click', () => {
-        loadReadme();
-        readmeViewer.style.display = 'block';
-        searchContainer.style.display = 'none';
-        templatesGrid.style.display = 'none';
-        document.body.classList.add('readme-active');
-    });
+    let isReadmeOpen = false;
     
-    backBtn.addEventListener('click', () => {
-        readmeViewer.style.display = 'none';
-        searchContainer.style.display = 'block';
-        templatesGrid.style.display = 'grid';
-        document.body.classList.remove('readme-active');
+    readmeBtn.addEventListener('click', async () => {
+        if (!isReadmeOpen) {
+            // Open README
+            await loadReadme();
+            readmeViewer.style.display = 'block';
+            searchContainer.style.display = 'none';
+            templatesGrid.style.display = 'none';
+            readmeBtn.textContent = '← Back to Templates';
+            readmeBtn.style.background = 'rgba(255,100,100,0.3)';
+            isReadmeOpen = true;
+        } else {
+            // Close README
+            readmeViewer.style.display = 'none';
+            searchContainer.style.display = 'block';
+            templatesGrid.style.display = 'grid';
+            readmeBtn.textContent = '📖 Guide';
+            readmeBtn.style.background = 'rgba(255,255,255,0.2)';
+            isReadmeOpen = false;
+        }
     });
     const repo = 'regolith_overview.github';
     const org = 'Maca-Designs';
