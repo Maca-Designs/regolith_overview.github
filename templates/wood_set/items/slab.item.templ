@@ -1,0 +1,37 @@
+{
+    "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_slab.item"
+    },
+    "$template": {
+    "format_version": "1.21.40",
+    "minecraft:item": {
+        "description": {
+            "identifier": "maca_templ:{{name}}_slab",
+            "menu_category": {
+        "category": "construction",
+        "group": "itemGroup.name.slab"
+      }
+        }, 
+        "components": {
+          "minecraft:tags": {
+            "tags": [
+              "minecraft:wooden_slabs",
+              "maca_templ:is_slab"
+            ]
+          },
+            "minecraft:fuel": {
+            "duration": 15
+              },
+
+            "minecraft:max_stack_size":{"value": 64},
+
+            "minecraft:block_placer":{
+                "block": "maca_templ:{{name}}_slab",
+                "use_on" : [],
+                "replace_block_item": true
+            }
+        }
+    }
+    }
+}

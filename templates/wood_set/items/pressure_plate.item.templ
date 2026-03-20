@@ -1,0 +1,32 @@
+{
+    "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_pressure_plate.item"
+    },
+    "$template": {
+        "format_version": "1.21.120",
+        "minecraft:item": {
+            "description": {
+                "identifier": "maca_templ:{{name}}_pressure_plate",
+                "menu_category": {
+                    "category": "items",
+                    "group": "minecraft:itemGroup.name.pressurePlate"
+                }
+            },
+            "components": {
+                "minecraft:block_placer": {
+                    "block": "maca_templ:{{name}}_pressure_plate",
+                    "replace_block_item": true
+                },
+                "minecraft:tags": {
+                    "tags": [
+                        "maca_templ:is_pressure_plate"
+                    ]
+                },
+                "minecraft:fuel": {
+                    "duration": 10
+                }
+            }
+        }
+    }   
+}

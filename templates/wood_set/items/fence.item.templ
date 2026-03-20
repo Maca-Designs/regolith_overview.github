@@ -1,0 +1,32 @@
+{
+    "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_fence.item"
+    },
+    "$template": {
+        "format_version": "1.21.40",
+        "minecraft:item": {
+            "description": {
+                "identifier": "maca_templ:{{name}}_fence",
+                "menu_category": {
+                    "category": "construction",
+                    "group": "itemGroup.name.fence"
+                }
+            },
+            "components": {
+                "minecraft:block_placer": {
+                    "block": "maca_templ:{{name}}_fence",
+                    "replace_block_item": true
+                },
+                "minecraft:tags": {
+                    "tags": [
+                        "maca_templ:is_fence"
+                    ]
+                },
+                "minecraft:fuel": {
+                "duration": 15
+                }
+            }
+        }
+    }
+}

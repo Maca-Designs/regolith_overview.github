@@ -1,0 +1,28 @@
+{
+	"$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_door.item"
+    },
+    "$template": {
+	"format_version": "1.21.50",
+	"minecraft:item": {
+		"description": {
+			"identifier": "maca_templ:{{name}}_door",
+			"menu_category": {
+				"category": "construction",
+				"group": "itemGroup.name.door"
+			}
+		},
+		"components": {
+			"minecraft:block_placer": {
+				"block": "maca_templ:{{name}}_door",
+				"replace_block_item": true
+			},
+			"minecraft:fuel": {
+            "duration": 10
+              },
+			"minecraft:icon": "maca_templ.{{name}}_door"
+		}
+	}
+	}
+}

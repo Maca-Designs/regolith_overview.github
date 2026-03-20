@@ -1,0 +1,248 @@
+{
+	"$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_door.block"
+    },
+    "$extend": [
+        "block.item_tier"
+    ],
+    "$template": {
+	"format_version": "1.26.0",
+	"minecraft:block": {
+		"description": {
+			"identifier": "maca_templ:{{name}}_door",
+			"states": {
+				"maca_templ:powered": [
+					false,
+					true
+				],
+				"maca_templ:upper_block": [
+					false,
+					true
+				],
+				"maca_templ:open": [
+					false,
+					true
+				],
+				"maca_templ:reversed": [
+					false,
+					true
+				]
+			},
+			"traits": {
+				"minecraft:placement_direction": {
+					"enabled_states": [
+						"minecraft:cardinal_direction"
+					]
+				}
+			}
+		},
+		"components": {
+            "minecraft:movable": {
+                    "movement_type": "popped"
+                },
+                "minecraft:redstone_consumer": {
+                    "min_power": 1 
+                },
+                "minecraft:connection_rule": {
+                    "accepts_connections_from": "none"
+                },
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "maca_templ.{{name}}_door_bottom",
+					"render_method": "blend"
+				}
+			},
+            "minecraft:precipitation_interactions": {"precipitation_behavior": "none"},
+			"minecraft:liquid_detection": {
+					"detection_rules": [
+						{
+                            "can_contain_liquid": true
+						}
+					]
+				},
+			"minecraft:loot": "loot_tables/empty.json",
+			"tag:minecraft:is_axe_item_destructible": {},
+			"minecraft:flammable": { 
+				"catch_chance_modifier": 5,
+				"destroy_chance_modifier": 20
+			},
+			"tag:maca_templ:is_door": {},
+        	"tag:maca_templ:no_connect": {},
+			"maca_templ:door": {},
+			"minecraft:geometry": {
+				"bone_visibility": {
+					"open_top": "query.block_state('maca_templ:open') && query.block_state('maca_templ:upper_block') && !q.block_state('maca_templ:reversed')",
+					"open_bottom": "query.block_state('maca_templ:open') && query.block_state('maca_templ:upper_block') == false && !q.block_state('maca_templ:reversed')",
+					"top": "query.block_state('maca_templ:open') == false && query.block_state('maca_templ:upper_block') && !q.block_state('maca_templ:reversed')",
+					"bottom": "query.block_state('maca_templ:open') == false && query.block_state('maca_templ:upper_block') == false && !q.block_state('maca_templ:reversed')",
+					"reversed_open_top": "query.block_state('maca_templ:open') && query.block_state('maca_templ:upper_block') && q.block_state('maca_templ:reversed')",
+					"reversed_open_bottom": "query.block_state('maca_templ:open') && query.block_state('maca_templ:upper_block') == false && q.block_state('maca_templ:reversed')",
+					"reversed_top": "query.block_state('maca_templ:open') == false && query.block_state('maca_templ:upper_block') && q.block_state('maca_templ:reversed')",
+					"reversed_bottom": "query.block_state('maca_templ:open') == false && query.block_state('maca_templ:upper_block') == false && q.block_state('maca_templ:reversed')"
+				},
+				"identifier": "geometry.maca_templ.door"
+			}
+		},
+		"permutations": [
+			{
+				"condition": "query.block_state('minecraft:cardinal_direction') == 'north'",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							180,
+							0
+						]
+					}
+				}
+			},
+			{
+				"condition": "query.block_state('minecraft:cardinal_direction') == 'east'",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							90,
+							0
+						]
+					}
+				}
+			},
+			{
+				"condition": "query.block_state('minecraft:cardinal_direction') == 'west'",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [
+							0,
+							270,
+							0
+						]
+					}
+				}
+			},
+			{
+				"condition": "query.block_state('maca_templ:open') == false",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-8,
+							0,
+							-8
+						],
+						"size": [
+							16,
+							16,
+							3
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-8,
+							0,
+							-8
+						],
+						"size": [
+							16,
+							16,
+							3
+						]
+					}
+				}
+			},
+			{
+				"condition": "query.block_state('maca_templ:open') == true && !q.block_state('maca_templ:reversed')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-8,
+							0,
+							-8
+						],
+						"size": [
+							3,
+							16,
+							16
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-8,
+							0,
+							-8
+						],
+						"size": [
+							3,
+							16,
+							16
+						]
+					}
+				}
+			},
+			{
+				"condition": "query.block_state('maca_templ:open') == true && q.block_state('maca_templ:reversed')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							5,
+							0,
+							-8
+						],
+						"size": [
+							3,
+							16,
+							16
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							5,
+							0,
+							-8
+						],
+						"size": [
+							3,
+							16,
+							16
+						]
+					}
+				}
+			},
+            {
+                "condition": "q.block_state('maca_templ:open') && q.block_state('maca_templ:powered')",
+                "components": {
+                    "maca_templ:door_pwr": {},
+                    "minecraft:tick": {
+                        "interval_range": [
+                            4,
+                            4
+                        ]
+                    }
+                }
+            },
+			{
+				"condition": "query.block_state('maca_templ:upper_block') == false",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "maca_templ.{{name}}_door_bottom",
+							"render_method": "blend"
+						}
+					}
+				}
+			},
+			{
+				"condition": "query.block_state('maca_templ:upper_block') == true",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "maca_templ.{{name}}_door_top",
+							"render_method": "blend"
+						}
+					}
+				}
+			}
+		]
+	}
+	}
+}

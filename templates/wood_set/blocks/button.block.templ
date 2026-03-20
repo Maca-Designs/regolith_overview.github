@@ -1,0 +1,272 @@
+{
+    "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_button.block"
+    },
+    "$extend": [
+        "block.item_tier"
+    ],
+    "$template": {
+    "format_version": "1.26.0",
+    "minecraft:block": {
+        "description": {
+            "identifier": "maca_templ:{{name}}_button",
+            "menu_category": {
+                "category": "items",
+                "group": "minecraft:itemGroup.name.buttons"
+            },
+            "traits": {
+                "minecraft:placement_position": {
+                    "enabled_states": ["minecraft:block_face"]
+                }
+            },
+            "states": {
+                "maca_templ:pressed": [0, 1]
+            }        
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'north'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [90, 180, 0]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'south'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [90, 0, 0]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'east'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [90, 90, 0]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'west'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [90, 270, 0]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'up'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [0, 0, 0]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'down'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [0, 180, 0]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'south' && q.block_state('maca_templ:pressed') == 0",
+                "components": {
+					"minecraft:redstone_producer": {
+						"connected_faces": ["south", "north", "west", "east", "down"],
+						"power": 0,
+						"strongly_powered_face": "north",
+						"transform_relative": false
+					}
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'north' && q.block_state('maca_templ:pressed') == 0",
+                "components": {
+					"minecraft:redstone_producer": {
+						"connected_faces": ["south", "north", "west", "east", "down"],
+						"power": 0,
+						"strongly_powered_face": "south",
+						"transform_relative": false
+					}
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'west' && q.block_state('maca_templ:pressed') == 0",
+                "components": {
+					"minecraft:redstone_producer": {
+						"connected_faces": ["south", "north", "west", "east", "down"],
+						"power": 0,
+						"strongly_powered_face": "east",
+						"transform_relative": false
+					}
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'east' && q.block_state('maca_templ:pressed') == 0",
+                "components": {
+					"minecraft:redstone_producer": {
+						"connected_faces": ["south", "north", "west", "east", "down"],
+						"power": 0,
+						"strongly_powered_face": "west",
+						"transform_relative": false
+					}
+                }
+            },
+            {
+                "condition": "query.block_state('minecraft:block_face') == 'down' && q.block_state('maca_templ:pressed') == 0",
+                "components": {
+					"minecraft:redstone_producer": {
+						"connected_faces": ["south", "north", "west", "east", "up", "down"],
+						"power": 0,
+						"strongly_powered_face": "up",
+						"transform_relative": false
+					}
+                }
+            },
+            {
+                "condition": "query.block_state('minecraft:block_face') == 'up' && q.block_state('maca_templ:pressed') == 0",
+                "components": {
+					"minecraft:redstone_producer": {
+						"connected_faces": ["south", "north", "west", "east", "down"],
+						"power": 0,
+						"strongly_powered_face": "down",
+						"transform_relative": false
+					}
+                }
+            },
+
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'south' && q.block_state('maca_templ:pressed') == 1",
+                "components": {
+					"minecraft:redstone_producer": {
+						"connected_faces": ["south", "north", "west", "east", "down"],
+						"power": 15,
+						"strongly_powered_face": "north",
+						"transform_relative": false
+					}
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'north' && q.block_state('maca_templ:pressed') == 1",
+                "components": {
+					"minecraft:redstone_producer": {
+						"connected_faces": ["south", "north", "west", "east", "down"],
+						"power": 15,
+						"strongly_powered_face": "south",
+						"transform_relative": false
+					}
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'west' && q.block_state('maca_templ:pressed') == 1",
+                "components": {
+					"minecraft:redstone_producer": {
+						"connected_faces": ["south", "north", "west", "east", "down"],
+						"power": 15,
+						"strongly_powered_face": "east",
+						"transform_relative": false
+					}
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:block_face') == 'east' && q.block_state('maca_templ:pressed') == 1",
+                "components": {
+					"minecraft:redstone_producer": {
+						"connected_faces": ["south", "north", "west", "east"],
+						"power": 15,
+						"strongly_powered_face": "west",
+						"transform_relative": false
+					}
+                }
+            },
+            {
+                "condition": "query.block_state('minecraft:block_face') == 'down' && q.block_state('maca_templ:pressed') == 1",
+                "components": {
+					"minecraft:redstone_producer": {
+						"connected_faces": ["south", "north", "west", "east", "up", "down"],
+						"power": 15,
+						"strongly_powered_face": "up",
+						"transform_relative": false
+					}
+                }
+            },
+            {
+                "condition": "query.block_state('minecraft:block_face') == 'up' && q.block_state('maca_templ:pressed') == 1",
+                "components": {
+					"minecraft:redstone_producer": {
+						"connected_faces": ["south", "north", "west", "east", "down"],
+						"power": 15,
+						"strongly_powered_face": "down",
+						"transform_relative": false
+					}
+                }
+            },
+            {
+                "condition": "q.block_state('maca_templ:pressed') == 1",
+                "components": {
+                        "minecraft:precipitation_interactions": {"precipitation_behavior": "none"},
+                    "minecraft:selection_box": {
+                        "origin": [-3, 0, -2],
+                        "size": [6, 1, 4]
+                    },
+					"maca_templ:powered": {},
+                    "minecraft:tick": {
+                        "interval_range": [
+                            30,
+                            30
+                        ]
+                    }
+                }
+            },
+            
+            {
+                "condition": "q.block_state('maca_templ:pressed') == 0",
+                "components": {
+                    "maca_templ:button": {}
+                }
+            }
+        ],
+        "components": {
+            "minecraft:movable": {
+                    "movement_type": "popped"
+                },
+                "minecraft:connection_rule": {
+                    "accepts_connections_from": "none"
+                },
+            "minecraft:selection_box": {
+            "origin": [-3, 0, -2],
+            "size": [6, 2, 4]
+            },
+            "minecraft:collision_box": false,
+            "tag:maca_templ:is_button": {},
+            "tag:minecraft:is_axe_item_destructible": {},
+            "minecraft:geometry": {
+                "identifier": "geometry.maca_templ.button",
+                "bone_visibility": {
+                    "main": "q.block_state('maca_templ:pressed') == 0",
+                    "pressed": "q.block_state('maca_templ:pressed') == 1"
+                }
+            },
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 2
+            },
+            "minecraft:flammable": {
+                "catch_chance_modifier": 5,
+                "destroy_chance_modifier": 20
+            },
+            "minecraft:map_color": "#B16A4A",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "maca_templ.{{name}}_planks",
+                    "render_method": "opaque"
+                }
+            }
+        }
+    }
+    }
+}

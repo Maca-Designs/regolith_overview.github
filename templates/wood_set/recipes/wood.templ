@@ -1,0 +1,36 @@
+{
+        "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_log_to_wood"
+    },
+    "$template": {
+	"format_version": "1.20.10",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "maca_templ:{{name}}logtoWood"
+		},
+		"tags": [
+            "crafting_table"
+        ],
+		"key": {
+			"#": {
+				"item": "maca_templ:{{name}}_log"
+			}
+		},
+		"group": "wood",
+    "pattern": [
+      "##",
+      "##"
+    ],
+		"unlock": [
+      {
+        "item": "maca_templ:{{name}}_log"
+      }
+    ],
+		"result": {
+			"item": "maca_templ:{{name}}_wood",
+			"count": 3
+		}
+	}
+}
+}

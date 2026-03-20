@@ -1,0 +1,41 @@
+{
+    "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_wood.block"
+    },
+    "$extend": [
+        "block.item_tier"
+    ],
+    "$template": {
+    "format_version": "1.21.60",
+    "minecraft:block": {
+        "description": {
+        "identifier": "maca_templ:{{name}}_wood"
+        },
+        "components": {
+            
+                "minecraft:redstone_conductivity": {
+                    "redstone_conductor": true
+                },
+            "tag:maca_templ:is_log": {},
+            "tag:maca_templ:is_wood": {},
+            "tag:minecraft:is_axe_item_destructible": {},
+            "minecraft:geometry": "{{geo}}",
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 2
+            },
+            "minecraft:flammable": {
+                "catch_chance_modifier": 5,
+                "destroy_chance_modifier": 20
+            },
+            "minecraft:map_color": "#B16A4A",
+            "minecraft:material_instances": {
+                "*": {
+                "texture": "maca_templ.{{name}}_log",
+                "render_method": "opaque"
+                }
+            }
+        }
+    }
+    }
+}

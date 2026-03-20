@@ -1,0 +1,32 @@
+{
+    "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_button.item"
+    },
+    "$template": {
+        "format_version": "1.21.120",
+        "minecraft:item": {
+            "description": {
+                "identifier": "maca_templ:{{name}}_button",
+                "menu_category": {
+                    "category": "items",
+                    "group": "minecraft:itemGroup.name.buttons"
+                }
+            },
+            "components": {
+                "minecraft:block_placer": {
+                    "block": "maca_templ:{{name}}_button",
+                    "replace_block_item": true
+                },
+                "minecraft:tags": {
+                    "tags": [
+                        "maca_templ:is_button"
+                    ]
+                },
+                "minecraft:fuel": {
+                    "duration": 5
+                }
+            }
+        }
+    }   
+}

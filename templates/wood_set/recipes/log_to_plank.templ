@@ -1,0 +1,34 @@
+{
+	"$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_log_to_plank"
+    },
+    "$template": {
+	"format_version": "1.20.10",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "maca_templ:{{name}}_log_to_plank"
+		},
+		"tags": [
+            "crafting_table"
+        ],
+		"key": {
+			"#": {
+				"item": "maca_templ:{{name}}_log"
+			}
+		},
+		"pattern": [
+			"#"
+		],
+		"unlock": [
+      {
+        "item": "maca_templ:{{name}}_log"
+      }
+    ],
+		"result": {
+			"item": "maca_templ:{{name}}_planks",
+			"count": 4
+		}
+	}
+}
+}

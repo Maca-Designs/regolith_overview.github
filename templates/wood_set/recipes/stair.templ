@@ -1,0 +1,36 @@
+{
+            "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_stair"
+    },
+    "$template": {
+	"format_version": "1.20.10",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "maca_templ:{{name}}_stair"
+		},
+		"tags": [
+            "crafting_table"
+        ],
+		"key": {
+			"#": {
+				"item": "maca_templ:{{name}}_planks"
+			}
+		},
+		"pattern": [
+			"#  ",
+			"## ",
+			"###"
+		],
+		"unlock": [
+      {
+        "item": "maca_templ:{{name}}_planks"
+      }
+    ],
+		"result": {
+			"item": "maca_templ:{{name}}_stair",
+			"count": 4
+		}
+	}
+}
+}

@@ -1,0 +1,34 @@
+{
+            "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_wood_to_plank"
+    },
+    "$template": {
+	"format_version": "1.20.10",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "maca_templ:{{name}}woodtoplanks"
+		},
+		"tags": [
+            "crafting_table"
+        ],
+		"key": {
+			"#": {
+				"item": "maca_templ:{{name}}_wood"
+			}
+		},
+		"pattern": [
+			"#"
+		],
+		"unlock": [
+      {
+        "item": "maca_templ:{{name}}_wood"
+      }
+    ],
+		"result": {
+			"item": "maca_templ:{{name}}_planks",
+			"count": 4
+		}
+	}
+}
+}

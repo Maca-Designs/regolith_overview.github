@@ -1,0 +1,78 @@
+{
+    "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_sapling.block"
+    },
+    "$template": {
+        "format_version": "1.26.0",
+        "minecraft:block": {
+            "description": {
+                "identifier": "maca_templ:{{name}}_sapling",
+                "states": {
+                    "maca_templ:growth_stage": [0, 1, 2]
+                }
+            },
+            "components": {
+                "minecraft:connection_rule": {
+                    "accepts_connections_from": "none"
+                },
+                "minecraft:precipitation_interactions": {"precipitation_behavior": "none"},
+                "minecraft:liquid_detection": {
+					"detection_rules": [
+						{
+                            "liquid_type": "water",
+                            "on_liquid_touches": "popped"
+						}
+					]
+				},
+                "tag:maca_templ:no_connect": {},
+                "tag:maca_templ:{{wideTree ? '2x2' : 'unused'}}": {},
+                "minecraft:collision_box": false,
+                "minecraft:selection_box": {
+                    "origin": [-6, 0, -6],
+                    "size": [12, 13, 12]
+                },
+                "maca_templ:interact_tree": {}, 
+                "maca_templ:random_tick":{},
+                "minecraft:light_dampening": 0,
+                "minecraft:geometry": "geometry.maca_templ.custom_sapling",
+                "minecraft:material_instances": {
+                    "*": {
+                    "texture": "maca_templ.{{name}}_sapling",
+                    "render_method": "alpha_test",
+                    "face_dimming": false,
+                    "ambient_occlusion": false
+                    }
+                },
+                "minecraft:placement_filter": {
+                    "conditions": [
+                    {
+                        "allowed_faces": ["up"],
+                        "block_filter": [
+                        "minecraft:dirt_with_roots",
+                        "minecraft:coarse_dirt",
+                        "minecraft:dirt",
+                        "minecraft:grass",
+                        "minecraft:podzol",
+                        "minecraft:mycelium",
+                        "minecraft:sand"
+                        ]
+                    }
+                    ]
+                },
+                "minecraft:flower_pottable": {},
+                "minecraft:embedded_visual": {
+                    "geometry": "geometry.maca_templ.custom_sapling_pot",
+                    "material_instances": {
+                        "*": {
+                            "texture": "maca_templ.{{name}}_sapling",
+                            "ambient_occlusion": false,
+                            "face_dimming": false,
+                            "render_method": "alpha_test"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

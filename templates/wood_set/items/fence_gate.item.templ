@@ -1,0 +1,27 @@
+{
+    "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_fence_gate.item"
+    },
+    "$template": {
+        "format_version": "1.21.40",
+	"minecraft:item": {
+		"description": {
+			"identifier": "maca_templ:{{name}}_fence_gate",
+			"menu_category": {
+                "category": "construction",
+				"group": "itemGroup.name.fenceGate"
+            }
+		},
+		"components": {
+			"minecraft:block_placer": {
+				"block": "maca_templ:{{name}}_fence_gate",
+				"replace_block_item": true
+			},
+			"minecraft:fuel": {
+            "duration": 15
+              }
+		}
+	}
+    }
+}

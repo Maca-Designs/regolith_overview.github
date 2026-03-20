@@ -1,0 +1,66 @@
+{
+    "$files": {
+        "array": "wood_blocks",
+        "fileName": "stripped_{{name}}_log.block"
+    },
+    "$extend": [
+        "{{strippedLogModulesBP ? strippedLogModulesBP : [] + ['block.item_tier']}}"
+    ],
+    "$template": {
+    "format_version": "1.26.0",
+    "minecraft:block": {
+        "description": {
+        "identifier": "maca_templ:stripped_{{name}}_log",
+        "traits": {
+            "minecraft:placement_position": {
+            "enabled_states": ["minecraft:block_face"]
+            }
+        }
+        },
+        "permutations": [
+        {
+            "condition": "query.block_state('minecraft:block_face') == 'north' || query.block_state('minecraft:block_face') == 'south'",
+            "components": {
+            "minecraft:transformation": { "rotation": [90, 0, 0] }
+            }
+        },
+        {
+            "condition": "query.block_state('minecraft:block_face') == 'east' || query.block_state('minecraft:block_face') == 'west'",
+            "components": {
+            "minecraft:transformation": { "rotation": [0, 0, 90] }
+            }
+        }
+        ],
+        "components": {
+            
+                "minecraft:redstone_conductivity": {
+                    "redstone_conductor": true
+                },
+            "tag:minecraft:is_axe_item_destructible": {},
+        "minecraft:geometry": "{{stripped_geo ? stripped_geo : geo}}",
+        "minecraft:destructible_by_explosion": {
+            "explosion_resistance": 2
+        },
+        "minecraft:flammable": {
+            "catch_chance_modifier": 5,
+            "destroy_chance_modifier": 20
+        },
+        "minecraft:map_color": "#B16A4A",
+        "minecraft:material_instances": {
+            "*": {
+            "texture": "maca_templ.stripped_{{name}}_log",
+            "render_method": "{{stripped_geo ? 'alpha_test' : 'opaque'}}"
+            },
+            "up": {
+            "texture": "maca_templ.stripped_{{name}}_log_top",
+            "render_method": "{{stripped_geo ? 'alpha_test' : 'opaque'}}"
+            },
+            "down": {
+            "texture": "maca_templ.stripped_{{name}}_log_top",
+            "render_method": "{{stripped_geo ? 'alpha_test' : 'opaque'}}"
+            }
+        }
+        }
+    }
+    }
+}

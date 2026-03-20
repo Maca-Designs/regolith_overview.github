@@ -97,6 +97,19 @@ header p {
     margin-bottom: 1rem;
 }
 
+.template-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.total-files {
+    color: rgb(102, 183, 161);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
 .download-btn {
     display: inline-block;
     background: rgb(102, 183, 161);
@@ -132,42 +145,51 @@ header p {
             <input type="text" id="searchInput" placeholder="Search templates...">
         </div>
     </main>
-<script>
-document.addEventListener('DOMContentLoaded', async function() {
-    try {
-        // 1. Get list of template folders
-        const listResponse = await fetch('./templates-list.json');
-        const data = await listResponse.json();
-        
-        const grid = document.getElementById('templatesGrid');
-        
-        // 2. For each folder, load its config.json
-        for (const folder of data.templates) {
-            try {
-                const configResponse = await fetch(`./templates/${folder}/config.json`);
-                const config = await configResponse.json();
-                
-                const card = document.createElement('a');
-                card.className = 'template-card';
-                card.href = `./templates/${folder}/config.json`;  // Download config for now
-                card.download = `${folder}-config.json`;
-                
-                card.innerHTML = `
-                    <h3>${config.name || folder}</h3>
-                    <p>${config.description}</p>
-                    <span class="download-btn">Download</span>
-                `;
-                
-                grid.appendChild(card);
-            } catch (e) {
-                console.warn(`Skipping ${folder} - no config.json`);
+    <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+        try {
+            // 1. Get list of template folders
+            const listResponse = await fetch('./templates-list.json');
+            const data = await listResponse.json();
+            
+            const grid = document.getElementById('templatesGrid');
+            
+            // 2. For each folder, load its config.json
+            for (const folder of data.templates) {
+                try {
+                    const configResponse = await fetch(`./templates/${folder}/config.json`);
+                    const config = await configResponse.json();
+                    
+                    const card = document.createElement('a');
+                    card.className = 'template-card';
+                    card.href = `./templates/${folder}/config.json`;
+                    card.download = `${folder}-config.json`;
+                    
+                    // Calculate category counts
+                    const categories = config.categories || {};
+                    const totalFiles = config.totalFiles || Object.values(categories).reduce((sum, cat) => sum + cat.length, 0);
+                    
+                    card.innerHTML = `
+                        <h3>${config.name || folder}</h3>
+                        <p>${config.description}</p>
+                        <div class="template-meta">
+                            <div>
+                                <span class="total-files">${totalFiles} files</span>
+                                <span class="download-btn">Download</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    grid.appendChild(card);
+                } catch (e) {
+                    console.warn(`Skipping ${folder} - no config.json`);
+                }
             }
+        } catch (error) {
+            console.error('Failed to load templates:', error);
         }
-    } catch (error) {
-        console.error('Failed to load templates:', error);
-    }
-});
-</script>
+    });
+    </script>
 
 </body>
 </html>

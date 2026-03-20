@@ -1,0 +1,38 @@
+{
+	"$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_fence"
+    },
+    "$template": {
+	"format_version": "1.20.10",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "maca_templ:{{name}}_fence"
+		},
+		"tags": [
+            "crafting_table"
+        ],
+		"key": {
+			"#": {
+				"item": "maca_templ:{{name}}_planks"
+			},
+            "A":{
+                "item": "minecraft:stick"
+            }
+		},
+		"pattern": [
+			"#A#",
+			"#A#"
+		],
+		"unlock": [
+      {
+        "item": "maca_templ:{{name}}_planks"
+      }
+    ],
+		"result": {
+			"item": "maca_templ:{{name}}_fence",
+			"count": 3
+		}
+	}
+}
+}

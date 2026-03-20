@@ -1,0 +1,35 @@
+{
+    "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_leaves.item"
+    },
+    "$template": {
+        "format_version": "1.21.50",
+        "minecraft:item": {
+            "description": {
+                "identifier": "maca_templ:{{name}}_leaves",
+                "menu_category": {
+                    "category": "nature",
+                    "group": "itemGroup.name.leaves"
+                }
+            }, 
+            "components": {
+                "minecraft:tags": {
+                    "tags": [
+                    "maca_templ:is_leaf"
+                    ]
+                },
+                "minecraft:compostable":{
+                    "composting_chance": 30
+                },
+
+                "minecraft:max_stack_size":{"value": 64},
+
+                "minecraft:block_placer":{
+                    "block": "maca_templ:{{name}}_leaves",
+                    "replace_block_item": true
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_fence_gate"
+    },
+    "$template": {
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "maca_templ:{{name}}_fence_gate"
+    },
+    "tags": ["crafting_table"],
+    "key": {
+      "A": {
+        "item": "maca_templ:{{name}}_planks"
+      },
+      "#": {
+        "item": "minecraft:stick"
+      }
+    },
+    "pattern": [
+		"#A#", 
+		"#A#"
+	],
+	"unlock": [
+      {
+        "item": "maca_templ:{{name}}_planks"
+      }
+    ],
+    "result": {
+      "item": "maca_templ:{{name}}_fence_gate",
+      "count": 3
+    }
+  }
+}
+}

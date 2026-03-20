@@ -1,0 +1,36 @@
+{
+            "$files": {
+        "array": "wood_blocks",
+        "fileName": "{{name}}_sltw"
+    },
+    "$template": {
+	"format_version": "1.20.10",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "maca_templ:{{name}}logstrippedtowoodstripped"
+		},
+		"tags": [
+            "crafting_table"
+        ],
+		"key": {
+			"#": {
+				"item": "maca_templ:stripped_{{name}}_log"
+			}
+		},
+		"group": "wood",
+    "pattern": [
+      "##",
+      "##"
+    ],
+		"unlock": [
+      {
+        "item": "maca_templ:stripped_{{name}}_log"
+      }
+    ],
+		"result": {
+			"item": "maca_templ:stripped_{{name}}_wood",
+			"count": 3
+		}
+	}
+}
+}
