@@ -149,7 +149,7 @@ header p {
     document.addEventListener('DOMContentLoaded', async function() {
         try {
             // 1. Get list of template folders
-            const listResponse = await fetch('./templates-list.json');
+            const listResponse = await fetch('./templates/templates-list.json');
             const data = await listResponse.json();
             
             const grid = document.getElementById('templatesGrid');
