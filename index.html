@@ -136,6 +136,109 @@ header p {
     font-size: 0.9rem;
 }
 
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.header-left, .header-right {
+    flex: 0 0 auto;
+}
+
+.header-center {
+    flex: 1;
+    text-align: center;
+}
+
+.readme-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.readme-btn:hover {
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-1px);
+}
+
+.readme-viewer {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: none;
+}
+
+.readme-content {
+    background: white;
+    border: 2px solid rgb(102, 183, 161);
+    border-radius: 12px;
+    padding: 2rem;
+    max-height: 70vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.readme-content h1, .readme-content h2, .readme-content h3 {
+    color: rgb(102, 183, 161);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.readme-content h1:first-child {
+    margin-top: 0;
+}
+
+.readme-content p, .readme-content li {
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.readme-content code {
+    background: rgba(102, 183, 161, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+}
+
+.readme-content pre {
+    background: rgba(102, 183, 161, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.readme-content blockquote {
+    border-left: 4px solid rgb(102, 183, 161);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    font-style: italic;
+    color: #555;
+}
+
+.back-btn {
+    background: rgb(102, 183, 161);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.back-btn:hover {
+    background: rgb(90, 160, 140);
+}
+
 @media (max-width: 768px) {
     .templates-grid {
         grid-template-columns: 1fr;
@@ -154,9 +257,17 @@ header p {
 <body>
 
 <header>
-        <h1>Template Files</h1>
-        <p>Browse and download templates from the repo.</p>
-    </header>
+    <div class="header-content">
+        <div class="header-left">
+            <button id="readmeBtn" class="readme-btn">📖 Guide</button>
+        </div>
+        <div class="header-center">
+            <h1>Template Files</h1>
+            <p>Browse and download templates from the repo.</p>
+        </div>
+        <div class="header-right"></div>
+    </div>
+</header>
     
     <main>
         <div class="search-container">
@@ -165,9 +276,71 @@ header p {
         <div class="templates-grid" id="templatesGrid">
             <!-- Cards will appear here -->
         </div>
+        <div class="readme-viewer" id="readmeViewer">
+    <div class="readme-content" id="readmeContent">
+        <button class="back-btn" id="backBtn">← Back to Templates</button>
+        <div id="readmeMarkdown">Loading README...</div>
+    </div>
+</div>
     </main>
 <script>
+    // Load README first
+    async function loadReadme() {
+        try {
+            const readmeResponse = await fetch('https://raw.githubusercontent.com/Maca-Designs/regolith_overview.github/main/README.md');
+            const readmeText = await readmeResponse.text();
+            const htmlContent = markdownToHtml(readmeText);
+            document.getElementById('readmeContent').innerHTML = htmlContent;
+        } catch (error) {
+            document.getElementById('readmeMarkdown').innerHTML = '<p>README not found. Make sure README.md exists in your repo root.</p>';
+        }
+    }
+
+    // Simple Markdown to HTML converter
+    function markdownToHtml(markdown) {
+        return markdown
+            // Headers
+            .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+            .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+            .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+            // Bold/Italic
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            // Code
+            .replace(/`([^`]+)`/g, '<code>$1</code>')
+            // Blockquotes
+            .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
+            // Lists
+            .replace(/^\s*- (.*$)/gim, '<li>$1</li>')
+            .replace(/(<li>.*<\/li>)/gi, '<ul>$1</ul>')
+            // Line breaks
+            .replace(/\n\n/g, '</p><p>')
+            .replace(/\n/g, '<br>')
+            // Paragraphs
+            .replace(/^(.+)$/gim, '<p>$1</p>')
+            .replace(/<\/p><p>\s*<\/p>/g, '');
+    }
 document.addEventListener('DOMContentLoaded', async function() {
+    const readmeBtn = document.getElementById('readmeBtn');
+    const backBtn = document.getElementById('backBtn');
+    const readmeViewer = document.getElementById('readmeViewer');
+    const searchContainer = document.querySelector('.search-container');
+    const templatesGrid = document.getElementById('templatesGrid');
+    
+    readmeBtn.addEventListener('click', () => {
+        loadReadme();
+        readmeViewer.style.display = 'block';
+        searchContainer.style.display = 'none';
+        templatesGrid.style.display = 'none';
+        document.body.classList.add('readme-active');
+    });
+    
+    backBtn.addEventListener('click', () => {
+        readmeViewer.style.display = 'none';
+        searchContainer.style.display = 'block';
+        templatesGrid.style.display = 'grid';
+        document.body.classList.remove('readme-active');
+    });
     const repo = 'regolith_overview.github';
     const org = 'Maca-Designs';
     
