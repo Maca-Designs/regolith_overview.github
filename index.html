@@ -145,51 +145,62 @@ header p {
             <input type="text" id="searchInput" placeholder="Search templates...">
         </div>
     </main>
-    <script>
-    document.addEventListener('DOMContentLoaded', async function() {
-        try {
-            // 1. Get list of template folders
-            const listResponse = await fetch('./templates-list.json');
-            const data = await listResponse.json();
-            
-            const grid = document.getElementById('templatesGrid');
-            
-            // 2. For each folder, load its config.json
-            for (const folder of data.templates) {
-                try {
-                    const configResponse = await fetch(`./templates/${folder}/${folder}-config.json`);
-                    const config = await configResponse.json();
-                    
-                    const card = document.createElement('a');
-                    card.className = 'template-card';
-                    card.href = `./templates/${folder}/${folder}-config.json`;
-                    card.download = `${folder}-config.json`;
-                    
-                    // Calculate category counts
-                    const categories = config.categories || {};
-                    const totalFiles = config.totalFiles || Object.values(categories).reduce((sum, cat) => sum + cat.length, 0);
-                    
-                    card.innerHTML = `
-                        <h3>${config.name || folder}</h3>
-                        <p>${config.description}</p>
-                        <div class="template-meta">
-                            <div>
-                                <span class="total-files">${totalFiles} files</span>
-                                <span class="download-btn">Download</span>
-                            </div>
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        const repo = 'regolith_overview.github';
+        
+        // 1. Get list of template folders from /templates/
+        const apiUrl = `https://api.github.com/repos/Maca-Designs/${repo}/contents/templates`;
+        const listResponse = await fetch(apiUrl);
+        const foldersData = await listResponse.json();
+        
+        const grid = document.getElementById('templatesGrid');
+        
+        // 2. Filter folders only (skip files)
+        const folders = foldersData.filter(item => item.type === 'dir').map(item => item.name);
+        
+        // 3. For each folder, load its config.json
+        for (const folder of folders) {
+            try {
+                const configUrl = `https://raw.githubusercontent.com/Maca-Designs/${repo}/main/templates/${folder}/${folder}-config.json`;
+                const configResponse = await fetch(configUrl);
+                
+                if (!configResponse.ok) throw new Error('Config not found');
+                
+                const config = await configResponse.json();
+                
+                const card = document.createElement('a');
+                card.className = 'template-card';
+                card.href = `./templates/${folder}/${folder}-config.json`;
+                card.download = `${folder}-config.json`;
+                
+                // Calculate category counts
+                const categories = config.categories || {};
+                const totalFiles = config.totalFiles || Object.values(categories).reduce((sum, cat) => sum + cat.length, 0);
+                
+                card.innerHTML = `
+                    <h3>${config.name || folder}</h3>
+                    <p>${config.description}</p>
+                    <div class="template-meta">
+                        <div>
+                            <span class="total-files">${totalFiles} files</span>
+                            <span class="download-btn">Download</span>
                         </div>
-                    `;
-                    
-                    grid.appendChild(card);
-                } catch (e) {
-                    console.warn(`Skipping ${folder} - no config.json`);
-                }
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            } catch (e) {
+                console.warn(`Skipping ${folder} - no config.json`);
             }
-        } catch (error) {
-            console.error('Failed to load templates:', error);
         }
-    });
-    </script>
+    } catch (error) {
+        console.error('Failed to load templates:', error);
+        document.getElementById('templatesGrid').innerHTML = '<p>Failed to load templates. Check console for details.</p>';
+    }
+});
+</script>
 
 </body>
 </html>
