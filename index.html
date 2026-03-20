@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Repository</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Template Files</h1>
+        <p>Browse and download templates from the repo.</p>
+    </header>
+    
+    <main>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search templates...">
+        </div>
+        
+        <div class="templates-grid" id="templatesGrid">
+            <!-- Sample templates; JS will populate/filter these later -->
+            <a href="templates/sample1.json" class="template-card" download>
+                <h3>Sample Template 1</h3>
+                <p>JSON config for basic setup.</p>
+                <span class="download-btn">Download</span>
+            </a>
+            <a href="templates/sample2.html" class="template-card" download>
+                <h3>Sample Template 2</h3>
+                <p>HTML starter page.</p>
+                <span class="download-btn">Download</span>
+            </a>
+            <a href="templates/sample3.css" class="template-card" download>
+                <h3>Sample Template 3</h3>
+                <p>CSS stylesheet base.</p>
+                <span class="download-btn">Download</span>
+            </a>
+        </div>
+    </main>
+</body>
+</html>
