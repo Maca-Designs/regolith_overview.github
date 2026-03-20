@@ -192,6 +192,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 
                 grid.appendChild(card);
             } catch (e) {
+                console.warn(JSON.stringify(e))
                 console.warn(`Skipping ${folder} - no config.json`);
             }
         }
