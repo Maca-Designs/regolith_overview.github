@@ -482,7 +482,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 
                 const card = createTemplateCard(folderData, async () => {
                     await downloadTemplateWithNamespace(folderData);
-                });
+                }, org, repo); 
                 
                 grid.appendChild(card);
             } catch (e) {
@@ -495,28 +495,52 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
-function createTemplateCard(folderData, onDownloadClick) {
+async function getFileCount(folderPath, org, repo) {
+    try {
+        // Use Git Trees API with recursive=1 to count ALL files in folder
+        const treeUrl = `https://api.github.com/repos/${org}/${repo}/git/trees/main?recursive=1`;
+        const treeResponse = await fetch(treeUrl);
+        const treeData = await treeResponse.json();
+        
+        // Count only files (not dirs) within this folder
+        const folderFiles = treeData.tree.filter(item => 
+            item.type === 'blob' && item.path.startsWith(folderPath + '/')
+        );
+        
+        return folderFiles.length;
+    } catch (error) {
+        console.warn(`Could not count files in ${folderPath}:`, error);
+        return 0;
+    }
+}
+
+function createTemplateCard(folderData, onDownloadClick, org, repo) {
     const card = document.createElement('a');
     card.className = 'template-card';
     
-    // FIXED: Calculate totalFiles the original SAFE way
-    const categories = folderData.config.categories || {};
-    const totalFiles = folderData.config.totalFiles || 
-        Object.values(categories).reduce((sum, cat) => sum + (Array.isArray(cat) ? cat.length : 0), 0);
+    // Async file count - show loading then real number
+    const fileCountSpan = document.createElement('span');
+    fileCountSpan.className = 'total-files';
+    fileCountSpan.textContent = 'Loading...';
+    fileCountSpan.dataset.folder = folderData.name;
+    
+    // Fetch real count
+    getFileCount(folderData.apiPath, org, repo).then(count => {
+        fileCountSpan.textContent = `${count} files`;
+    });
     
     card.innerHTML = `
         <h3>${folderData.config.name || folderData.name}</h3>
         <p>${folderData.config.description}</p>
         <div class="template-meta">
-            <span class="total-files">${totalFiles} files</span>
+            ${fileCountSpan.outerHTML}
             <button class="download-btn namespace-download" data-folder="${folderData.name}">Download Pack</button>
         </div>
     `;
     
-    // Add click handler
     card.querySelector('.namespace-download').addEventListener('click', (e) => {
         e.preventDefault();
-        e.stopPropagation();  // Prevent card link click
+        e.stopPropagation();
         onDownloadClick();
     });
     
