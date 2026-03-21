@@ -451,6 +451,7 @@ main {
             <label><input type="checkbox" value="trees" class="filter-checkbox"> Trees</label>
             <label><input type="checkbox" value="biomes" class="filter-checkbox"> Biomes</label>
             <label><input type="checkbox" value="wood" class="filter-checkbox"> Wood</label>
+            <label><input type="checkbox" value="jigsaws" class="filter-checkbox"> Jigsaws</label>
         </div>
         <button class="clear-filters" id="clearFilters">Clear All</button>
     </div>
@@ -584,6 +585,7 @@ main {
         return div.innerHTML;
     }
 document.addEventListener('DOMContentLoaded', async function() {
+    initFilters();
     const readmeBtn = document.getElementById('readmeBtn');
     const readmeViewer = document.getElementById('readmeViewer');
     const searchContainer = document.querySelector('.search-container');
@@ -657,6 +659,24 @@ document.addEventListener('DOMContentLoaded', async function() {
         grid.innerHTML = '<p>Failed to load templates. Check console for details.</p>';
     }
 });
+
+function initFilters() {
+    const checkboxes = document.querySelectorAll('.filter-checkbox');
+    const clearBtn = document.getElementById('clearFilters');
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', filterTemplates);
+    });
+    
+    // FIXED Clear All - force uncheck + trigger filter
+    clearBtn.addEventListener('click', () => {
+        checkboxes.forEach(cb => {
+            cb.checked = false;  // Uncheck all
+        });
+        activeFilters.clear();
+        filterTemplates();  // Refresh display
+    });
+}
 
 async function getFileCount(folderName, org, repo) {
     let count = 0;
