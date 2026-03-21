@@ -688,7 +688,7 @@ async function getFileCount(folderName, org, repo) {
 async function createTemplateCard(folderData, onDownloadClick, org, repo) {
     const card = document.createElement('a');
     card.className = 'template-card';
-
+    card.dataset.folderName = folderData.name; 
     const fileCount = await getFileCount(folderData.name, org, repo);
     
     // Async file count - show loading then real number
