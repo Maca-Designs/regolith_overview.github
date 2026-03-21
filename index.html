@@ -480,9 +480,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 };
                 window.templateData.push(folderData);
                 
-                const card = createTemplateCard(folderData, async () => {
+                // AWAIT the card creation (includes file count)
+                const card = await createTemplateCard(folderData, async () => {
                     await downloadTemplateWithNamespace(folderData);
-                }, org, repo); 
+                }, org, repo);
                 
                 grid.appendChild(card);
             } catch (e) {
