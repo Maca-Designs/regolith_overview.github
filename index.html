@@ -367,7 +367,8 @@ main {
 }
 
 header {
-    background-color: rgb(102, 183, 161);
+    background-color: rgb(102, 183, 161); /* For browsers that do not support gradients */
+    background-image: linear-gradient(to bottom right, rgb(102, 183, 161), white);
     color: white;
     width: 100%;
     padding: 1.5rem 2rem;
