@@ -493,6 +493,7 @@ main {
     }
 
     function filterTemplates() {
+        console.log('allCards length:', allCards.length);
         activeFilters.clear();
         document.querySelectorAll('.filter-checkbox:checked').forEach(cb => {
             activeFilters.add(cb.value);
@@ -501,6 +502,7 @@ main {
         let visibleCount = 0;
         
         allCards.forEach(card => {
+            console.log(`Card ${index}:`, card.dataset.folderName);
             if (!card.parentNode) return;  // Skip removed cards
             
             const folderName = card.dataset.folderName;
