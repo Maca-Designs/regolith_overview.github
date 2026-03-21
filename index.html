@@ -498,7 +498,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 async function getFileCount(org, repo, folderData) {
     try {
         // Use Git Trees API with recursive=1 to count ALL files in folder
-        const treeUrl = `https://raw.githubusercontent.com/${org}/${repo}/main/templates/${folderData}`;
+        const treeUrl = `https://api.github.com/repos/${org}/${repo}/contents/templates/${folderData}`;
         const treeResponse = await fetch(treeUrl);
         const treeData = await treeResponse.json();
         console.warn(JSON.stringify(treeData))
