@@ -493,7 +493,6 @@ main {
     }
 
     function filterTemplates() {
-        console.log('allCards length:', allCards.length);
         activeFilters.clear();
         document.querySelectorAll('.filter-checkbox:checked').forEach(cb => {
             activeFilters.add(cb.value);
@@ -502,8 +501,8 @@ main {
         let visibleCount = 0;
         
         allCards.forEach(card => {
-            console.log(card.dataset.folderName);
-            if (!card.parentNode) return;  // Skip removed cards
+            // Skip cards not in DOM
+            if (!card.parentNode) return;
             
             const folderName = card.dataset.folderName;
             const templateData = window.templateData.find(data => data.name === folderName);
@@ -512,23 +511,29 @@ main {
             const matchesFilters = activeFilters.size === 0 || 
                 Array.from(activeFilters).some(filter => tags.includes(filter));
             
-            if (matchesFilters) {
-                card.style.display = 'block';
-                visibleCount++;
-            } else {
-                card.style.display = 'none';
-            }
+            card.style.display = matchesFilters ? 'block' : 'none';
+            if (matchesFilters) visibleCount++;
         });
         
+        updateGridLayout(visibleCount);
+    }
+
+    function updateGridLayout(visibleCount) {
         const grid = document.getElementById('templatesGrid');
-        const noResults = grid.querySelector('.no-results');
         
+        // Remove existing "No results" if any
+        const existingNoResults = grid.querySelector('.no-results');
+        if (existingNoResults) {
+            existingNoResults.remove();
+        }
+        
+        // Add "No results" ONLY when needed
         if (visibleCount === 0 && activeFilters.size > 0) {
-            if (!noResults) {
-                grid.innerHTML += '<p class="no-results" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #666;">No templates match your filters</p>';
-            }
-        } else if (noResults) {
-            noResults.remove();
+            const noResults = document.createElement('p');
+            noResults.className = 'no-results';
+            noResults.style.cssText = 'grid-column: 1/-1; text-align: center; padding: 3rem; color: #666;';
+            noResults.textContent = 'No templates match your filters';
+            grid.appendChild(noResults);
         }
     }
 
@@ -662,7 +667,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     await downloadTemplateWithNamespace(folderData);
                 }, org, repo);
 
-                card.dataset.folderName = folderData.name;  // ← Must be BEFORE allCards.push
+                card.dataset.folderName = folderData.name; 
                 allCards.push(card);
                 grid.appendChild(card);
             } catch (e) {
@@ -683,13 +688,12 @@ function initFilters() {
         checkbox.addEventListener('change', filterTemplates);
     });
     
-    // FIXED Clear All - force uncheck + trigger filter
     clearBtn.addEventListener('click', () => {
-        checkboxes.forEach(cb => {
-            cb.checked = false;  // Uncheck all
+        document.querySelectorAll('.filter-checkbox').forEach(cb => {
+            cb.checked = false;
         });
         activeFilters.clear();
-        filterTemplates();  // Refresh display
+        filterTemplates(); 
     });
 }
 
