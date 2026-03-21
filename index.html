@@ -548,21 +548,33 @@ header {
             activeFilters.add(cb.value);
         });
         
-        let visibleCount = 0;
+        const searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
         
         allCards.forEach(card => {
-            // Skip cards not in DOM
             if (!card.parentNode) return;
             
-            const folderName = card.dataset.folderName;
-            const templateData = window.templateData.find(data => data.name === folderName);
+            const folderName = card.dataset.folderName.toLowerCase();
+            const templateData = window.templateData.find(data => data.name === card.dataset.folderName);
+            const title = (templateData?.config?.name || folderName).toLowerCase();
+            const description = (templateData?.config?.description || '').toLowerCase();
             const tags = templateData?.config?.tags || [];
             
+            // Combined logic: must match BOTH filters AND search
             const matchesFilters = activeFilters.size === 0 || 
                 Array.from(activeFilters).some(filter => tags.includes(filter));
             
-            card.style.display = matchesFilters ? 'block' : 'none';
-            if (matchesFilters) visibleCount++;
+            const matchesSearch = !searchQuery || 
+                folderName.includes(searchQuery) || 
+                title.includes(searchQuery) || 
+                description.includes(searchQuery);
+            
+            const shouldShow = matchesFilters && matchesSearch;
+            card.style.display = shouldShow ? 'block' : 'none';
+        });
+        
+        let visibleCount = 0;
+        allCards.forEach(card => {
+            if (card.style.display === 'block') visibleCount++;
         });
         
         updateGridLayout(visibleCount);
@@ -645,6 +657,7 @@ header {
     }
 document.addEventListener('DOMContentLoaded', async function() {
     initFilters();
+    initSearch();
     const readmeBtn = document.getElementById('readmeBtn');
     const readmeViewer = document.getElementById('readmeViewer');
     const searchContainer = document.querySelector('.search-container');
@@ -718,6 +731,67 @@ document.addEventListener('DOMContentLoaded', async function() {
         grid.innerHTML = '<p>Failed to load templates. Check console for details.</p>';
     }
 });
+
+// Search Functionality
+function initSearch() {
+    const searchInput = document.getElementById('searchInput');
+    
+    searchInput.addEventListener('input', debounce(searchTemplates, 300));
+}
+
+function searchTemplates() {
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    
+    allCards.forEach(card => {
+        if (!card.parentNode) return;
+        
+        const folderName = card.dataset.folderName.toLowerCase();
+        const templateData = window.templateData.find(data => data.name === card.dataset.folderName);
+        const title = (templateData?.config?.name || folderName).toLowerCase();
+        const description = (templateData?.config?.description || '').toLowerCase();
+        
+        // Show if matches search OR no query
+        const matchesSearch = !query || 
+            folderName.includes(query) || 
+            title.includes(query) || 
+            description.includes(query);
+        
+        card.style.display = matchesSearch ? 'block' : 'none';
+    });
+    
+    updateSearchGridLayout();
+}
+
+function updateSearchGridLayout() {
+    const grid = document.getElementById('templatesGrid');
+    const visibleCards = Array.from(document.querySelectorAll('.template-card[style*="display: block"], .template-card:not([style*="display: none"])'));
+    
+    // Remove existing no-results
+    const existingNoResults = grid.querySelector('.search-no-results');
+    if (existingNoResults) existingNoResults.remove();
+    
+    // Add no-results if needed
+    if (visibleCards.length === 0 && document.getElementById('searchInput').value.trim()) {
+        const noResults = document.createElement('p');
+        noResults.className = 'search-no-results';
+        noResults.style.cssText = 'grid-column: 1/-1; text-align: center; padding: 3rem; color: #666;';
+        noResults.textContent = 'No templates match your search';
+        grid.appendChild(noResults);
+    }
+}
+
+// Debounce utility to avoid excessive filtering
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
 
 function initFilters() {
     const checkboxes = document.querySelectorAll('.filter-checkbox');
