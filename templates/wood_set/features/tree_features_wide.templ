@@ -1,0 +1,43 @@
+
+{
+    "$files": {
+        "array": "{{features.filter(x => x?.tree_feature_wide)}}",
+        "fileName": "{{name}}_feature"
+    },
+    "$template": {
+        "format_version": "1.13.0",
+        "minecraft:tree_feature": {
+            "description": {
+                "identifier": "maca_templ:{{name}}_feature"
+            },
+            "fancy_trunk": {
+                "trunk_block": "maca_templ:{{name}}_log",
+                "trunk_height": {
+                    "base": "{{trunk.min}}",
+                    "variance": "{{trunk.intervals}}",
+                    "scale": 1
+                },
+                "trunk_width": "{{trunk.width}}",
+                "width_scale": 2,
+
+                "foliage_altitude_factor": 0.65,
+                "branches": {
+                    "slope": 0.5,
+                    "density": 0.05,
+                    "min_altitude_factor": 0.5
+                }
+            },
+            "fancy_canopy": {
+                "height": "{{canopy.height}}",
+                "radius": "{{canopy.radius}}",
+                "leaf_block": "maca_templ:{{name}}_leaves"
+            },
+            "may_grow_on": [
+                "{{grow_on}}"
+            ],
+            "may_replace": [
+                "{{may_replace}}"
+            ]
+        }
+    }
+}

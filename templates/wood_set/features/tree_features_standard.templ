@@ -1,0 +1,72 @@
+
+{
+    "$files": {
+        "array": "{{features.filter(x => x?.tree_feature_standard)}}",
+        "fileName": "{{name}}_feature"
+    },
+    "$template": {
+        "format_version": "1.13.0",
+        "minecraft:tree_feature": {
+            "description": {
+            "identifier": "maca_templ:{{name}}_feature"
+            },
+            "trunk": {
+            "trunk_block": "maca_templ:{{name}}_log",
+            "trunk_height": {
+                "range_min": "{{trunk.min}}",
+                "range_max": "{{trunk.max}}"
+            }
+            },
+            "canopy": {
+            "leaf_block": "maca_templ:{{name}}_leaves",
+            "canopy_offset": {
+                "min": "{{canopy_offset.min}}",
+                "max": "{{canopy_offset.max}}"
+            },
+            "variation_chance": [
+                {
+                "numerator": "{{variation.numerator}}",
+                "denominator": "{{variation.denominator}}"
+                },
+                {
+                "numerator": "{{variation.numerator}}",
+                "denominator": "{{variation.denominator}}"
+                },
+                {
+                "numerator": "{{variation.numerator}}",
+                "denominator": "{{variation.denominator}}"
+                },
+                {
+                "numerator": "{{variation.numerator}}",
+                "denominator": "{{variation.denominator}}"
+                }
+            ]
+            },
+            "base_block": [
+            "minecraft:dirt",
+            {
+                "name": "minecraft:dirt",
+                "states": {
+                "dirt_type": "coarse"
+                }
+            }
+            ],
+            "may_grow_on": [
+                "{{grow_on}}"
+            ],
+            "may_replace": [
+                "{{may_replace}}"
+            ],
+            "may_grow_through": [
+            "minecraft:dirt",
+            "minecraft:grass",
+            {
+                "name": "minecraft:dirt",
+                "states": {
+                "dirt_type": "coarse"
+                }
+            }
+            ]
+        }
+    }
+}

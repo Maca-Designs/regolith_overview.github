@@ -1,0 +1,85 @@
+{
+    "wood_blocks": [
+        {
+            "name": new_oak,
+            "item_tier": "wood",
+            "map_color": "#B16A4A",
+            "leaf_tint": "default_foliage",
+            "wideTree": false //used to add 2x2 tag for growing large trees
+        }
+    ],
+    "features": [
+        {
+            "name": "new_oak",
+            "tree_feature_standard": false,
+            "feature_to_place": "maca_templ:new_oak_feature",
+            "scatter_chance": {"numerator": 1, "denominator": 2},
+            "placementPass": "surface_pass",
+            "Xdistribution": {"distribution": "uniform", "extent": [0, 16]},
+            "Ydistribution": "query.heightmap(variable.originx, variable.originz)",
+            "Zdistribution": {"distribution": "uniform", "extent": [0, 16]},
+            "order": "xyz",
+            "biome_filter": [{"test": "has_biome_tag", "operator": "==", "value": "jungle"}],
+            "canopy_offset": {"min": -3, "max": 0},
+            "distribution": "uniform",
+            "rule_iterations": 1,
+            "iterations": 1,
+            "variation": {"numerator": 1, "denominator": 3},
+            "trunk": {"min": 4, "max": 8},
+            "extent": {"min": 15, "max": 60},
+            "grow_on": [
+                "minecraft:dirt",
+                "minecraft:grass",
+                "minecraft:podzol",
+                "minecraft:coarse_dirt",
+                "minecraft:dirt_with_roots",
+                "minecraft:mycelium"
+            ],
+            "may_replace": [
+                "minecraft:air",
+                {"name": "minecraft:leaves", "states": {"old_leaf_type": "oak"}},
+                {"name": "minecraft:leaves", "states": {"old_leaf_type": "spruce"}},
+                {"name": "minecraft:leaves", "states": {"old_leaf_type": "birch"}},
+                {"name": "minecraft:leaves", "states": {"old_leaf_type": "jungle"}},
+                {"name": "minecraft:leaves2", "states": {"new_leaf_type": "acacia"}},
+                {"name": "minecraft:leaves2", "states": {"new_leaf_type": "dark_oak"}},
+                {"name": `maca_templ:new_oak_leaves`}
+            ]
+        },
+        {
+            "name": "new_oak",
+            "tree_feature_wide": false,
+            //"feature_to_place": "maca_templ:new_oak_feature", with above being false and this commented out it will not create any files
+            "scatter_chance": {"numerator": 1, "denominator": 2},
+            "placementPass": "surface_pass",
+            "Xdistribution": {"distribution": "uniform", "extent": [0, 16]},
+            "Ydistribution": "query.heightmap(variable.originx, variable.originz)",
+            "Zdistribution": {"distribution": "uniform", "extent": [0, 16]},
+            "order": "xyz",
+            "biome_filter": [{"test": "has_biome_tag", "operator": "==", "value": "jungle"}],
+            "canopy": {"radius": 3, "height": 4},
+            "distribution": "uniform",
+            "rule_iterations": 1,
+            "iterations": 1,
+            "trunk": {"min": 5, "intervals": 5, "width": 2},
+            "grow_on": [
+                "minecraft:dirt",
+                "minecraft:grass",
+                "minecraft:podzol",
+                "minecraft:coarse_dirt",
+                "minecraft:dirt_with_roots",
+                "minecraft:mycelium"
+            ],
+            "may_replace": [
+                "minecraft:air",
+                {"name": "minecraft:leaves", "states": {"old_leaf_type": "oak"}},
+                {"name": "minecraft:leaves", "states": {"old_leaf_type": "spruce"}},
+                {"name": "minecraft:leaves", "states": {"old_leaf_type": "birch"}},
+                {"name": "minecraft:leaves", "states": {"old_leaf_type": "jungle"}},
+                {"name": "minecraft:leaves2", "states": {"new_leaf_type": "acacia"}},
+                {"name": "minecraft:leaves2", "states": {"new_leaf_type": "dark_oak"}},
+                {"name": `maca_templ:new_oak_leaves`}
+            ]
+        }
+    ]
+}

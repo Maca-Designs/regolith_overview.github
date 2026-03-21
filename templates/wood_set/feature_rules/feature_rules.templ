@@ -1,0 +1,32 @@
+{
+    "$files": {
+        "array": "features",
+        "fileName": "{{name}}_feature_rule"
+    },
+    "$template": {
+        "format_version": "1.13.0",
+        "minecraft:feature_rules": {
+            "description": {
+                "identifier": "maca_templ:{{name}}_feature_rule",
+                "places_feature": "{{feature_to_place}}"
+            },
+            "conditions": {
+                "placement_pass": "{{placementPass}}",
+                "minecraft:biome_filter": [
+                    "{{biome_filter}}"
+                ]
+            },
+            "distribution": {
+                "scatter_chance": {
+                "numerator": "{{scatter_chance.numerator}}",
+                "denominator": "{{scatter_chance.denominator}}"
+                },
+                "coordinate_eval_order": "{{order}}",
+                "iterations": "{{rule_iterations}}",
+                "x": "{{Xdistribution}}",
+                "y": "{{Ydistribution}}",
+                "z": "{{Zdistribution}}"
+            }
+        }
+    }
+}
