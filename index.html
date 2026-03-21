@@ -502,7 +502,7 @@ main {
         let visibleCount = 0;
         
         allCards.forEach(card => {
-            console.log(`Card ${index}:`, card.dataset.folderName);
+            console.log(card.dataset.folderName);
             if (!card.parentNode) return;  // Skip removed cards
             
             const folderName = card.dataset.folderName;
