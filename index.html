@@ -495,22 +495,29 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
-async function getFileCount(org, repo, folderData) {
+async function getFileCount(folderName, org, repo) {
+    let count = 0;
+    
     try {
-        // Use Git Trees API with recursive=1 to count ALL files in folder
-        const treeUrl = `https://api.github.com/repos/${org}/${repo}/contents/templates/${folderData}`;
-        const treeResponse = await fetch(treeUrl);
-        const treeData = await treeResponse.json();
-        console.warn(JSON.stringify(treeData))
+        // Recursive function to count all files
+        async function countFiles(path) {
+            const url = `https://api.github.com/repos/${org}/${repo}/contents/${path}`;
+            const response = await fetch(url);
+            const items = await response.json();
+            
+            for (const item of items) {
+                if (item.type === 'file') {
+                    count++;
+                } else if (item.type === 'dir') {
+                    await countFiles(`${path}/${item.name}`);
+                }
+            }
+        }
         
-        // Count only files (not dirs) within this folder
-        const folderFiles = treeData.tree.filter(item => 
-            item.type !== 'dir'
-        );
-        
-        return folderFiles.length;
+        await countFiles(`templates/${folderName}`);
+        return count;
     } catch (error) {
-        console.warn(`Could not count files in ${folderData}:`, error);
+        console.warn(`Could not count files in ${folderName}:`, error);
         return 0;
     }
 }
