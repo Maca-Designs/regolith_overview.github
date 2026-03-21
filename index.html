@@ -522,19 +522,17 @@ async function getFileCount(org, repo, folderName) {
     }
 }
 
-function createTemplateCard(folderData, onDownloadClick, org, repo) {
+async function createTemplateCard(folderData, onDownloadClick, org, repo) {
     const card = document.createElement('a');
     card.className = 'template-card';
+
+    const fileCount = await getFileCount(folderData.name, org, repo);
     
     // Async file count - show loading then real number
     const fileCountSpan = document.createElement('span');
     fileCountSpan.className = 'total-files';
+    fileCountSpan.textContent = `${fileCount} files`
     fileCountSpan.dataset.folder = folderData.name;
-    
-    // Fetch real count
-    getFileCount(org, repo, folderData.name).then(count => {
-        fileCountSpan.textContent = `${count} files`;
-    });
     
     card.innerHTML = `
         <h3>${folderData.config.name || folderData.name}</h3>
