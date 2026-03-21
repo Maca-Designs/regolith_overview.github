@@ -521,7 +521,6 @@ function createTemplateCard(folderData, onDownloadClick, org, repo) {
     // Async file count - show loading then real number
     const fileCountSpan = document.createElement('span');
     fileCountSpan.className = 'total-files';
-    fileCountSpan.textContent = 'Loading...';
     fileCountSpan.dataset.folder = folderData.name;
     
     // Fetch real count
