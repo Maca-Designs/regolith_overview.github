@@ -305,6 +305,98 @@ header p {
     animation: indeterminate 2s ease-in-out infinite;
 }
 
+main {
+    display: flex;
+    min-height: calc(100vh - 120px);
+}
+
+.filter-sidebar {
+    width: 250px;
+    background: white;
+    border-right: 2px solid rgb(102, 183, 161);
+    padding: 2rem 1.5rem;
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+.content-container {
+    flex: 1;
+    max-width: calc(1200px + 250px);
+    margin-left: -250px;
+    padding-left: 250px;
+}
+
+.templates-grid {
+    padding: 0 1rem 2rem;
+}
+
+/* Filter Styles */
+.filter-sidebar h3 {
+    color: rgb(102, 183, 161);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.filter-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: background 0.2s;
+    font-weight: 500;
+}
+
+.filter-group label:hover {
+    background: rgba(102, 183, 161, 0.05);
+}
+
+.filter-checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: rgb(102, 183, 161);
+}
+
+.clear-filters {
+    width: 100%;
+    background: transparent;
+    color: rgb(102, 183, 161);
+    border: 2px solid rgb(102, 183, 161);
+    padding: 0.75rem;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.clear-filters:hover {
+    background: rgb(102, 183, 161);
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .filter-sidebar {
+        display: none;
+    }
+    
+    .content-container {
+        margin-left: 0;
+        padding-left: 0;
+        max-width: 1200px;
+    }
+}
+
 @keyframes indeterminate {
     0% { transform: translateX(-100%) scaleX(1); }
     50% { transform: translateX(100%) scaleX(0.5); }
@@ -353,12 +445,26 @@ header p {
 </header>
     
     <main>
+        <div class="filter-sidebar" id="filterSidebar">
+        <h3>Filter Templates</h3>
+        <div class="filter-group">
+            <label><input type="checkbox" value="trees" class="filter-checkbox"> Trees</label>
+            <label><input type="checkbox" value="biomes" class="filter-checkbox"> Biomes</label>
+            <label><input type="checkbox" value="wood" class="filter-checkbox"> Wood</label>
+        </div>
+        <button class="clear-filters" id="clearFilters">Clear All</button>
+    </div>
+    
+    <!-- Search + Grid Container -->
+    <div class="content-container">
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Search templates...">
         </div>
+        
         <div class="templates-grid" id="templatesGrid">
-            <!-- Cards will appear here -->
+            <!-- Cards here -->
         </div>
+    </div>
         <div class="readme-viewer" id="readmeViewer">
     <div class="readme-content" id="readmeContent">
         <div id="readmeMarkdown">Loading README...</div>
@@ -366,7 +472,62 @@ header p {
 </div>
     </main>
 <script>
-    // Load README first
+    //Load the side bar first
+    // Tag Filter System
+    let allCards = [];
+    let activeFilters = new Set();
+
+    function initFilters() {
+        const checkboxes = document.querySelectorAll('.filter-checkbox');
+        const clearBtn = document.getElementById('clearFilters');
+        
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', filterTemplates);
+        });
+        
+        clearBtn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
+            activeFilters.clear();
+            filterTemplates();
+        });
+    }
+
+    function filterTemplates() {
+        // Update active filters
+        activeFilters.clear();
+        document.querySelectorAll('.filter-checkbox:checked').forEach(cb => {
+            activeFilters.add(cb.value);
+        });
+        
+        // Filter cards
+        allCards.forEach(card => {
+            const folderName = card.dataset.folderName;
+            const templateData = window.templateData.find(data => data.name === folderName);
+            const tags = templateData?.config?.tags || [];
+            
+            // Show if matches ALL active filters (OR logic)
+            const matchesFilters = activeFilters.size === 0 || 
+                Array.from(activeFilters).some(filter => tags.includes(filter));
+            
+            card.style.display = matchesFilters ? 'block' : 'none';
+        });
+        
+        // Update grid layout
+        updateGridLayout();
+    }
+
+    function updateGridLayout() {
+        const visibleCards = Array.from(document.querySelectorAll('.template-card:not([style*="display: none"])'));
+        const grid = document.getElementById('templatesGrid');
+        
+        if (visibleCards.length === 0) {
+            grid.innerHTML = '<p class="no-results" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #666;">No templates match your filters</p>';
+        } else {
+            const noResults = grid.querySelector('.no-results');
+            if (noResults) noResults.remove();
+        }
+    }
+    // Load README next
     async function loadReadme() {
         try {
             const readmeResponse = await fetch('https://raw.githubusercontent.com/Maca-Designs/regolith_overview.github/main/README.md');
@@ -480,11 +641,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                 };
                 window.templateData.push(folderData);
                 
-                // AWAIT the card creation (includes file count)
                 const card = await createTemplateCard(folderData, async () => {
                     await downloadTemplateWithNamespace(folderData);
                 }, org, repo);
-                
+
+                card.dataset.folderName = folderData.name;  // For filtering
+                allCards.push(card);  // Store for filtering
                 grid.appendChild(card);
             } catch (e) {
                 console.warn(`Skipping ${folder} - no config.json`);
