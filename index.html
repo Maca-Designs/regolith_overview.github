@@ -477,7 +477,6 @@ main {
     // Tag Filter System
     let allCards = [];
     let activeFilters = new Set();
-
     function initFilters() {
         const checkboxes = document.querySelectorAll('.filter-checkbox');
         const clearBtn = document.getElementById('clearFilters');
@@ -494,27 +493,41 @@ main {
     }
 
     function filterTemplates() {
-        // Update active filters
         activeFilters.clear();
         document.querySelectorAll('.filter-checkbox:checked').forEach(cb => {
             activeFilters.add(cb.value);
         });
         
-        // Filter cards
+        let visibleCount = 0;
+        
         allCards.forEach(card => {
+            if (!card.parentNode) return;  // Skip removed cards
+            
             const folderName = card.dataset.folderName;
             const templateData = window.templateData.find(data => data.name === folderName);
             const tags = templateData?.config?.tags || [];
             
-            // Show if matches ALL active filters (OR logic)
             const matchesFilters = activeFilters.size === 0 || 
                 Array.from(activeFilters).some(filter => tags.includes(filter));
             
-            card.style.display = matchesFilters ? 'block' : 'none';
+            if (matchesFilters) {
+                card.style.display = 'block';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
         });
         
-        // Update grid layout
-        updateGridLayout();
+        const grid = document.getElementById('templatesGrid');
+        const noResults = grid.querySelector('.no-results');
+        
+        if (visibleCount === 0 && activeFilters.size > 0) {
+            if (!noResults) {
+                grid.innerHTML += '<p class="no-results" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #666;">No templates match your filters</p>';
+            }
+        } else if (noResults) {
+            noResults.remove();
+        }
     }
 
     function updateGridLayout() {
@@ -647,8 +660,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     await downloadTemplateWithNamespace(folderData);
                 }, org, repo);
 
-                card.dataset.folderName = folderData.name;  // For filtering
-                allCards.push(card);  // Store for filtering
+                card.dataset.folderName = folderData.name;  // ← Must be BEFORE allCards.push
+                allCards.push(card);
                 grid.appendChild(card);
             } catch (e) {
                 console.warn(`Skipping ${folder} - no config.json`);
