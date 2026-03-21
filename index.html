@@ -511,10 +511,10 @@ async function getFileCount(org, repo, folderName) {
                     await countFiles(`${path}/${item.name}`);
                 }
             }
-            console.warn(count)
         }
         
         await countFiles(`templates/${folderName}`);
+        console.warn(count)
         return count;
     } catch (error) {
         console.warn(`Could not count files in ${folderName}:`, error);
