@@ -495,22 +495,22 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
-async function getFileCount(folderPath, org, repo) {
+async function getFileCount(org, repo, folderData) {
     try {
         // Use Git Trees API with recursive=1 to count ALL files in folder
-        const treeUrl = `https://api.github.com/repos/${org}/${repo}/git/trees/main`;
+        const treeUrl = `https://raw.githubusercontent.com/${org}/${repo}/main/templates/${folderData.folder}`;
         const treeResponse = await fetch(treeUrl);
         const treeData = await treeResponse.json();
         console.warn(JSON.stringify(treeData))
         
         // Count only files (not dirs) within this folder
         const folderFiles = treeData.tree.filter(item => 
-            item.type === 'blob' && item.path.startsWith(folderPath + '/')
+            item.type !== 'dir'
         );
         
         return folderFiles.length;
     } catch (error) {
-        console.warn(`Could not count files in ${folderPath}:`, error);
+        console.warn(`Could not count files in ${folderData}:`, error);
         return 0;
     }
 }
@@ -525,7 +525,7 @@ function createTemplateCard(folderData, onDownloadClick, org, repo) {
     fileCountSpan.dataset.folder = folderData.name;
     
     // Fetch real count
-    getFileCount(folderData.apiPath, org, repo).then(count => {
+    getFileCount(org, repo, folderData).then(count => {
         fileCountSpan.textContent = `${count} files`;
     });
     
