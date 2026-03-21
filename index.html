@@ -506,6 +506,7 @@ async function getFileCount(org, repo, folderName) {
             const items = await response.json();
             
             for (const item of items) {
+                console.warn(item.type)
                 if (item.type === 'file') {
                     count++;
                 } else if (item.type === 'dir') {
