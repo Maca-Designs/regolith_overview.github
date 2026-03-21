@@ -384,6 +384,44 @@ main {
     color: white;
 }
 
+.header-logo {
+    height: 45px;
+    width: auto;
+    margin-right: 1rem;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.header-logo:hover {
+    transform: scale(1.05);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 1rem 0;
+    position: relative;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: 1rem;
+}
+
+.header-center {
+    flex: 1;
+    text-align: center;
+}
+
+.header-right {
+    flex: 0 0 auto;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .filter-sidebar {
@@ -434,6 +472,7 @@ main {
 <header>
     <div class="header-content">
         <div class="header-left">
+            <img src="./logo.png" alt="Logo" class="header-logo">
             <button id="readmeBtn" class="readme-btn">📖 Guide</button>
         </div>
         <div class="header-center">
@@ -719,7 +758,6 @@ async function createTemplateCard(folderData, onDownloadClick, org, repo) {
     card.dataset.folderName = folderData.name; 
     const fileCount = await getFileCount(folderData.name, org, repo);
     
-    // Async file count - show loading then real number
     const fileCountSpan = document.createElement('span');
     fileCountSpan.className = 'total-files';
     fileCountSpan.textContent = `${fileCount} files`
@@ -767,7 +805,6 @@ async function downloadTemplateWithNamespace(folderData) {
     const repo = 'regolith_overview.github';
     
     try {
-        // Update progress (fake it til you make it)
         document.querySelector('.progress-fill').style.width = '30%';
         
         const files = await fetchFolderContents(zip, folderData.apiPath, '', org, repo, newNamespace);
@@ -781,14 +818,12 @@ async function downloadTemplateWithNamespace(folderData) {
         
         document.querySelector('.progress-fill').style.width = '100%';
         
-        // Success - hide after 1s
         setTimeout(() => {
             document.getElementById('loadingOverlay').style.display = 'none';
             document.querySelectorAll('.namespace-download').forEach(btn => {
                 btn.disabled = false;
                 btn.textContent = 'Download Pack ✓';
             });
-            // Reset button text after 3s
             setTimeout(() => {
                 document.querySelectorAll('.namespace-download').forEach(btn => {
                     btn.textContent = 'Download Pack';
