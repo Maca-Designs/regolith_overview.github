@@ -1,0 +1,10 @@
+{
+    "$module": "fire_immuneBP",
+    "$template": {
+        "minecraft:entity": {
+            "components": {
+                "minecraft:fire_immune": {}
+            }
+        }
+    }
+}

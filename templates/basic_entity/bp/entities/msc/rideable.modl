@@ -1,0 +1,144 @@
+{
+    "$module": "rideableBP",
+    "$template": {
+        "minecraft:entity": {
+            "components": {
+                "minecraft:rideable": {
+                    "seat_count": 1,
+                    "crouching_skip_interact": true,
+                    "family_types": "{{=(rideable?.family_types??['player'])}}",
+                    "interact_text": "{{rideable?.interact_text??'action.interact.ride.horse'}}",
+                    "{{?!rideable?.seats}}": {"seats": {
+                        "position": [
+                            0.0,
+                            1.1,
+                            -0.2
+                        ]
+                    }},
+                    "{{?rideable?.seats}}": {
+                        "seats": "{{=rideable.seats}}"
+                    }
+                },
+                "minecraft:is_saddled": {},
+                "minecraft:input_ground_controlled": {},
+                "{{?rideable?.power_jump}}": {
+                    "minecraft:horse.jump_strength": {
+                        "value": "{{=rideable.power_jump}}"
+                    },
+                    "minecraft:can_power_jump": {}
+                },
+                "{{?rideable?.step_height}}": {
+                    "minecraft:variable_max_auto_step": {
+                        "base_value": "{{=rideable.step_height}}",
+                        "controlled_value": "{{=rideable.step_height}}",
+                        "jump_prevented_value": "{{=rideable.step_height}}"
+                    }
+                }
+            },
+            "component_groups": {
+                "maca_templ:movement_scale": {
+                    "minecraft:movement": {
+                        "value": "{{=(stats.movement*(rideable?.movement_scale??1))}}"
+                    },
+                    "minecraft:buoyant": {
+                        "liquid_blocks": [
+                            "water"
+                        ]
+                    },
+                    "{{?rideable?.step_height}}": {
+                        "minecraft:variable_max_auto_step": {
+                            "base_value": "{{=rideable.step_height}}",
+                            "controlled_value": "{{=rideable.step_height}}",
+                            "jump_prevented_value": "{{=rideable.step_height}}"
+                        }
+                    }
+                },
+                "maca_templ:regular_movement": {
+                    "minecraft:movement": {
+                        "value": "{{=stats.movement}}"
+                    },
+                    "{{?rideable?.step_height}}": {
+                        "minecraft:variable_max_auto_step": {
+                            "base_value": "{{=rideable.step_height}}",
+                            "controlled_value": "{{=rideable.step_height}}",
+                            "jump_prevented_value": "{{=rideable.step_height}}"
+                        }
+                    }
+                },
+                "maca_templ:ko_restored": {
+                    "minecraft:rideable": {
+                        "seat_count": 1,
+                        "crouching_skip_interact": true,
+                        "family_types": "{{=(rideable?.family_types??['player'])}}",
+                        "interact_text": "{{rideable?.interact_text??'action.interact.ride.horse'}}",
+                        "{{?!rideable?.seats}}": {"seats": {
+                            "position": [
+                                0.0,
+                                1.1,
+                                -0.2
+                            ]
+                        }},
+                        "{{?rideable?.seats}}": {
+                            "seats": "{{=rideable.seats}}"
+                        }
+                    },
+                    "minecraft:is_saddled": {},
+                    "minecraft:input_ground_controlled": {},
+                    "{{?rideable?.power_jump}}": {
+                        "minecraft:horse.jump_strength": {
+                            "value": "{{=rideable.power_jump}}"
+                        },
+                        "minecraft:can_power_jump": {}
+                    },
+                    "{{?rideable?.step_height}}": {
+                        "minecraft:variable_max_auto_step": {
+                            "base_value": "{{=rideable.step_height}}",
+                            "controlled_value": "{{=rideable.step_height}}",
+                            "jump_prevented_value": "{{=rideable.step_height}}"
+                        }
+                    }
+                }
+            },
+            "events": {
+                "maca_templ:start_riding": {
+                    "filters": {
+                        "test": "bool_property",
+                        "domain": "maca_templ:ko",
+                        "value": false
+                    },
+                    "remove": {
+                        "component_groups": [
+                            "maca_templ:attack",
+                            "maca_templ:movement",
+                            "maca_templ:regular_movement"
+                        ]
+                    },
+                    "add": {
+                        "component_groups": [
+                            "maca_templ:movement_scale"
+                        ]
+                    }
+                },
+                "maca_templ:stop_riding": {
+                    "filters": {
+                        "test": "bool_property",
+                        "domain": "maca_templ:ko",
+                        "value": false
+                    },
+                    "remove": {
+                        "component_groups": [
+                            "maca_templ:movement_scale"
+                        ]
+                    },
+                    "add": {
+                        "component_groups": [
+                            "maca_templ:attack",
+                            "maca_templ:movement",
+                            "maca_templ:regular_movement"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,100 @@
+{
+    "$module": "ranged_attackBP",
+    "$template": {
+        "minecraft:entity": {
+            "description": {
+                "animations": {
+                    "ranged_attack.gain_xp.ac": "controller.animation.maca_templ.ranged_attack.gain_xp"
+                },
+                "scripts": {
+                    "animate": [
+                        "ranged_attack.gain_xp.ac"
+                    ]
+                }
+            },
+            "components": {
+                "minecraft:behavior.ranged_attack": {
+                    "priority": 3,
+                    "attack_radius": "{{=ranged_attack.attack_radius}}",
+                    "charge_shoot_trigger": "{{=ranged_attack.charge_shoot_trigger}}",
+                    "charge_charged_trigger": "{{=ranged_attack.charge_charged_trigger}}",
+                    "burst_interval": "{{ranged_attack?.burst_interval ?? 0}}",
+                    "attack_interval_min": "{{ranged_attack?.attack_interval_min ?? 0}}",
+                    "attack_interval_max": "{{ranged_attack?.attack_interval_max ?? 0}}",
+                    "burst_shots": "{{ranged_attack?.burst_shots ?? 1}}"
+                },
+                "minecraft:behavior.nearest_attackable_target": {
+                    "priority": 2,
+                    "attack_interval": "{{target?.attack_interval ?? 1}}",
+                    "must_reach": true,
+                    "must_see": true,
+                    "within_radius": "{{target?.within_radius ?? 128}}",
+                    "entity_types": [
+                        {
+                            "filters": {
+                                "all_of": [
+                                    {
+                                        "test": "is_family",
+                                        "subject": "other",
+                                        "value": "player"
+                                    },
+                                    {
+                                        "test": "is_mark_variant",
+                                        "subject": "self",
+                                        "operator": "!=",
+                                        "value": 1
+                                    }
+                                ]
+                            },
+                            "max_dist": "{{target?.within_radius ?? 128}}"
+                        }
+                    ]
+                },
+                "minecraft:shooter": {
+                    "def": "{{ranged_attack.shooter_definition}}"
+                }
+            },
+            "component_groups": {
+                "maca_templ:attack": {
+                    "minecraft:behavior.ranged_attack": {
+                        "priority": 3,
+                        "attack_radius": "{{=ranged_attack.attack_radius}}",
+                        "charge_shoot_trigger": "{{=ranged_attack.charge_shoot_trigger}}",
+                        "charge_charged_trigger": "{{=ranged_attack.charge_charged_trigger}}",
+                        "burst_interval": "{{ranged_attack?.burst_interval ?? 0}}",
+                        "attack_interval_min": "{{ranged_attack?.attack_interval_min ?? 0}}",
+                        "attack_interval_max": "{{ranged_attack?.attack_interval_max ?? 0}}",
+                        "burst_shots": "{{ranged_attack?.burst_shots ?? 1}}"
+                    },
+                    "minecraft:behavior.nearest_attackable_target": {
+                        "priority": 2,
+                        "attack_interval": "{{target?.attack_interval ?? 1}}",
+                        "must_reach": true,
+                        "must_see": true,
+                        "within_radius": "{{target?.within_radius ?? 128}}",
+                        "entity_types": [
+                            {
+                                "filters": {
+                                    "all_of": [
+                                        {
+                                            "test": "is_family",
+                                            "subject": "other",
+                                            "value": "player"
+                                        },
+                                        {
+                                            "test": "is_mark_variant",
+                                            "subject": "self",
+                                            "operator": "!=",
+                                            "value": 1
+                                        }
+                                    ]
+                                },
+                                "max_dist": "{{target?.within_radius ?? 128}}"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

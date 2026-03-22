@@ -1,0 +1,80 @@
+{
+    "$module": "charge_attackBP",
+    "$template": {
+        "minecraft:entity": {
+            "description": {},
+            "components": {
+                "minecraft:behavior.charge_attack": {
+                    "priority": 3,
+                    "speed_multiplier": "{{box?.speed_multiplier ?? 1.5}}",
+                    "max_distance": 24,
+                    "success_rate": 0.6
+                },
+                "minecraft:behavior.nearest_attackable_target": {
+                    "priority": 2,
+                    "attack_interval": "{{target?.attack_interval ?? 1}}",
+                    "must_reach": true,
+                    "must_see": true,
+                    "within_radius": "{{target?.within_radius ?? 128}}",
+                    "entity_types": [
+                        {
+                            "filters": {
+                                "all_of": [
+                                    {
+                                        "test": "is_family",
+                                        "subject": "other",
+                                        "value": "player"
+                                    },
+                                    {
+                                        "test": "is_mark_variant",
+                                        "subject": "self",
+                                        "operator": "!=",
+                                        "value": 1
+                                    }
+                                ]
+                            },
+                            "max_dist": "{{target?.within_radius ?? 128}}"
+                        }
+                    ]
+                }
+            },
+            "component_groups": {
+                    "maca_templ:attack": {
+                        "minecraft:behavior.charge_attack": {
+                        "priority": 3,
+                        "speed_multiplier": "{{box?.speed_multiplier ?? 1.5}}",
+                        "max_distance": 24,
+                        "success_rate": 0.6
+                    },
+                    "minecraft:behavior.nearest_attackable_target": {
+                        "priority": 2,
+                        "attack_interval": "{{target?.attack_interval ?? 1}}",
+                        "must_reach": true,
+                        "must_see": true,
+                        "within_radius": "{{target?.within_radius ?? 128}}",
+                        "entity_types": [
+                            {
+                                "filters": {
+                                    "all_of": [
+                                        {
+                                            "test": "is_family",
+                                            "subject": "other",
+                                            "value": "player"
+                                        },
+                                        {
+                                            "test": "is_mark_variant",
+                                            "subject": "self",
+                                            "operator": "!=",
+                                            "value": 1
+                                        }
+                                    ]
+                                },
+                                "max_dist": "{{target?.within_radius ?? 128}}"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

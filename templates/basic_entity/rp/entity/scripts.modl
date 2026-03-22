@@ -1,0 +1,10 @@
+{
+    "$module": "scriptsRP",
+    "$template": {
+        "minecraft:client_entity": {
+            "description": {
+                "scripts": "{{scripts}}"
+            }
+        }
+    }
+}

@@ -1,0 +1,60 @@
+{
+    "entity": [
+        {
+            "name": "entity_name",
+            "stats": {
+                "scale": 1,
+                "movement": 0.3,
+                "health": 80,
+                "attack": 13
+            },
+            "target": {
+                "attack_interval": 1,
+                "within_radius": 64
+            },
+            "box": {
+                "attack_interval": 1,
+                "within_radius": 128,
+                "speed_multiplier": 4
+            },
+            "collision_box": {
+                "width": 1.2,
+                "height": 2.5
+            },
+            "families": ["monster", "desert", "scarab"],
+            "filters": {
+                "any_of": [
+                    {"test": "has_biome_tag", "operator": "==", "value": "desert"},
+					{"test": "has_biome_tag", "operator": "==", "value": "mesa"}
+                ]
+            },
+            "weight": 40,
+            "herd": {
+                "min": 3,
+                "max": 6
+            },
+            "spawnOnBlock": [{"name": "minecraft:sand"}, {"name": "minecraft:red_sand"}, {"name": "minecraft:stone"}],
+            "spawn":[ 
+                {"suffix": "on_surface", "value": true},
+                {"suffix": "underground", "value": true}
+            ],
+            "population_control": "monster",
+            "extraModulesBP": [
+                "walkBP",
+                "box_attackBP",
+                "fire_immuneBP"
+            ],
+            "extraModulesRP": [
+                "melee_attackRP"
+            ],
+            "animations": [
+                {"id": "test", "type": "testing"},
+                {"id": "ex", "type": "example2"}
+            ],
+            "particle_effects": {
+              "1": "maca_mutants:example_particle"
+            },
+            "drop": {"item": "minecraft:bone", "min": 2, "max": 4, "looting": true, "looting_min": 1, "looting_max": 2}
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+{
+    "$files": {
+        "array": "{{entity.filter(x => x?.drop.looting)}}",
+        "fileName": "{{name}}_loot_table"
+    },
+    "$template": {
+        "pools": [
+            {
+                    "rolls": 1,
+                    "entries": [
+                        {
+                            "type": "item",
+                            "name": "{{drop.item}}",
+                            "weight": 1,
+                            "functions": [
+                                {
+                                    "function": "set_count",
+                                    "count": {
+                                        "min": "{{drop.min ?? 1}}",
+                                        "max": "{{drop.max ?? 2}}"
+                                    }
+                                },
+                                    {
+                                        "function": "looting_enchant",
+                                        "count": {
+                                            "min": "{{drop.looting_min ?? 1}}",
+                                            "max": "{{drop.looting_max ?? 2}}"
+                                        }
+                                    }
+                                
+                            ]
+                        }
+                    ]
+                
+            }
+        ]
+    }
+}

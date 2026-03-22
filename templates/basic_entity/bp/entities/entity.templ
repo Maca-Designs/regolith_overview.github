@@ -1,0 +1,57 @@
+{
+    "$files": {
+        "array": "entity",
+        "fileName": "{{name}}.se"
+    },
+    "$extend": ["{{extraModulesBP ? extraModulesBP : []}}"],
+    "$template": {
+        "format_version": "1.21.90",
+        "minecraft:entity": {
+            "description": {
+                "identifier": "maca_templ:{{name}}",
+                "is_spawnable": false,
+                "is_summonable": true,
+                "is_experimental": false
+            },
+            "components": {
+                // Family
+                "minecraft:type_family": {"family": "{{families}}"},
+                //Loot
+                "minecraft:loot": {
+                    "table": "loot_tables/maca/mm/entities/{{name}}_loot_table.json"
+                },
+                // Hitbox, Collision & Attribrutes
+                "minecraft:health": {"value": "{{=stats.health}}"},
+                "minecraft:attack": {"damage": "{{=stats.attack}}"},
+                "minecraft:scale": {"value": "{{=stats.scale ?? 1.0}}"},
+                "minecraft:physics": {"has_collision": true, "has_gravity": true},
+                "minecraft:collision_box": {"height": "{{=collision_box.height}}", "width": "{{=collision_box.width}}"},
+                "minecraft:movement": {"value": "{{=stats.movement}}"},
+                "minecraft:despawn": {
+                    "despawn_from_chance": true,
+                    "despawn_from_distance": {
+                        "min_distance": 32,
+                        "max_distance": 128
+                    },
+                    "despawn_from_inactivity": true,
+                    "despawn_from_simulation_edge": true,
+                    "min_range_inactivity_timer": 30,
+                    "min_range_random_chance": 800,
+                    "remove_child_entities": false
+                },
+                "minecraft:behavior.hurt_by_target": {
+                    "priority": 1,
+                    "hurt_owner": false
+                },
+                // Look at 
+                "minecraft:behavior.look_at_player": {"angle_of_view_vertical": 360, "angle_of_view_horizontal": 360, "look_distance": 12, "probability": 1, "target_distance": 6, "priority": 6}
+            },
+            "component_groups": {
+                "maca_templ:despawn": {"minecraft:instant_despawn": {}}
+            },
+            "events": {
+                "maca_templ:despawn": {"add": {"component_groups": ["maca_templ:despawn"]}}
+            }
+        }
+    }
+}

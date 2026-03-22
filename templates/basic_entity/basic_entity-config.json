@@ -1,0 +1,7 @@
+{
+  "name": "Basic Entity Template",
+  "description": "A template containing the basics needed for an entire new set entities, includes BP and RP files for the core entity behaviour. Includes options for Movements and Attacks.",
+  "version": "1.0.0",
+  "author": "Andrew Polmans",
+  "tags": ["entity"]
+}

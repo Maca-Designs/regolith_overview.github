@@ -1,0 +1,66 @@
+{
+    "$files": {
+        "array": "entity",
+        "fileName": "{{name}}.ce"
+    },
+    "$extend": ["{{extraModulesRP ? extraModulesRP : []}}"],
+    "$template": {
+        "format_version": "1.10.0",
+        "minecraft:client_entity": {
+            "description": {
+                "identifier": "maca_templ:{{name}}",
+                "materials": {
+                    "default": "{{material ?? 'entity_alphatest'}}",
+                    "{{?second_material}}": {
+                        "second": "{{second_material}}"
+                    }
+                },
+                "textures": {
+                    "default": "textures/maca_templ/entity/{{name}}"
+                },
+                "geometry": {
+                    "default": "geometry.maca_templ.{{name}}"
+                },
+                "render_controllers": [
+                    "controller.render.maca_templ.{{RC ?? 'mutants'}}"
+                ],
+                "animations": {
+                    // Movement
+                    "walk": "animation.maca_templ.{{name}}.walk",
+                    "idle": "animation.maca_templ.{{name}}.idle",
+                    "move_controller": "controller.animation.maca_templ.{{custom_ac ?? 'entity'}}.move",
+                    "look_at_player": "animation.humanoid.look_at_target.default",
+                    // Attack
+                    "attack": "animation.maca_templ.{{name}}.attack",
+                    //Extra animations
+                    "{{?animations}}": {
+                        "{{#animations}}": {
+                            "{{id}}": "animation.maca_templ.{{name}}.{{type}}"
+                        }
+                    }
+                },
+                "scripts": {
+                    "pre_animation": [
+                        "variable.max_health = {{=stats.health}} + floor(q.property('maca:level') / 5) * 5;",
+                        "variable.attack_time = v.attack_time;",
+                        "variable.attack_time_increased = (v.prev_attack_time ?? 0) < v.attack_time;",
+                        "variable.prev_attack_time = v.attack_time;",
+                        "variable.attack_time_change_timestamp = v.attack_time_increased ? q.life_time : (v.attack_time_change_timestamp??q.life_time);",
+                        "variable.attack_timestamp = v.attack_time <= 0  ? -1 : ((v.attack_timestamp ?? -1) > 0 ? v.attack_timestamp : q.life_time);",
+                        "variable.attack_duration = v.attack_timestamp == -1 ? 0.0 : q.life_time-v.attack_timestamp;",
+                        "variable.attack_time_increase_speed = variable.attack_time_increased ? (v.attack_duration > 0 ? v.attack_time/v.attack_duration : 0.0) : (variable.attack_time_increase_speed??0);",
+                        "variable.smoothing = (q.life_time - v.attack_time_change_timestamp)*v.attack_time_increase_speed;",
+                        "variable.smoothed_attack_time = v.attack_time == 0.0 ? 0.0 : math.clamp(v.attack_time + v.smoothing, 0.0, 1.0);"
+                    ],
+                    "animate": [
+                        "move_controller",
+                        "look_at_player"
+                    ]
+                },
+                "{{?particle_effects}}": {
+                    "particle_effects": "{{particle_effects}}"
+                }
+            }
+        }
+    }
+}

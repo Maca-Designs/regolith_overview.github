@@ -1,0 +1,17 @@
+{
+    "$module": "fall_immuneBP",
+    "$template": {
+        "minecraft:entity": {
+            "components": {
+                "minecraft:damage_sensor": {
+                    "triggers": [
+                        {
+                            "deals_damage": "no",
+                            "cause": "fall"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

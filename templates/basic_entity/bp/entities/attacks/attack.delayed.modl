@@ -1,0 +1,96 @@
+{
+    "$module": "delayed_attackBP",
+    "$template": {
+        "minecraft:entity": {
+            "components": {
+                "minecraft:behavior.delayed_attack": {
+                    "priority": 3,
+                    "attack_duration": "{{=delayed_attack.attack_duration}}",
+                    "attack_once": false,
+                    "attack_types": "",
+                    "hit_delay_pct": "{{=delayed_attack.hit_delay_pct}}",
+                    "random_stop_interval": 0,
+                    "reach_multiplier": "{{=delayed_attack.reach_multiplier ?? 1}}",
+                    "require_complete_path": true,
+                    "track_target": true,
+                    "melee_fov": 60,
+                    "cooldown_time": "{{delayed_attack?.cooldown ?? 3}}",
+                    "speed_multiplier": "{{delayed_attack?.speed_multiplier ?? 1}}",
+                    "path_inner_boundary": 8
+                },
+                "minecraft:behavior.nearest_attackable_target": {
+                    "priority": 2,
+                    "attack_interval": "{{target?.attack_interval ?? 1}}",
+                    "must_reach": true,
+                    "must_see": true,
+                    "within_radius": "{{target?.within_radius ?? 128}}",
+                    "entity_types": [
+                        {
+                            "filters": {
+                                "all_of": [
+                                    {
+                                        "test": "is_family",
+                                        "subject": "other",
+                                        "value": "player"
+                                    },
+                                    {
+                                        "test": "is_mark_variant",
+                                        "subject": "self",
+                                        "operator": "!=",
+                                        "value": 1
+                                    }
+                                ]
+                            },
+                            "max_dist": "{{target?.within_radius ?? 128}}"
+                        }
+                    ]
+                }
+            },
+            "component_groups": {
+                "maca_templ:attack": {
+                    "minecraft:behavior.delayed_attack": {
+                        "priority": 1,
+                        "attack_duration": "{{=delayed_attack.attack_duration}}",
+                        "attack_once": false,
+                        "attack_types": "",
+                        "hit_delay_pct": "{{=delayed_attack.hit_delay_pct}}",
+                        "random_stop_interval": 0,
+                        "reach_multiplier": 3,
+                        "require_complete_path": true,
+                        "track_target": false,
+                        "melee_fov": 60,
+                        "cooldown_time": 3,
+                        "speed_multiplier": "{{delayed_attack?.speed_multiplier ?? 1}}"
+                    },
+                    "minecraft:behavior.nearest_attackable_target": {
+                        "priority": 2,
+                        "attack_interval": "{{target?.attack_interval ?? 1}}",
+                        "must_reach": true,
+                        "must_see": true,
+                        "within_radius": "{{target?.within_radius ?? 128}}",
+                        "entity_types": [
+                            {
+                                "filters": {
+                                    "all_of": [
+                                        {
+                                            "test": "is_family",
+                                            "subject": "other",
+                                            "value": "player"
+                                        },
+                                        {
+                                            "test": "is_mark_variant",
+                                            "subject": "self",
+                                            "operator": "!=",
+                                            "value": 1
+                                        }
+                                    ]
+                                },
+                                "max_dist": "{{target?.within_radius ?? 128}}"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

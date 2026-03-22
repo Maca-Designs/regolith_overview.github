@@ -1,0 +1,81 @@
+{
+    "$module": "swimBP",
+    "$template": {
+        "minecraft:entity": {
+            "component_groups": {
+                "maca_templ:movement": {
+                    "minecraft:behavior.random_swim": {
+                        "priority": 7,
+                        "speed_multiplier": 1,
+                        "interval": 80,
+                        "avoid_surface": false
+                    },
+                    "minecraft:underwater_movement": {
+                        "value": 0.06
+                    },
+                    "minecraft:movement.generic": {},
+                    "minecraft:jump.static": {},
+                    "minecraft:can_climb": {},
+                    "minecraft:movement": {
+                        "value": 0.23
+                    },
+                    "minecraft:navigation.generic": {
+                        "is_amphibious": false,
+                        "can_path_over_water": false,
+                        "can_break_doors": false,
+                        "can_pass_doors": true,
+                        "can_open_doors": true,
+                        "can_swim": true,
+                        "can_walk": true,
+                        "avoid_sun": false
+                    },
+                    "minecraft:jump.static": {
+                    },
+                    "minecraft:behavior.move_to_water": {
+                        "priority": 6,
+                        "search_range": 32,
+                        "search_height": 5,
+                        "search_count": 1,
+                        "goal_radius": 0.1
+                    }
+                }
+            },
+            "components": {
+                "minecraft:behavior.random_swim": {
+                    "priority": 7,
+                    "speed_multiplier": 1,
+                    "interval": 80,
+                    "avoid_surface": false
+                },
+                "minecraft:underwater_movement": {
+                    "value": 0.06
+                },
+                "minecraft:movement.generic": {},
+                "minecraft:jump.static": {},
+                "minecraft:can_climb": {},
+                "minecraft:movement": {
+                    "value": 0.23
+                },
+                "minecraft:navigation.generic": {
+                    "is_amphibious": false,
+                    "can_path_over_water": false,
+                    "can_break_doors": false,
+                    "can_pass_doors": true,
+                    "can_open_doors": true,
+                    "can_swim": true,
+                    "can_walk": true,
+                    "avoid_sun": false
+                },
+                "minecraft:jump.static": {
+                },
+                "minecraft:behavior.move_to_water": {
+                    "priority": 6,
+                    "search_range": 32,
+                    "search_height": 5,
+                    "search_count": 1,
+                    "goal_radius": 0.1
+                }
+            }
+        }
+    }
+}

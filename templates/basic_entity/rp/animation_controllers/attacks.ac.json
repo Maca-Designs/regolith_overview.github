@@ -1,0 +1,51 @@
+{
+    "format_version": "1.12.0",
+    "animation_controllers": {
+        "controller.animation.maca_templ.entity.delayed_attack": {
+            "initial_state": "default",
+            "states": {
+                "default": {
+                    "transitions": [
+                        {
+                            "attack": "q.is_delayed_attacking"
+                        }
+                    ],
+                    "blend_transition": 0.2
+                },
+                "attack": {
+                    "animations": [
+                        "attack"
+                    ],
+                    "transitions": [
+                        {
+                            "default": "!q.is_delayed_attacking && q.all_animations_finished"
+                        }
+                    ],
+                    "blend_transition": 0.2
+                }
+            }
+        },
+        "controller.animation.maca_templ.entity.melee_attack": {
+            "initial_state": "default",
+            "states": {
+                "default": {
+                    "transitions": [
+                        {
+                            "attack": "v.attack_time > 0.0"
+                        }
+                    ]
+                },
+                "attack": {
+                    "animations": [
+                        "attack"
+                    ],
+                    "transitions": [
+                        {
+                            "default": "q.all_animations_finished"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

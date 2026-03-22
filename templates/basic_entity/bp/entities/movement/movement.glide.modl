@@ -1,0 +1,67 @@
+{
+    "$module": "glideBP",
+    "$template": {
+        "minecraft:entity": {
+            "component_groups": {
+                "maca_templ:movement": {
+                    "minecraft:behavior.random_look_around": {
+                        "priority": 9
+                    },
+                    "minecraft:behavior.look_at_player": {
+                        "angle_of_view_vertical": 360,
+                        "angle_of_view_horizontal": 360,
+                        "look_distance": 12,
+                        "probability": 1,
+                        "target_distance": 6,
+                        "priority": 6
+                    }
+                }
+            },
+            "components": {
+                "minecraft:behavior.look_at_player": {
+                    "angle_of_view_vertical": 360,
+                    "angle_of_view_horizontal": 360,
+                    "look_distance": 12,
+                    "probability": 1,
+                    "target_distance": 6,
+                    "priority": 6
+                },
+                "minecraft:physics": {
+                  "has_gravity": false
+                },
+                "minecraft:behavior.random_look_around": {
+                    "priority": 9
+                },
+                "minecraft:breathable": {
+                    "total_supply": 15,
+                    "suffocate_time": 0
+                },
+                "minecraft:fire_immune": {},
+
+                // GLIDE
+                "minecraft:movement.glide": {
+                  "start_speed": 0.1,
+                  "speed_when_turning": 0.2
+                },
+                "minecraft:behavior.circle_around_anchor": {
+                  "priority": 4,
+                  "radius_change": 1.0,
+                  "radius_adjustment_chance": 0.004,
+                  "height_adjustment_chance": 0.022857,
+                  "goal_radius": 1.0,
+                  "angle_change": 15.0,
+                  "radius_range": [ 5.0, 15.0 ],
+                  "height_offset_range": [ -2.0, 2.0 ],
+                  "height_above_target_range": [ 2.0, 8.0 ]
+                },
+                "minecraft:follow_range": {
+                    "value": 64,
+                    "max": 64
+                },
+                "minecraft:behavior.hurt_by_target": {
+                    "priority": 1
+                }
+            }
+        }
+    }
+}

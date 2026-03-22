@@ -1,0 +1,22 @@
+{
+    "$module": "eatBlocksBP",
+    "$template": {
+        "minecraft:entity": {
+            "component_groups": {},
+            "components": {
+                "minecraft:behavior.eat_block": {
+                    "priority": "{{eatStats.priority}}",
+                    "success_chance": "{{eatStats.successChance}}",
+                    "time_until_eat": "{{eatStats.time}}",
+                    "eat_and_replace_block_pairs": [
+                    "{{eatBlocks}}"
+                    ],
+                    "on_eat": {
+                    "event": "minecraft:on_eat_block",
+                    "target": "self"
+                    }
+                }
+            }
+        }
+    }
+}

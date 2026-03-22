@@ -1,0 +1,22 @@
+{
+    "$module": "equipmentBP",
+    "$template": {
+        "minecraft:entity": {
+            "components": {
+                "minecraft:equipment": {
+                    "table": "{{equipment_loot_table}}"
+                },
+                "minecraft:equip_item": {
+                    "excluded_items": [
+                    {
+                        "item": "minecraft:banner:15"
+                    }
+                    ]
+                },
+                "minecraft:behavior.equip_item": {
+                    "priority": 3
+                }
+            }
+        }
+    }
+}

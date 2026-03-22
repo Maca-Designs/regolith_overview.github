@@ -1,0 +1,39 @@
+{
+    "$files": {
+        "array": "entity",
+        "fileName": "{{name}}_spawn_rules"
+    },
+    "$template": {
+        "format_version": "1.8.0",
+        "minecraft:spawn_rules": {
+            "description": {
+                "identifier": "maca_ve:{{name}}",
+                "population_control": "{{population_control}}"
+            },
+            "conditions": [
+                {
+                    "minecraft:brightness_filter": {
+                        "min": "{{min_light ?? 7}}",
+                        "max": "{{max_light ?? 15}}",
+                        "adjust_for_weather": true
+                    },
+                    "minecraft:weight": {
+                        "default": "{{weight}}"
+                    },
+                    "{{#spawn}}": {
+                        "minecraft:spawns_{{suffix}}": "{{value}}"
+                    },
+                    "{{$spawnOnBlock}}": {
+                        "minecraft:spawns_on_block_filter": "{{spawnOnBlock}}"
+                    },
+                    "minecraft:herd": {
+                        "min_size": "{{herd.min}}",
+                        "max_size": "{{herd.max}}"
+                    },
+                    "minecraft:biome_filter": "{{filters}}"
+                }
+            ]
+        }
+    }
+}
+  

@@ -1,0 +1,99 @@
+{
+    "$module": "melee_attackBP",
+    "$template": {
+        "minecraft:entity": {
+            "description": {
+                "animations": {
+                    "melee_attack.gain_xp.ac": "controller.animation.maca_templ.melee_attack.gain_xp"
+                },
+                "scripts": {
+                    "animate": [
+                        "melee_attack.gain_xp.ac"
+                    ]
+                }
+            },
+            "components": {
+                "minecraft:behavior.melee_attack": {
+                    "priority": 3,
+                    "melee_fov": 90,
+                    "track_target": true,
+                    "attack_once": false,
+                    "require_complete_path": false,
+                    "random_stop_interval": 0,
+                    "reach_multiplier": "{{melee?.reach_multiplier ?? 1}}",
+                    "cooldown_time": "{{melee?.cooldown_time ?? 1}}",
+                    "speed_multiplier": "{{melee?.speed_multiplier ?? 1}}"
+                },
+                "minecraft:behavior.nearest_attackable_target": {
+                    "priority": 2,
+                    "attack_interval": "{{target?.attack_interval ?? 1}}",
+                    "must_reach": true,
+                    "must_see": true,
+                    "within_radius": "{{target?.within_radius ?? 128}}",
+                    "entity_types": [
+                        {
+                            "filters": {
+                                "all_of": [
+                                    {
+                                        "test": "is_family",
+                                        "subject": "other",
+                                        "value": "player"
+                                    },
+                                    {
+                                        "test": "is_mark_variant",
+                                        "subject": "self",
+                                        "operator": "!=",
+                                        "value": 1
+                                    }
+                                ]
+                            },
+                            "max_dist": "{{target?.within_radius ?? 128}}"
+                        }
+                    ]
+                }
+            },
+            "component_groups": {
+                "maca_templ:attack": {
+                    "minecraft:behavior.melee_attack": {
+                    "priority": 3,
+                    "melee_fov": 90,
+                    "track_target": true,
+                    "attack_once": false,
+                    "require_complete_path": false,
+                    "random_stop_interval": 0,
+                    "reach_multiplier": "{{melee?.reach_multiplier ?? 1}}",
+                    "cooldown_time": "{{melee?.cooldown_time ?? 1}}",
+                    "speed_multiplier": "{{melee?.speed_multiplier ?? 1}}"
+                },
+                "minecraft:behavior.nearest_attackable_target": {
+                    "priority": 2,
+                    "attack_interval": "{{target?.attack_interval ?? 1}}",
+                    "must_reach": true,
+                    "must_see": true,
+                    "within_radius": "{{target?.within_radius ?? 128}}",
+                    "entity_types": [
+                        {
+                            "filters": {
+                                "all_of": [
+                                    {
+                                        "test": "is_family",
+                                        "subject": "other",
+                                        "value": "player"
+                                    },
+                                    {
+                                        "test": "is_mark_variant",
+                                        "subject": "self",
+                                        "operator": "!=",
+                                        "value": 1
+                                    }
+                                ]
+                            },
+                            "max_dist": "{{target?.within_radius ?? 128}}"
+                        }
+                    ]
+                }
+                }
+            }
+        }
+    }
+}

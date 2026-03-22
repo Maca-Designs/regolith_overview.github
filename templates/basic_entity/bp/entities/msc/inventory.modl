@@ -1,0 +1,17 @@
+{
+    "$module": "inventoryBP",
+    "$template": {
+        "minecraft:entity": {
+            "description": {
+            },
+            "components": {
+                "minecraft:is_chested": {
+                },
+                "minecraft:inventory": {
+                    "inventory_size": "{{inventory.size ?? 16}}",
+                    "container_type": "{{inventory.type ?? horse}}"
+                }
+            }
+        }
+    }
+}
