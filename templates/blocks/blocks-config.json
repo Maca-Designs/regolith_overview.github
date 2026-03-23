@@ -1,6 +1,6 @@
 {
   "name": "Block Template",
-  "description": "A template containing the files needed to generate a new custom block set. This includes templates, modules and scripts for stairs, walls, bars, slabs, flowers, trapdoors, doors, chains and crops",
+  "description": "A template containing the files needed to generate a new custom block set. This includes templates, modules and scripts for stairs, walls, bars, slabs, trapdoors, doors, chains, and more",
   "version": "1.0.0",
   "author": "Andrew Polmans",
   "tags": ["blocks"]
