@@ -1,0 +1,28 @@
+{
+    "$template": {
+        "texture_data": {
+            "{{?blocks}}": {
+                "{{#blocks.filter(x => x?.door)}}": {
+                    "maca_templ.{{name}}_door": {
+                        "textures": "textures/maca_templ/items{{folder ? '/'+folder : ''}}/{{name}}_door"
+                    }
+                },
+                "{{#blocks.filter(x => x?.bar)}}": {
+                    "maca_templ.{{name}}_bars": {
+                        "textures": "textures/maca_templ/items{{folder ? '/'+folder : ''}}/{{name}}_bars"
+                    }
+                }
+            },
+            "{{?bars}}": {
+                "maca_templ.{{name}}_bars": {
+                    "textures": "textures/maca_templ/items{{folder ? '/'+folder : ''}}/{{name}}_bars"
+                }
+            },
+            "{{?door}}": {
+                "maca_templ.{{name}}_door": {
+                    "textures": "textures/maca_templ/items{{folder ? '/'+folder : ''}}/{{name}}_door"
+                }
+            }
+        }
+    }
+}

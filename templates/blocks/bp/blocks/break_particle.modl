@@ -1,0 +1,12 @@
+{
+    "$module": "break_particleBP",
+    "$template": {
+        "minecraft:block": {
+            "components": {
+                "minecraft:destruction_particles": {
+                    "texture": "{{break_particle}}"
+                }
+            }
+        }
+    }
+}

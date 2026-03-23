@@ -1,0 +1,10 @@
+{
+    "$module": "traitsBP",
+    "$template": {
+        "minecraft:block": {
+            "description": {
+                "traits": "{{traits}}"
+            }
+        }
+    }
+}

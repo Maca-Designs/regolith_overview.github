@@ -1,0 +1,25 @@
+{
+	"$files": {
+        "array": "{{blocks.filter(x => x?.door)}}",
+        "fileName": "{{name}}_door.item"
+    },
+    "$template": {
+	"format_version": "1.21.50",
+	"minecraft:item": {
+		"description": {
+			"identifier": "maca_ve:{{name}}_door",
+			"menu_category": {
+				"category": "construction",
+				"group": "itemGroup.name.door"
+			}
+		},
+		"components": {
+			"minecraft:block_placer": {
+				"block": "maca_ve:{{name}}_door",
+				"replace_block_item": true
+			},
+			"minecraft:icon": "maca_ve.{{name}}_door"
+		}
+	}
+	}
+}

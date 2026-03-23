@@ -1,0 +1,51 @@
+{
+    "blocks": [
+        {
+            "name": "new_block",
+            "stair": true,
+            "wall": true,
+            "slab": true,
+            "bar": false,
+            "door": false,
+            "trapdoor": false,
+            "full_block": true,
+            "sound": "iron",
+            "tags": [
+                "is_solid"
+            ],
+            //"componentList":["maca_templ:custom_components_here"],
+            "breakItem": "pickaxe",
+            "map_color": '#798382',
+            "light": 0,
+            "dampening": 15,
+            "textures": [
+                {"name": "new_block"},
+                {"name": "new_block_up", "face": "up"},
+                {"name": "new_block_up", "face": "down"}
+            ],
+            "extraModulesBP":[
+                "blockFaceBP",
+                "redstoneBP",
+                "destructibleBP"
+            ]
+        }
+    ],
+    "walls": [
+    //only needed when you want to make a wall without the main full block
+    ],
+    "slabs": [
+    //only needed when you want to make a slab without the main full block
+    ],
+    "stairs": [
+    //only needed when you want to make a stair without the main full block
+    ],
+    "bars": [
+    //only needed when you want to make a bar without the main full block
+    ],
+    "door": [
+    //only needed when you want to make a door without the main full block
+    ],
+    "trapdoor": [
+    //only needed when you want to make a trapdoor without the main full block
+    ]
+}

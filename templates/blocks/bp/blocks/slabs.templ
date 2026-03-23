@@ -1,0 +1,170 @@
+{
+    "$files": {
+        "array": "{{blocks.filter(x => x?.slab)}} + slabs",
+        "fileName": "{{name}}_slab"
+    },
+    "$extend": [
+        "{{(extraModulesBP ? extraModulesBP : []) + ['block.item_tier']}}"
+    ],
+    "$template": {
+        "format_version": "1.26.0",
+        "minecraft:block": {
+            "description": {
+                "identifier": "maca_templ:{{name}}_slab",
+                "menu_category": {
+                    "category": "construction",
+                    "group": "minecraft:itemGroup.name.slab" 
+                },
+                "traits": {
+                    "minecraft:placement_position": {
+                        "enabled_states": [
+                            "minecraft:vertical_half"
+                        ]
+                    }
+                }
+            },
+            "permutations": [
+                {
+                    "condition": "q.block_state('minecraft:vertical_half') == 'top'",
+                    "components": {
+                        "minecraft:precipitation_interactions": {"precipitation_behavior": "obstruct_rain_accumulate_snow"},
+                        "minecraft:redstone_conductivity": {
+                            "allows_wire_to_step_down": false
+                        }
+                    }
+                },
+                {
+                    "condition": "q.block_state('minecraft:vertical_half') == 'bottom'",
+                    "components": {
+                        "minecraft:liquid_detection": {
+                            "detection_rules": [
+                                {
+                                    "can_contain_liquid": true,
+                                    "liquid_type": "water",
+                                    "on_liquid_touches": "no_reaction"
+                                }
+                            ]
+                        },
+                        "minecraft:collision_box": {
+                            "origin": [
+                                -8,
+                                0,
+                                -8
+                            ],
+                            "size": [
+                                16,
+                                8,
+                                16
+                            ]
+                        },
+                        "minecraft:selection_box": {
+                            "origin": [
+                                -8,
+                                0,
+                                -8
+                            ],
+                            "size": [
+                                16,
+                                8,
+                                16
+                            ]
+                        },
+                        "minecraft:light_dampening": 0,
+                        "minecraft:loot": "loot_tables/maca/blocks/slabs/{{name}}_slab_half.json"
+                    }
+                },
+                {
+                    "condition": "q.block_state('minecraft:vertical_half') == 'top'",
+                    "components": {
+                        "minecraft:liquid_detection": {
+                            "detection_rules": [
+                                {
+                                    "can_contain_liquid": true,
+                                    "liquid_type": "water",
+                                    "on_liquid_touches": "no_reaction"
+                                }
+                            ]
+                        },
+                        "minecraft:collision_box": {
+                            "origin": [
+                                -8,
+                                8,
+                                -8
+                            ],
+                            "size": [
+                                16,
+                                8,
+                                16
+                            ]
+                        },
+                        "minecraft:selection_box": {
+                            "origin": [
+                                -8,
+                                8,
+                                -8
+                            ],
+                            "size": [
+                                16,
+                                8,
+                                16
+                            ]
+                        },
+                        "minecraft:light_dampening": 0,
+                        "minecraft:loot": "loot_tables/maca/blocks/slabs/{{name}}_slab_half.json"
+                    }
+                }
+            ],
+            "components": {
+                "minecraft:support": { 
+                    "shape": "stair" 
+                },
+                "minecraft:precipitation_interactions": {"precipitation_behavior": "obstruct_rain"},
+                "tag:maca_templ:is_slab": {},
+                "tag:maca_templ:no_connect": {},
+                "{{?destroy_time != undefined}}": {
+                    "minecraft:destructible_by_mining": {
+                        "seconds_to_destroy": "{{destroy_time}}"
+                    }
+                },
+                "minecraft:destructible_by_explosion": "{{explosion ?? true}}",
+                "minecraft:light_emission": "{{emission}}",
+                "{{?flammable}}": {
+                    "minecraft:flammable": {
+                        "catch_chance_modifier": 5,
+                        "destroy_chance_modifier": 20
+                    }
+                },
+                "minecraft:map_color": "{{map_color}}",
+                "minecraft:geometry": {
+                    "identifier": "geometry.maca_templ.slab",
+                    "bone_visibility": {
+                        "bottom_slab": "q.block_state('minecraft:vertical_half') == 'bottom'",
+                        "top_slab": "q.block_state('minecraft:vertical_half') == 'top'"
+                    }
+                },
+                "{{?textures}}": {
+                    "minecraft:material_instances": {
+                        "{{#textures}}": {
+                            "{{textures.face ?? '*'}}": {
+                                "texture": "maca_templ.{{textures.name}}",
+                                "render_method": "{{textures.render ?? 'opaque'}}",
+                                "face_dimming": "{{textures.dimming ?? true}}",
+                                "ambient_occlusion": "{{textures.occlusion ?? true}}"
+                            }
+                        }
+                    }
+                },
+                "{{?textures == undefined}}": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "maca_templ.{{name}}",
+                            "render_method": "opaque",
+                            "face_dimming": true,
+                            "ambient_occlusion": true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

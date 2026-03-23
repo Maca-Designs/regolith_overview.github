@@ -1,0 +1,69 @@
+{
+    "$files": {
+        "array": "{{blocks.filter(x => x?.full_block)}}",
+        "fileName": "{{name}}.block"
+    },
+    "$extend": [
+        "{{(extraModulesBP ? extraModulesBP : []) + ['block.item_tier']}}"
+    ],
+    "$template": {
+        "format_version": "1.26.0,
+        "minecraft:block": {
+            "description": {
+                "identifier": "maca_templ:{{name}}",
+                "menu_category": {
+                    "category": "{{category??'construction'}}"
+                }
+            },
+            "components": {
+                "{{$tags}}": {
+                    "{{#tags as tag}}": {
+                        "tag:maca_templ:{{#tag}}": {},
+                    }
+                },
+                "{{?break_time}}": {
+                    "minecraft:destructible_by_mining": {
+                        "seconds_to_destroy": "{{break_time ?? 1}}"
+                    }
+                },
+                "minecraft:destructible_by_explosion": "{{explosion ?? true}}",
+                "{{?collision_box != undefined}}": {
+                    "minecraft:collision_box": "{{collision_box}}"
+                },
+                "minecraft:geometry": "{{geo ?? 'minecraft:geometry.full_block'}}",
+                "{{?textures}}": {
+                    "minecraft:material_instances": {
+                        "{{#textures}}": {
+                            "{{textures.face ?? '*'}}": {
+                                "texture": "maca_templ.{{textures.name}}",
+                                "render_method": "{{textures.render ?? 'opaque'}}",
+                                "face_dimming": "{{textures.dimming ?? true}}",
+                                "ambient_occlusion": "{{textures.occlusion ?? true}}"
+                            }
+                        }
+                    }
+                },
+                "{{?flammable}}": {
+                    "minecraft:flammable": {
+                        "catch_chance_modifier": 5,
+                        "destroy_chance_modifier": 20
+                    }
+                },
+                "{{?textures == undefined}}": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "maca_templ.{{name}}",
+                            "render_method": "opaque",
+                            "face_dimming": true,
+                            "ambient_occlusion": true
+                        }
+                    }
+                },
+                "minecraft:friction": "{{friction ?? 0.4}}",
+                "minecraft:light_dampening": "{{dampening ?? 15}}",
+                "minecraft:light_emission": "{{light ?? 0}}",
+                "minecraft:map_color": "{{map_color ?? '#5BA49B'}}"
+            }
+        }
+    }
+}

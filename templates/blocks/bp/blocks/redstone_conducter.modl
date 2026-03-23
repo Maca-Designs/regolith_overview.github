@@ -1,0 +1,12 @@
+{
+    "$module": "redstoneBP",
+    "$template": {
+        "minecraft:block": {
+            "components": {
+                "minecraft:redstone_conductivity": {
+                    "redstone_conductor": true
+                }
+            }
+        }
+    }
+}

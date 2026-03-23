@@ -1,0 +1,35 @@
+{
+    "$module": "pottableBP",
+    "$template": {
+        "minecraft:block": {
+            "components": {
+               "minecraft:flower_pottable": {},
+                "minecraft:embedded_visual": {
+                    "geometry": "geometry.maca_templ.custom_cross_pot",
+                    "{{?textures}}": {
+                        "minecraft:material_instances": {
+                            "{{#textures}}": {
+                                "{{textures.face ?? '*'}}": {
+                                    "texture": "maca_templ.{{textures.name}}",
+                                    "render_method": "{{textures.render ?? 'opaque'}}",
+                                    "face_dimming": "{{textures.dimming ?? true}}",
+                                    "ambient_occlusion": "{{textures.occlusion ?? true}}"
+                                }
+                            }
+                        }
+                    },
+                    "{{?textures == undefined}}": {
+                        "minecraft:material_instances": {
+                            "*": {
+                                "texture": "maca_templ.{{name}}",
+                                "render_method": "opaque",
+                                "face_dimming": true,
+                                "ambient_occlusion": true
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

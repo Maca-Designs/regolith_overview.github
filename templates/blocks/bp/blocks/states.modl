@@ -1,0 +1,10 @@
+{
+    "$module": "statesBP",
+    "$template": {
+        "minecraft:block": {
+            "description": {
+                "states": "{{states}}"
+            }
+        }
+    }
+}

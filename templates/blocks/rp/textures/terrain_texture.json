@@ -1,0 +1,96 @@
+{
+    "$template": {
+        "resource_pack_name": "vanilla",
+        "texture_name": "atlas.terrain",
+        "padding": 8,
+        "num_mip_levels": 4,
+        "texture_data": {
+            "{{#blocks}}": {
+                "maca_templ.{{name}}": {
+                    "textures": "textures/maca_templ/{{folder ?? 'blocks'}}}/{{name}}"
+                },
+                "{{?textures}}": {
+                    "{{#textures}}": {
+                        "maca_templ.{{textures.name}}": {
+                            "textures": "textures/maca_templ/{{textures.folder ?? 'blocks'}}/{{textures.name}}"
+                        }
+                    }
+                }
+            },
+            "{{#stairs}}": {
+                "maca_templ.{{name}}": {
+                    "textures": "textures/maca_templ/{{folder ?? 'blocks'}}}/{{name}}"
+                },
+                "{{?textures}}": {
+                    "{{#textures}}": {
+                        "maca_templ.{{textures.name}}": {
+                            "textures": "textures/maca_templ/{{textures.folder ?? 'blocks'}}/{{textures.name}}"
+                        }
+                    }
+                }
+            },
+            "{{#walls}}": {
+                "maca_templ.{{name}}": {
+                    "textures": "textures/maca_templ/{{folder ?? 'blocks'}}}/{{name}}"
+                },
+                "{{?textures}}": {
+                    "{{#textures}}": {
+                        "maca_templ.{{textures.name}}": {
+                            "textures": "textures/maca_templ/{{textures.folder ?? 'blocks'}}/{{textures.name}}"
+                        }
+                    }
+                }
+            },
+            "{{#trapdoor}}": {
+                "maca_templ.{{name}}": {
+                    "textures": "textures/maca_templ/{{folder ?? 'blocks'}}}/{{name}}_trapdoor"
+                },
+                "{{?textures}}": {
+                    "{{#textures}}": {
+                        "maca_templ.{{textures.name}}": {
+                            "textures": "textures/maca_templ/{{textures.folder ?? 'blocks'}}/{{textures.name}}_trapdoor"
+                        }
+                    }
+                }
+            },
+            "{{#blocks.filter(x => x?.door)}}": {
+                "maca_templ.{{name}}_door_bottom": {
+                    "textures": "textures/maca_templ/{{folder ?? 'blocks'}}}/{{name}}_door_bottom"
+                },
+                "maca_templ.{{name}}_door_top": {
+                    "textures": "textures/maca_templ/{{folder ?? 'blocks'}}}/{{name}}_door_top"
+                }
+            },
+            "{{#door}}": {
+                "maca_templ.{{name}}_door_bottom": {
+                    "textures": "textures/maca_templ/{{folder ?? 'blocks'}}}/{{name}}_door_bottom"
+                },
+                "maca_templ.{{name}}_door_top": {
+                    "textures": "textures/maca_templ/{{folder ?? 'blocks'}}}/{{name}}_door_top"
+                }
+            },
+            "{{#slabs}}": {
+                "maca_templ.{{name}}": {
+                    "textures": "textures/maca_templ/{{folder ?? 'blocks'}}}/{{name}}"
+                },
+                "{{?textures}}": {
+                    "{{#textures}}": {
+                        "maca_templ.{{textures.name}}": {
+                            "textures": "textures/maca_templ/{{textures.folder ?? 'blocks'}}/{{textures.name}}"
+                        }
+                    }
+                }
+            },
+            "{{#blocks.filter(x => x?.bar)}}": {
+                "maca_templ.{{name}}_bars": {
+                    "textures": "textures/maca_templ/{{folder ?? 'blocks'}}}/{{name}}_bars"
+                }
+            },
+            "{{#bars}}": {
+                "maca_templ.{{name}}": {
+                    "textures": "textures/maca_templ/{{folder ?? 'blocks'}}}/{{name}}"
+                }
+            }
+        }
+    }
+}

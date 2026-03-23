@@ -1,0 +1,599 @@
+{
+    "$files": {
+        "array": "{{blocks.filter(x => x?.wall)}} + walls",
+        "fileName": "{{name}}_wall"
+    },
+    "$template": {
+    "format_version": "1.26.0",
+	"minecraft:block": {
+		"description": {
+			"identifier": "maca_templ:{{name}}_wall",
+       		"menu_category": {
+       		    "category": "construction",
+       		    "group": "minecraft:itemGroup.name.walls" // Placed into WALLS
+       		},
+			"states": {
+				"maca_templ:top_bit": [
+					false,
+					true
+				],
+				"maca_templ:connect_north": [
+					false,
+					true
+				],
+				"maca_templ:connect_south": [
+					false,
+					true
+				],
+				"maca_templ:connect_east": [
+					false,
+					true
+				],
+				"maca_templ:connect_west": [
+					false,
+					true
+				],
+				"maca_templ:slim": [
+					false,
+					true
+				],
+				"maca_templ:slim_bit": [
+					"north_south",
+					"east_west"
+				]
+			}
+		},
+		"components": {			
+            "minecraft:liquid_detection": {
+				"detection_rules": [
+					{
+                        "can_contain_liquid": true
+					}
+				]
+			},			
+            "{{?break_time}}": {
+                "minecraft:destructible_by_mining": {
+                    "seconds_to_destroy": "{{break_time ?? 1}}"
+                }
+            },
+            "minecraft:destructible_by_explosion": "{{explosion ?? true}}",
+			"tag:maca_templ:is_wall": {},
+			"minecraft:geometry": {
+				"identifier": "geometry.wall_block",
+				"bone_visibility": {
+					"center": "!q.block_state('maca_templ:slim')",
+					"center_slim_south_north": "q.block_state('maca_templ:slim') && q.block_state('maca_templ:slim_bit') == 'north_south' && !q.block_state('maca_templ:top_bit')",
+					"center_slim_south_north_above": "q.block_state('maca_templ:slim') && q.block_state('maca_templ:slim_bit') == 'north_south' && q.block_state('maca_templ:top_bit')",
+					"center_slim_east_west": "q.block_state('maca_templ:slim') && q.block_state('maca_templ:slim_bit') == 'east_west' && !q.block_state('maca_templ:top_bit')",
+					"center_slim_east_west_above": "q.block_state('maca_templ:slim') && q.block_state('maca_templ:slim_bit') == 'east_west' && q.block_state('maca_templ:top_bit')",
+					"north": "q.block_state('maca_templ:connect_north') && !q.block_state('maca_templ:top_bit')",
+					"north_above": "q.block_state('maca_templ:connect_north') && q.block_state('maca_templ:top_bit')",
+					"south": "q.block_state('maca_templ:connect_south') && !q.block_state('maca_templ:top_bit')",
+					"south_above": "q.block_state('maca_templ:connect_south') && q.block_state('maca_templ:top_bit')",
+					"east": "q.block_state('maca_templ:connect_east') && !q.block_state('maca_templ:top_bit')",
+					"east_above": "q.block_state('maca_templ:connect_east') && q.block_state('maca_templ:top_bit')",
+					"west": "q.block_state('maca_templ:connect_west') && !q.block_state('maca_templ:top_bit')",
+					"west_above": "q.block_state('maca_templ:connect_west') && q.block_state('maca_templ:top_bit')"
+				}
+			},
+			"{{?textures}}": {
+                "minecraft:material_instances": {
+                    "{{#textures}}": {
+                        "{{textures.face ?? '*'}}": {
+                            "texture": "maca_templ.{{textures.name}}",
+                            "render_method": "{{textures.render ?? 'opaque'}}",
+                            "face_dimming": "{{textures.dimming ?? true}}",
+                            "ambient_occlusion": "{{textures.occlusion ?? true}}"
+                        }
+                    }
+                }
+            },
+            "{{?textures == undefined}}": {
+                "minecraft:material_instances": {
+                    "*": {
+                        "texture": "maca_templ.{{name}}",
+                        "render_method": "opaque",
+                        "face_dimming": true,
+                        "ambient_occlusion": true
+                    }
+                }
+            }
+		},
+		"permutations": [
+			{
+				"condition": "!q.block_state('maca_templ:connect_north') && !q.block_state('maca_templ:connect_south') && !q.block_state('maca_templ:connect_east') && !q.block_state('maca_templ:connect_west')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-4,
+							0,
+							-4
+						],
+						"size": [
+							8,
+							24,
+							8
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-4,
+							0,
+							-4
+						],
+						"size": [
+							8,
+							16,
+							8
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('maca_templ:slim') && q.block_state('maca_templ:slim_bit') == 'north_south' && q.block_state('maca_templ:top_bit')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-3,
+							0,
+							-8
+						],
+						"size": [
+							6,
+							24,
+							16
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-3,
+							0,
+							-8
+						],
+						"size": [
+							6,
+							16,
+							16
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('maca_templ:slim') && q.block_state('maca_templ:slim_bit') == 'north_south' && !q.block_state('maca_templ:top_bit')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-3,
+							0,
+							-8
+						],
+						"size": [
+							6,
+							24,
+							16
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-3,
+							0,
+							-8
+						],
+						"size": [
+							6,
+							13,
+							16
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('maca_templ:slim') && q.block_state('maca_templ:slim_bit') == 'east_west' && q.block_state('maca_templ:top_bit')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-8,
+							0,
+							-3
+						],
+						"size": [
+							16,
+							24,
+							6
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-8,
+							0,
+							-3
+						],
+						"size": [
+							16,
+							16,
+							6
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('maca_templ:slim') && q.block_state('maca_templ:slim_bit') == 'east_west' && !q.block_state('maca_templ:top_bit')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-8,
+							0,
+							-3
+						],
+						"size": [
+							16,
+							24,
+							6
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-8,
+							0,
+							-3
+						],
+						"size": [
+							16,
+							13,
+							6
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('maca_templ:connect_north') && !q.block_state('maca_templ:connect_south') && !q.block_state('maca_templ:connect_east') && !q.block_state('maca_templ:connect_west')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-4,
+							0,
+							-8
+						],
+						"size": [
+							8,
+							24,
+							12
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-4,
+							0,
+							-8
+						],
+						"size": [
+							8,
+							16,
+							12
+						]
+					}
+				}
+			},
+			{
+				"condition": "!q.block_state('maca_templ:connect_north') && q.block_state('maca_templ:connect_south') && !q.block_state('maca_templ:connect_east') && !q.block_state('maca_templ:connect_west')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-4,
+							0,
+							-4
+						],
+						"size": [
+							8,
+							24,
+							12
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-4,
+							0,
+							-4
+						],
+						"size": [
+							8,
+							16,
+							12
+						]
+					}
+				}
+			},
+			{
+				"condition": "!q.block_state('maca_templ:connect_north') && !q.block_state('maca_templ:connect_south') && q.block_state('maca_templ:connect_east') && !q.block_state('maca_templ:connect_west')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-8,
+							0,
+							-4
+						],
+						"size": [
+							12,
+							24,
+							8
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-8,
+							0,
+							-4
+						],
+						"size": [
+							12,
+							16,
+							8
+						]
+					}
+				}
+			},
+			{
+				"condition": "!q.block_state('maca_templ:connect_north') && !q.block_state('maca_templ:connect_south') && !q.block_state('maca_templ:connect_east') && q.block_state('maca_templ:connect_west')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-4,
+							0,
+							-4
+						],
+						"size": [
+							12,
+							24,
+							8
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-4,
+							0,
+							-4
+						],
+						"size": [
+							12,
+							16,
+							8
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('maca_templ:connect_north') && !q.block_state('maca_templ:connect_south') && q.block_state('maca_templ:connect_east') && !q.block_state('maca_templ:connect_west')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-8,
+							0,
+							-8
+						],
+						"size": [
+							12,
+							24,
+							12
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-8,
+							0,
+							-8
+						],
+						"size": [
+							12,
+							16,
+							12
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('maca_templ:connect_north') && !q.block_state('maca_templ:connect_south') && !q.block_state('maca_templ:connect_east') && q.block_state('maca_templ:connect_west')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-4,
+							0,
+							-8
+						],
+						"size": [
+							12,
+							24,
+							12
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-4,
+							0,
+							-8
+						],
+						"size": [
+							12,
+							16,
+							12
+						]
+					}
+				}
+			},
+			{
+				"condition": "!q.block_state('maca_templ:connect_north') && q.block_state('maca_templ:connect_south') && !q.block_state('maca_templ:connect_east') && q.block_state('maca_templ:connect_west')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-4,
+							0,
+							-4
+						],
+						"size": [
+							12,
+							24,
+							12
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-4,
+							0,
+							-4
+						],
+						"size": [
+							12,
+							16,
+							12
+						]
+					}
+				}
+			},
+			{
+				"condition": "!q.block_state('maca_templ:connect_north') && q.block_state('maca_templ:connect_south') && q.block_state('maca_templ:connect_east') && !q.block_state('maca_templ:connect_west')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-8,
+							0,
+							-4
+						],
+						"size": [
+							12,
+							24,
+							12
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-8,
+							0,
+							-4
+						],
+						"size": [
+							12,
+							16,
+							12
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('maca_templ:connect_north') && !q.block_state('maca_templ:connect_south') && q.block_state('maca_templ:connect_east') && q.block_state('maca_templ:connect_west')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-8,
+							0,
+							-8
+						],
+						"size": [
+							16,
+							24,
+							12
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-8,
+							0,
+							-8
+						],
+						"size": [
+							16,
+							16,
+							12
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('maca_templ:connect_north') && q.block_state('maca_templ:connect_south') && !q.block_state('maca_templ:connect_east') && q.block_state('maca_templ:connect_west')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-4,
+							0,
+							-8
+						],
+						"size": [
+							12,
+							24,
+							16
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-4,
+							0,
+							-8
+						],
+						"size": [
+							12,
+							16,
+							16
+						]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('maca_templ:connect_north') && q.block_state('maca_templ:connect_south') && q.block_state('maca_templ:connect_east') && !q.block_state('maca_templ:connect_west')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-8,
+							0,
+							-8
+						],
+						"size": [
+							12,
+							24,
+							16
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-8,
+							0,
+							-8
+						],
+						"size": [
+							12,
+							16,
+							16
+						]
+					}
+				}
+			},
+			{
+				"condition": "!q.block_state('maca_templ:connect_north') && q.block_state('maca_templ:connect_south') && q.block_state('maca_templ:connect_east') && q.block_state('maca_templ:connect_west')",
+				"components": {
+					"minecraft:collision_box": {
+						"origin": [
+							-8,
+							0,
+							-4
+						],
+						"size": [
+							16,
+							24,
+							12
+						]
+					},
+					"minecraft:selection_box": {
+						"origin": [
+							-8,
+							0,
+							-4
+						],
+						"size": [
+							16,
+							16,
+							12
+						]
+					}
+				}
+			}
+		]
+	}
+    }
+}

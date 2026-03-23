@@ -1,0 +1,19 @@
+{
+    "$module": "liquidRulesBP",
+    "$template": {
+        "minecraft:block": {
+            "components": {
+                "minecraft:liquid_detection": {
+					"detection_rules": [
+						{
+							"can_contain_liquid": "{{liquid?.contain ?? false}}",
+							"liquid_type": "water",
+							"on_liquid_touches": "{{liquid?.touches ?? 'popped'}}",
+                            "stops_liquid_flowing_from_direction": "{{liquid?.flowingRules ?? []}}"
+						}
+					]
+				}
+            }
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "$module": "destructibleBP",
+    "$template": {
+        "minecraft:block": {
+            "components": {
+            "tag:minecraft:is_{{breakItem}}_item_destructible": {}
+            }
+        }
+    }
+}

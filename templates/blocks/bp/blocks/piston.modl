@@ -1,0 +1,12 @@
+{
+    "$module": "pistonBP",
+    "$template": {
+        "minecraft:block": {
+            "components": {
+                "minecraft:movable": {
+                    "movement_type": "{{movement_type}}"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "$module": "permutationsBP",
+    "$template": {
+        "minecraft:block": {
+            "permutations": "{{permutations}}"
+        }
+    }
+}

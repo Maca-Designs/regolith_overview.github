@@ -1,0 +1,15 @@
+{
+    "$module": "tickBP",
+    "$template": {
+        "minecraft:block": {
+            "components": {
+                "minecraft:tick": {
+                    "interval_range": [
+                        "{{tick.min}}",
+                        "{{tick.max}}"
+                    ]
+                }
+            }
+        }
+    }
+}

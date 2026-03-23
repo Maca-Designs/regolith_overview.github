@@ -1,0 +1,12 @@
+{
+    "$module": "eventBP",
+    "$template": {
+        "minecraft:block": {
+            "components": {
+               "{{#componentList as component}}": {
+                "{{component}}": {}
+               }
+            }
+        }
+    }
+}

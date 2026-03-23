@@ -1,0 +1,12 @@
+{
+    "$module": "redstoneConsumerBP",
+    "$template": {
+        "minecraft:block": {
+            "components": {
+                "minecraft:redstone_consumer": {
+                    "redstone_conductor": true
+                }
+            }
+        }
+    }
+}

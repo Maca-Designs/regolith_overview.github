@@ -1,0 +1,12 @@
+{
+    "$module": "tagBP",
+    "$template": {
+        "minecraft:block": {
+            "components": {
+                "{{#tagBP as tag}}" {
+                    "{{tag}}": {}
+                }
+            }
+        }
+    }
+}
