@@ -1,0 +1,50 @@
+{
+        "flora": [
+        {
+            "name": "new_crop",
+            "flammable": true,
+            "growing": true,
+            "spreading": false,
+            "2Tall": false,
+            "harvestable": true,
+            "sound": "grass",
+            "growStates": 4,
+            "geo": "geometry.maca_ve.custom_crop",
+            "tags": [
+                "growing_block",
+                "harvestable"
+            ],
+            "componentList":["maca_templ:custom_crop"],
+            "map_color": '#C7CC8A',
+            "light": 0,
+            "dampening": 0,
+            "selection_box": {
+                "origin": [
+                    -4,
+                    0,
+                    -4
+                ],
+                "size": [
+                    8,
+                    11,
+                    8
+                ]
+            },
+            "collision_box": {
+                "origin": [
+                    -4,
+                    0,
+                    -4
+                ],
+                "size": [
+                    8,
+                    11,
+                    8
+                ]
+            },
+            "extraModulesBP":[
+                "growingBlockBP"
+            ]
+        }
+    ]
+}

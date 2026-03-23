@@ -1,10 +1,10 @@
 {
     "$files": {
-        "array": "{{blocks.filter(x => x?.full_block)}}",
+        "array": "flora",
         "fileName": "{{name}}.block"
     },
     "$extend": [
-        "{{(extraModulesBP ? extraModulesBP : []) + ['block.item_tier']}}"
+        "{{(extraModulesBP ? extraModulesBP : [])}}"
     ],
     "$template": {
         "format_version": "1.26.0,
@@ -21,12 +21,6 @@
                         "tag:maca_templ:{{tag}}": {},
                     }
                 },
-                "{{?break_time}}": {
-                    "minecraft:destructible_by_mining": {
-                        "seconds_to_destroy": "{{break_time ?? 1}}"
-                    }
-                },
-                "minecraft:destructible_by_explosion": "{{explosion ?? true}}",
                 "{{?collision_box != undefined}}": {
                     "minecraft:collision_box": "{{collision_box}}"
                 },

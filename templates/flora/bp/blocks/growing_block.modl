@@ -1,0 +1,29 @@
+{
+    "$module": "growingBlockBP",
+    "$template": {
+        "minecraft:block": {
+            "description": {
+                "states": {
+                    "maca_templ:growing_state":[ "{{0..growStates}}"]
+                }
+            },
+            "permutations": [
+                {
+                    "{{#0..growStates}}": {
+                        "condition": "q.block_state('maca_templ:growing_state') == {{value}}",
+                        "components": {
+                            "minecraft:material_instances": {
+                                "*": {
+                                "texture": "maca_templ.{{name}}_stage_{{value}}",
+                                "render_method": "alpha_test",
+                                "face_dimming": true,
+                                "ambient_occlusion": true
+                                }
+                            }
+                        }
+                    }
+                }             
+            ]
+        }
+    }
+}
