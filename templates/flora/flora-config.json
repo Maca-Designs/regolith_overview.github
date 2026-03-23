@@ -1,5 +1,5 @@
 {
-  "name": "Block Template",
+  "name": "Nature Blocks Template",
   "description": "A template containing the files needed to generate a new nature related block. This includes templates, modules and scripts for crops, flowers, plants and vines.",
   "version": "1.0.0",
   "author": "Andrew Polmans",
