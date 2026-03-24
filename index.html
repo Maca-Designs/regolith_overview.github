@@ -859,7 +859,7 @@ async function createTemplateCard(folderData, onDownloadClick, org, repo) {
     card.innerHTML = `
         <h3>${folderData.config.name || folderData.name}</h3>
         <p>${folderData.config.description}</p>
-        <div class="card-footer">
+        <div class="template-meta">
             ${fileCountSpan.outerHTML}
             <button class="download-btn namespace-download" data-folder="${folderData.name}">Download Pack</button>
         </div>
