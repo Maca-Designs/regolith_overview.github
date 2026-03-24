@@ -1,0 +1,61 @@
+{
+    "biomes": [
+        {
+            "name": "new_biome",
+            "climate": {
+                "rain": 0.7,
+                "snow": [ 0.0, 0.0 ],
+                "temp": 0.9
+            },
+            "noise_type": "lowlands",
+            "replace_biomes": [
+                {
+                    "dimension": "minecraft:overworld",
+                    "targets": ["minecraft:beach"],
+                    "amount": 0.3,
+                    "noise_frequency_scale": 1
+                },
+                {
+                    "dimension": "minecraft:overworld",
+                    "targets": ["minecraft:desert"],
+                    "amount": 0.3,
+                    "noise_frequency_scale": 1
+                }
+            ],
+            "builder": {
+                "type": "minecraft:overworld",
+                "sea_floor_depth": 7,
+                "sea_floor_material": "minecraft:gravel",
+                "foundation_material": "minecraft:stone",
+                "mid_material": "minecraft:sand",
+                "top_material": "minecraft:sand",
+                "sea_material": "minecraft:water"
+            },
+            "tags": [
+                "animal",
+                "monster",
+                "overworld",
+                "beach_oasis"
+            ],
+            // RP biome details - EVERYTHING below is optional, uses default values if not present
+            "water": "#497F99",
+            "sky": "#88A2D2",
+            "foliage": "#5D8049",
+            "grass": "#668C50",
+            "dry_foliage": "#645C40",
+            "ambient": {
+                "addition":{
+                    "asset": "ambient.basalt_deltas.additions",
+                    "chance": 0.0111
+                },
+                "loop": "ambient.basalt_deltas.loop",
+                "mood": "ambient.basalt_deltas.mood"
+            },
+            "particles":{ 
+                "name": "white_ash",
+                "rate": 1.0
+            },
+            "biome_music": "birch_forest"
+        }
+    ]
+}

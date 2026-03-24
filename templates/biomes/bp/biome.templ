@@ -1,0 +1,59 @@
+{
+     "$files": {
+        "array": "biomes",
+        "fileName": "{{name}}.biome"
+    },
+    "$template": {
+        "format_version": "1.21.120",
+        "minecraft:biome": {
+            "description": {
+                "identifier": "maca_templ:{{name}}"
+            },
+            "components": {
+                "minecraft:climate": {
+                    "downfall": 0.7,
+                    "snow_accumulation": [ 0.0, 0.0 ],
+                    "temperature": 0.9
+                },
+                "minecraft:overworld_height": {
+                    "noise_type": "lowlands"
+                },
+                "minecraft:replace_biomes": {
+                    "replacements": [
+                        {
+                            "dimension": "minecraft:overworld",
+                            "targets": ["minecraft:beach"],
+                            "amount": 0.3,
+                            "noise_frequency_scale": 1
+                        },
+                        {
+                            "dimension": "minecraft:overworld",
+                            "targets": ["minecraft:desert"],
+                            "amount": 0.3,
+                            "noise_frequency_scale": 1
+                        }
+                    ]
+                },  
+                "minecraft:surface_builder": {
+                    "builder": {
+                        "type": "minecraft:overworld",
+                        "sea_floor_depth": 7,
+                        "sea_floor_material": "minecraft:gravel",
+                        "foundation_material": "minecraft:stone",
+                        "mid_material": "minecraft:sand",
+                        "top_material": "minecraft:sand",
+                        "sea_material": "minecraft:water"
+                    }
+                },
+                "minecraft:tags": {
+                    "tags": [
+                        "animal",
+                        "monster",
+                        "overworld",
+                        "beach_oasis"
+                    ]
+                }
+            }
+        }
+    }
+}

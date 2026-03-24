@@ -1,0 +1,7 @@
+{
+  "name": "Biome Template",
+  "description": "A template containing the files needed to generate a new custom biome in minecraft",
+  "version": "1.0.0",
+  "author": "Andrew Polmans",
+  "tags": ["biomes"]
+}
