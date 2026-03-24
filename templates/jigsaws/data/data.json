@@ -1,0 +1,18 @@
+{
+    "features": [
+        {
+            "name": "new_jigsaw",
+            "jigsaw": true,
+            "salt": 31158334, // be sure to have this updated when two different jigsaws spawn in the same biome
+            "terrain_adaptation": "beard_thin",
+            "step": "surface_structures",
+            "path": "maca_templ/jigsaws/",
+            "biome_filter":[{"test": "has_biome_tag", "operator": "==", "value": "cherry_grove"}],
+            "separation": 10,
+            "spacing": 22,
+            "projection": "rigid",
+            "offset": -18,
+            "liquid": "ignore_waterlogging"
+        }
+    ]
+}

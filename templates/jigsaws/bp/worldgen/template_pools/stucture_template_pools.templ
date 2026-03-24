@@ -1,0 +1,25 @@
+{ 
+    "$files": {
+        "array": "{{features.filter(x => x?.jigsaw)}}",
+        "fileName": "{{name}}_structure_pool"
+    },
+    "$template": {
+        "format_version": "1.21.120", 
+        "minecraft:template_pool": { 
+            "description": { 
+            "identifier": "maca_templ:{{name}}_pool" 
+            }, 
+            "elements": [ 
+            { 
+                "element": { 
+                "element_type": "minecraft:single_pool_element",
+                "location": "{{path}}{{name}}",
+                "projection": "{{projection}}"
+                }, 
+                "weight": 1
+            }
+            ],
+            "fallback": "minecraft:empty"
+        } 
+    }
+}

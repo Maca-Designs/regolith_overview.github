@@ -1,0 +1,27 @@
+{
+    "$files": {
+        "array": "{{features.filter(x => x?.jigsaw)}}",
+        "fileName": "{{name}}_structure"
+    },
+    "$template": {
+        "format_version": "1.21.120",
+        "minecraft:structure_set": {
+            "description": {
+            "identifier": "maca_templ:{{name}}"
+            },
+            "placement": {
+            "type": "minecraft:random_spread",
+            "salt": "{{salt}}",
+            "separation": "{{separation}}",
+            "spacing": "{{spacing}}",
+            "spread_type": "linear"
+            },
+            "structures": [
+            {
+                "structure": "maca_templ:{{name}}",
+                "weight": 1
+            }
+            ]
+        }
+    }
+}

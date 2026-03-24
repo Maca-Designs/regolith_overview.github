@@ -1,0 +1,7 @@
+{
+  "name": "Jigsaw Template",
+  "description": "A template containing the files needed to generate new jigsaw structures, the JSON files needed that is.",
+  "version": "1.0.0",
+  "author": "Andrew Polmans",
+  "tags": ["biomes", "features"]
+}
