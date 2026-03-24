@@ -56,108 +56,12 @@ header p {
     margin: 1rem 0;
 }
 
-.template-card {
-  background: rgb(54, 58, 67);
-  border: 2px solid rgb(102, 183, 161);
-  border-radius: 12px;
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.2s, box-shadow 0.2s;
-  display: block;
-  height: 100%;              /* Let inner grid stretch */
-}
-
-.template-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(102, 183, 161, 0.3);
-}
-
-.card-inner {
-  display: grid;
-  grid-template-rows: auto 1fr auto;  /* header (if any) / body / footer */
-  height: 100%;
-  padding: 1.5rem;
-}
-
-.card-body {
-  overflow: hidden;
-}
-
-.template-card h3 {
-  color: rgb(102, 183, 161);
-  margin-bottom: 0.5rem;
-  font-size: 1.3rem;
-}
-
-.card-description {
-  color: white;
-  margin: 0;
-  /* Truncation for collapsed state */
-  display: -webkit-box;
-  -webkit-line-clamp: 5; 
-  line-clamp: 5;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.template-card.expanded .card-description {
-  -webkit-line-clamp: unset;
-  line-clamp: unset;
-  max-height: none;
-}
-
 .card-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 1rem;
   gap: 1rem;
-}
-
-.total-files {
-  color: rgb(102, 183, 161);
-  font-weight: 500;
-  font-size: 1rem;
-  white-space: nowrap;
-}
-
-.card-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.card-toggle {
-  background: transparent;
-  border: 1px solid rgb(102, 183, 161);
-  color: rgb(102, 183, 161);
-  border-radius: 999px;
-  padding: 0.15rem 0.5rem;
-  font-size: 0.8rem;
-  cursor: pointer;
-  line-height: 1;
-}
-
-.template-card.expanded .card-toggle {
-  transform: rotate(180deg);
-}
-
-.download-btn,
-.namespace-download {
-  display: inline-block;
-  background: rgb(102, 183, 161);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-weight: bold;
-  font-size: 0.9rem;
-  border: none;
-  cursor: pointer;
-}
-
-.download-btn:hover,
-.namespace-download:hover {
-  background: rgb(90, 160, 140);
 }
 
 .templates-grid {
@@ -167,6 +71,30 @@ header p {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
+}
+
+.template-card {
+    background: white;
+    border: 2px solid rgb(102, 183, 161);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    background: rgb(54, 58, 67);
+    color: white;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: block;
+}
+
+.template-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(102, 183, 161, 0.3);
+}
+
+.template-card h3 {
+    color: rgb(102, 183, 161);
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
 }
 
 .template-card p {
@@ -179,6 +107,38 @@ header p {
     justify-content: space-between;
     align-items: center;
     margin-top: 1rem;
+}
+
+.total-files {
+    color: rgb(102, 183, 161);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.namespace-download {
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    background: rgb(102, 183, 161);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.namespace-download:hover {
+    background: rgb(90, 160, 140);
+}
+
+.download-btn {
+    display: inline-block;
+    background: rgb(102, 183, 161);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
 }
 
 .readme-btn {
@@ -897,19 +857,12 @@ async function createTemplateCard(folderData, onDownloadClick, org, repo) {
     fileCountSpan.dataset.folder = folderData.name;
     
     card.innerHTML = `
-    <div class="card-inner">
-        <div class="card-body">
-        <h3>${config.name || folder}</h3>
-        <p class="card-description">${config.description}</p>
-        </div>
+        <h3>${folderData.config.name || folderData.name}</h3>
+        <p>${folderData.config.description}</p>
         <div class="card-footer">
-        <span class="total-files">${fileCount} files</span>
-        <div class="card-actions">
-            <button class="card-toggle" type="button" aria-label="Toggle description">▾</button>
+            ${fileCountSpan.outerHTML}
             <button class="download-btn namespace-download" data-folder="${folderData.name}">Download Pack</button>
         </div>
-        </div>
-    </div>
     `;
     
     card.querySelector('.namespace-download').addEventListener('click', (e) => {
