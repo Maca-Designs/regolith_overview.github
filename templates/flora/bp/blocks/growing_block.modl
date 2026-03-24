@@ -4,20 +4,54 @@
         "minecraft:block": {
             "description": {
                 "states": {
-                    "maca_templ:growing_state":[ "{{0..growStates}}"]
+                    "maca_templ:growing_state":[ "{{0..growStates}}"],
+                    "maca_templ:sheared":[ false, true]
+                }
+            },
+            "components": {
+                "maca_templ:floraInteractComponent": {
+                    "max_stage": "{{growStates}}",
+                    "state_name": "maca_templ:growing_state",
+                    "{{$harvestable}}": {
+                        "drop": "{{harvest.item}}",
+                        "base_stage": "{{baseStage}}"
+                    }
                 }
             },
             "permutations": [
                 {
+                    "condition": "q.block_state('maca_templ:growth_stage') != "{{growStates}}" && !q.block_state('maca_templ:sheared')",
+                    "components": {
+                            "maca_templ:floraRandomTickComponent": {
+                                "max_stage": "{{growStates}}",
+                                "state_name": "maca_templ:growing_state"
+                            }
+                    }
+                },
+                {
                     "{{#0..growStates}}": {
                         "condition": "q.block_state('maca_templ:growing_state') == {{value}}",
                         "components": {
-                            "minecraft:material_instances": {
-                                "*": {
-                                "texture": "maca_templ.{{name}}_stage_{{value}}",
-                                "render_method": "alpha_test",
-                                "face_dimming": true,
-                                "ambient_occlusion": true
+                            "{{?textures}}": {
+                                "minecraft:material_instances": {
+                                    "{{#textures}}": {
+                                        "{{textures.face ?? '*'}}": {
+                                            "texture": "maca_templ.{{textures.name}}_stage_{{value}}",
+                                            "render_method": "{{textures.render ?? 'opaque'}}",
+                                            "face_dimming": "{{textures.dimming ?? true}}",
+                                            "ambient_occlusion": "{{textures.occlusion ?? true}}"
+                                        }
+                                    }
+                                }
+                            },
+                            "{{?textures == undefined}}": {
+                                "minecraft:material_instances": {
+                                    "*": {
+                                        "texture": "maca_templ.{{name}}_stage_{{value}}",
+                                        "render_method": "opaque",
+                                        "face_dimming": true,
+                                        "ambient_occlusion": true
+                                    }
                                 }
                             }
                         }

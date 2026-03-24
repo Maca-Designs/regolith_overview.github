@@ -1,0 +1,19 @@
+{
+    "$module": "food_itemBP",
+    "$template": {
+        "minecraft:item": {
+            "components": {
+                "minecraft:food": {
+                    "nutrition": "{{food.nutrition}}",
+                    "saturation_modifier": "{{food.saturation}}",
+                    "can_always_eat": false
+                },
+                "minecraft:use_modifiers": {
+                    "movement_modifier": "{{food.movement_modifier}}",
+                    "use_duration": "{{food.use_duration}}"
+                },
+                "minecraft:use_animation": "{{food.use_animation}}"
+            }
+        }
+    }
+}

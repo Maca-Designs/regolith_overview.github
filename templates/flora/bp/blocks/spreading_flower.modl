@@ -1,0 +1,13 @@
+{
+    "$module": "spreadingFlowerBP",
+    "$template": {
+        "minecraft:block": {
+            "components": {
+                "maca_templ:floraInteractComponent": {
+                    "max_stage": 0,
+                    "state_name": ""
+                }
+            }
+        }
+    }
+}

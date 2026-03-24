@@ -1,0 +1,36 @@
+{
+    "$module": "offsetBP",
+    "$template": {
+        "minecraft:block": {
+        "format_version": "1.21.120",
+            "components": {
+                "minecraft:random_offset": {
+                    "x": {
+                        // This is the range of possible values we can pick from
+                        "range": {
+                        "min": "{{random_offset.min}}",
+                        "max": "{{random_offset.max}}"
+                        },
+                        // This is the equally spaced steps across the given range 
+                        // Provide 0 for all possible values in the range
+                        "steps": 16
+                    },
+                    "y": {
+                        "range": {
+                        "min": 0,
+                        "max": 0
+                        },
+                        "steps": 16
+                    },
+                    "z": {
+                        "range": {
+                        "min": "{{random_offset.min}}",
+                        "max": "{{random_offset.max}}"
+                        },
+                        "steps": 16
+                    }
+                }
+            }
+        }
+    }
+}

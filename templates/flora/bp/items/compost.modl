@@ -1,0 +1,12 @@
+{
+    "$module": "compost_itemBP",
+    "$template": {
+        "minecraft:item": {
+            "components": {
+                "minecraft:compostable":{
+            	    "composting_chance": "{{compost_chance}}"
+                }
+            }
+        }
+    }
+}

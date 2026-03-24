@@ -1,0 +1,17 @@
+{
+    "$module": "placementFilterBP",
+    "$template": {
+        "minecraft:block": {
+            "components": {
+                "minecraft:placement_filter": {
+                    "conditions": [
+                        {
+                            "allowed_faces": "{{allowed_faces}}",
+                            "block_filter": "{{block_filter}}"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

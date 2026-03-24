@@ -1,0 +1,87 @@
+{
+    "$module": "placeTallBP",
+    "$template": {
+        "minecraft:block": {
+            "description": {
+                "states": {
+                    "maca_templ:top": [
+                        false,
+                        true
+                    ]
+                }
+            },
+            "components": {
+                "maca_templ:place2TallComponent": {
+                }
+            },
+            "permutations": [
+                {
+                    "condition": "q.block_state('maca_templ:top')",
+                    "components": {
+                        "{{?textures}}": {
+                            "minecraft:material_instances": {
+                                "{{#textures}}": {
+                                    "{{textures.face ?? '*'}}": {
+                                        "texture": "maca_templ.{{textures.name}}_top",
+                                        "render_method": "{{textures.render ?? 'opaque'}}",
+                                        "face_dimming": "{{textures.dimming ?? true}}",
+                                        "ambient_occlusion": "{{textures.occlusion ?? true}}"
+                                    }
+                                }
+                            }
+                        },
+                        "{{?textures == undefined}}": {
+                            "minecraft:material_instances": {
+                                "*": {
+                                    "texture": "maca_templ.{{name}}_top",
+                                    "render_method": "opaque",
+                                    "face_dimming": true,
+                                    "ambient_occlusion": true
+                                }
+                            }
+                        },
+                        "minecraft:placement_filter": {
+                            "conditions": [
+                                {
+                                    "allowed_faces": [
+                                        "up"
+                                    ],
+                                    "block_filter": [
+                                        "maca_templ:{{name}}"
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "condition": "!q.block_state('maca_templ:top')",
+                    "components": {
+                        "{{?textures}}": {
+                            "minecraft:material_instances": {
+                                "{{#textures}}": {
+                                    "{{textures.face ?? '*'}}": {
+                                        "texture": "maca_templ.{{textures.name}}_bottom",
+                                        "render_method": "{{textures.render ?? 'opaque'}}",
+                                        "face_dimming": "{{textures.dimming ?? true}}",
+                                        "ambient_occlusion": "{{textures.occlusion ?? true}}"
+                                    }
+                                }
+                            }
+                        },
+                        "{{?textures == undefined}}": {
+                            "minecraft:material_instances": {
+                                "*": {
+                                    "texture": "maca_templ.{{name}}_bottom",
+                                    "render_method": "opaque",
+                                    "face_dimming": true,
+                                    "ambient_occlusion": true
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

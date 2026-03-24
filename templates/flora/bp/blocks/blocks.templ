@@ -12,14 +12,38 @@
             "description": {
                 "identifier": "maca_templ:{{name}}",
                 "menu_category": {
-                    "category": "{{category??'construction'}}"
+                    "category": "{{category??'items'}}"
                 }
             },
             "components": {
+                "minecraft:precipitation_interactions": {"precipitation_behavior": "none"},
+                "minecraft:connection_rule": {
+                    "accepts_connections_from": "none"
+                },
+                "minecraft:support": { 
+                    "shape": "stair" 
+                }
                 "{{$tags}}": {
                     "{{#tags as tag}}": {
                         "tag:maca_templ:{{tag}}": {},
                     }
+                },
+                "{{$pottable}}": {
+                    "minecraft:flower_pottable": {},
+                    "minecraft:embedded_visual": {
+                        "geometry": "geometry.maca_templ.custom_cross_pot",
+                        "material_instances": {
+                            "*": {
+                                "texture": "maca_templ.{{name}}",
+                                "ambient_occlusion": false,
+                                "face_dimming": false,
+                                "render_method": "alpha_test"
+                            }
+                        }
+                    }
+                },
+                "minecraft:movable": {
+                    "movement_type": "popped"
                 },
                 "{{?collision_box != undefined}}": {
                     "minecraft:collision_box": "{{collision_box}}"
@@ -40,12 +64,6 @@
                         }
                     }
                 },
-                "{{?flammable}}": {
-                    "minecraft:flammable": {
-                        "catch_chance_modifier": 5,
-                        "destroy_chance_modifier": 20
-                    }
-                },
                 "{{?textures == undefined}}": {
                     "minecraft:material_instances": {
                         "*": {
@@ -54,6 +72,12 @@
                             "face_dimming": true,
                             "ambient_occlusion": true
                         }
+                    }
+                },
+                "{{?flammable}}": {
+                    "minecraft:flammable": {
+                        "catch_chance_modifier": 5,
+                        "destroy_chance_modifier": 20
                     }
                 },
                 "minecraft:friction": "{{friction ?? 0.4}}",

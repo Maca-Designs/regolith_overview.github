@@ -1,0 +1,35 @@
+{
+    "$files": {
+        "array": "{{flora.filter(x => x?.replace_block_item)}}",
+        "fileName": "{{name}}.i"
+    },
+    "$extend": ["{{extraItemModulesBP ? extraItemModulesBP : []}}"],
+    "$template": {
+          "format_version": "1.21.50",
+            "minecraft:item": {
+                "description": {
+                "identifier": "maca_templ:{{name}}",
+                "menu_category": {
+                    "category": "{{category}}"
+                }
+                },
+                "components": {
+                    "minecraft:tags": {
+                        "tags": [
+                            "maca_templ:vine"
+                        ]
+                    },
+                    "minecraft:block_placer": {
+                        "block": "maca_templ:{{name}}",
+                        "replace_block_item": true,
+                        "use_on": "{{block_filter}}"
+                    },
+                    "minecraft:max_stack_size": "{{stack}}",
+                    "minecraft:allow_off_hand": "{{=offhand ?? false}}",
+                    "minecraft:glint": "{{=glint ?? false}}",
+                    "minecraft:icon": "maca_templ.{{name}}_item",
+                    "minecraft:rarity": "{{=rarity ?? 'common'}}"
+                }
+            }
+    }
+}

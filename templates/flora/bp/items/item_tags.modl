@@ -1,0 +1,12 @@
+{
+    "$module": "tag_itemBP",
+    "$template": {
+        "minecraft:item": {
+            "components": {
+                "minecraft:tags": {
+                    "tags": "{{itemTags}}"
+                }
+            }
+        }
+    }
+}

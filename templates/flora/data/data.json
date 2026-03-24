@@ -1,23 +1,43 @@
 {
-        "flora": [
+    "flora": [
         {
             "name": "new_crop",
             "flammable": true,
-            "growing": true,
-            "spreading": false,
-            "2Tall": false,
-            "harvestable": true,
+            "category": "nature",
+            "allowed_faces": [
+                "up"
+            ],
+            "block_filter": [
+                "minecraft:farmland"
+            ],
+            "harvestable": true, //only needed for blocks that can be harvested with interaction, like berries
+            "replace_block_item": true,
+            "compost_chance": 10,
+            "harvest": {
+                "item": "maca_templ:new_berries", // the drop item for the harvest interaction
+                "qty": 3
+            },
             "sound": "grass",
-            "growStates": 4,
-            "geo": "geometry.maca_ve.custom_crop",
+            "growStates": 4, //adds in all the states and permutations needed
+            "baseStage": 0, //sometimes needed to make the post-harvest stage greater than 0. Only used for harvestable blocks like berry bush (interact to harvest)
+            "geo": "geometry.maca_templ.custom_crop",
+            "pottable": false, //used to make a flower pottable in a flower pot
             "tags": [
                 "growing_block",
                 "harvestable"
+                //"2Tall"
+                //"spreading_block"
             ],
-            "componentList":["maca_templ:custom_crop"],
+            "item_tags": [
+                //if needed - "maca_templ:is_vine" for instance is needed for the code to function when using an item for the vine
+            ],
             "map_color": '#C7CC8A',
             "light": 0,
             "dampening": 0,
+            "random_offset": {
+                "min": -2,
+                "max": 2
+            },
             "selection_box": {
                 "origin": [
                     -4,
@@ -43,7 +63,16 @@
                 ]
             },
             "extraModulesBP":[
-                "growingBlockBP"
+                "randomTickBP",
+                "placementFilterBP",
+                "offsetBP",
+                "growingBlockBP" //this is used for all growing blocks with multiple states, adding harvestable:true and the tag also adds interact to harvest
+                //"spreadingFlowerBP" - only for flowers that should spread when bonemealed - cannot combine with growing
+                //"placeTallBP" - This is for when you want a 2 tall flower on placement, use growing blocks and 2Tall tag for other scenarios
+            ],
+            "extraItemModulesBP": [
+                "block_placerBP",
+                "compost_itemBP"
             ]
         }
     ]
