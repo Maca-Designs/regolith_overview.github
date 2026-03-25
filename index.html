@@ -697,50 +697,59 @@ document.addEventListener('DOMContentLoaded', async function() {
     const grid = document.getElementById('templatesGrid');
     
     try {
-        // 1 SINGLE API CALL - entire repo tree
+        // SINGLE API CALL - gets entire repo tree
         const treeUrl = `https://api.github.com/repos/${org}/${repo}/git/trees/main?recursive=1`;
         const treeResponse = await fetch(treeUrl);
         const treeData = await treeResponse.json();
         
-        // Get template folders from tree
+        // 1. Get all template folders
         const templateFolders = treeData.tree
             .filter(item => item.path.startsWith('templates/') && item.type === 'tree')
-            .map(item => item.path.split('/')[1]);
+            .map(item => item.path.split('/')[1]);  // Extract folder name
         
+        // 2. Filter unique folders & fetch configs in parallel (1 call per config)
         const uniqueFolders = [...new Set(templateFolders)];
         
-        // Parallel config fetches
-        const configPromises = uniqueFolders.map(async folder => {
+        // Fetch ALL configs at once (still hits rate limit but much less)
+        const configPromises = uniqueFolders.map(async (folder) => {
             try {
                 const configUrl = `https://raw.githubusercontent.com/${org}/${repo}/main/templates/${folder}/${folder}-config.json`;
                 const configResponse = await fetch(configUrl);
                 if (!configResponse.ok) return null;
+                
+                const config = await configResponse.json();
                 return {
                     name: folder,
-                    config: await configResponse.json(),
+                    config: config,
                     apiPath: `templates/${folder}`
                 };
             } catch (e) {
+                console.warn(`Skipping ${folder} - no config.json`);
                 return null;
             }
         });
         
+        // Wait for ALL configs (parallel!)
         const folderDataList = (await Promise.all(configPromises)).filter(Boolean);
+        
+        // Store for download/filtering
         window.templateData = folderDataList;
         
-        // Parallel card creation WITH file counts from treeData!
-        const cardPromises = folderDataList.map(folderData => 
-            createTemplateCard(folderData, async () => {
+        // 3. Create cards with file counts (parallel too!)
+        const cardPromises = folderDataList.map(async (folderData) => {
+            const fileCount = await getFileCount(folderData.name, org, repo);
+            const card = createTemplateCard(folderData, async () => {
                 await downloadTemplateWithNamespace(folderData);
-            }, org, repo, treeData.tree)  // Pass tree items!
-        );
-        
-        const cards = await Promise.all(cardPromises);
-        cards.forEach(card => {
-            card.dataset.folderName = cards.find(c => c.dataset.folderName === folderData.name)?.dataset.folderName || folderData.name;
+            }, org, repo, fileCount);  // Pass fileCount directly
+            
+            card.dataset.folderName = folderData.name;
             allCards.push(card);
-            grid.appendChild(card);
+            return card;
         });
+        
+        // Render ALL cards at once
+        const cards = await Promise.all(cardPromises);
+        cards.forEach(card => grid.appendChild(card));
         
     } catch (error) {
         console.error('Failed to load templates:', error);
