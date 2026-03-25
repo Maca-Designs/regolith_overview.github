@@ -694,7 +694,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Store template data globally for download function
     window.templateData = [];
         
-    const grid = document.getElementById('templatesGrid');
+        const grid = document.getElementById('templatesGrid');
     
     try {
         // SINGLE API CALL - gets entire repo tree
@@ -866,11 +866,7 @@ async function createTemplateCard(folderData, onDownloadClick, org, repo) {
     const card = document.createElement('a');
     card.className = 'template-card';
     card.dataset.folderName = folderData.name; 
-    const folderPath = `templates/${folderData.name}/`;
-    const folderFiles = treeItems.filter(item => 
-        item.type === 'blob' && item.path.startsWith(folderPath)
-    );
-    const fileCount = folderFiles.length;
+    const fileCount = await getFileCount(folderData.name, org, repo);
     
     const fileCountSpan = document.createElement('span');
     fileCountSpan.className = 'total-files';
