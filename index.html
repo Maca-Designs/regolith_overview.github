@@ -693,63 +693,54 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     // Store template data globally for download function
     window.templateData = [];
+        
+    const grid = document.getElementById('templatesGrid');
     
     try {
-        // SINGLE API CALL - gets entire repo tree
+        // 1 SINGLE API CALL - entire repo tree
         const treeUrl = `https://api.github.com/repos/${org}/${repo}/git/trees/main?recursive=1`;
         const treeResponse = await fetch(treeUrl);
         const treeData = await treeResponse.json();
         
-        const grid = document.getElementById('templatesGrid');
-        
-        // 1. Get all template folders
+        // Get template folders from tree
         const templateFolders = treeData.tree
             .filter(item => item.path.startsWith('templates/') && item.type === 'tree')
-            .map(item => item.path.split('/')[1]);  // Extract folder name
+            .map(item => item.path.split('/')[1]);
         
-        // 2. Filter unique folders & fetch configs in parallel (1 call per config)
         const uniqueFolders = [...new Set(templateFolders)];
         
-        // Fetch ALL configs at once (still hits rate limit but much less)
-        const configPromises = uniqueFolders.map(async (folder) => {
+        // Parallel config fetches
+        const configPromises = uniqueFolders.map(async folder => {
             try {
                 const configUrl = `https://raw.githubusercontent.com/${org}/${repo}/main/templates/${folder}/${folder}-config.json`;
                 const configResponse = await fetch(configUrl);
                 if (!configResponse.ok) return null;
-                
-                const config = await configResponse.json();
                 return {
                     name: folder,
-                    config: config,
+                    config: await configResponse.json(),
                     apiPath: `templates/${folder}`
                 };
             } catch (e) {
-                console.warn(`Skipping ${folder} - no config.json`);
                 return null;
             }
         });
         
-        // Wait for ALL configs (parallel!)
         const folderDataList = (await Promise.all(configPromises)).filter(Boolean);
-        
-        // Store for download/filtering
         window.templateData = folderDataList;
         
-        // 3. Create cards with file counts (parallel too!)
-        const cardPromises = folderDataList.map(async (folderData) => {
-            const fileCount = await getFileCount(folderData.name, org, repo);
-            const card = createTemplateCard(folderData, async () => {
+        // Parallel card creation WITH file counts from treeData!
+        const cardPromises = folderDataList.map(folderData => 
+            createTemplateCard(folderData, async () => {
                 await downloadTemplateWithNamespace(folderData);
-            }, org, repo, fileCount);  // Pass fileCount directly
-            
-            card.dataset.folderName = folderData.name;
-            allCards.push(card);
-            return card;
-        });
+            }, org, repo, treeData.tree)  // Pass tree items!
+        );
         
-        // Render ALL cards at once
         const cards = await Promise.all(cardPromises);
-        cards.forEach(card => grid.appendChild(card));
+        cards.forEach(card => {
+            card.dataset.folderName = cards.find(c => c.dataset.folderName === folderData.name)?.dataset.folderName || folderData.name;
+            allCards.push(card);
+            grid.appendChild(card);
+        });
         
     } catch (error) {
         console.error('Failed to load templates:', error);
@@ -866,7 +857,11 @@ async function createTemplateCard(folderData, onDownloadClick, org, repo) {
     const card = document.createElement('a');
     card.className = 'template-card';
     card.dataset.folderName = folderData.name; 
-    const fileCount = await getFileCount(folderData.name, org, repo);
+    const folderPath = `templates/${folderData.name}/`;
+    const folderFiles = treeItems.filter(item => 
+        item.type === 'blob' && item.path.startsWith(folderPath)
+    );
+    const fileCount = folderFiles.length;
     
     const fileCountSpan = document.createElement('span');
     fileCountSpan.className = 'total-files';
