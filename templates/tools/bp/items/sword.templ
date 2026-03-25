@@ -1,0 +1,71 @@
+{
+    "$files": {
+        "array": "tools",
+        "fileName": "{{name ?? material}}_sword.i"
+    },
+    "$template": {
+        "format_version": "1.21.120",
+        "minecraft:item": {
+            "description": {
+                "identifier": "maca_templ:{{name ?? material}}_sword",
+                "menu_category": {
+                    "category": "equipment",
+                    "group": "minecraft:itemGroup.name.sword"
+                }
+            },
+            "components": {
+                "minecraft:tags": {
+                    "tags": [
+                        "minecraft:is_sword"
+                    ]
+                },
+                "minecraft:icon": "maca_templ.{{name ?? material}}_sword_item",
+                "minecraft:max_stack_size": 1,
+                "minecraft:stacked_by_data": false,
+                "minecraft:hand_equipped": true,
+                "minecraft:durability": {
+                    "max_durability": "{{dura}}"
+                },
+                "minecraft:repairable": {
+                    "repair_items": [
+                        {
+                            "items": [
+                                "{{repair}}"
+                            ],
+                            "repair_amount": "q.max_durability * 0.25"
+                        },
+                        {
+                            "items": [
+                                "maca_templ:{{name ?? material}}_sword"
+                            ],
+                            "repair_amount": "q.max_durability"
+                        }
+                    ]
+                },
+                "minecraft:fire_resistant": {
+                    "value": "{{fireproof}}"
+                },
+                "minecraft:mining_speed": 1.5,
+                "minecraft:damage": "{{damage}}",
+                "minecraft:enchantable": {
+                    "value": "{{enchantability??10}}",
+                    "slot": "sword"
+                },
+                "minecraft:can_destroy_in_creative": false,
+                "minecraft:digger": {
+                    "use_efficiency": true,
+                    "destroy_speeds": [
+                        {
+                            "block": "minecraft:web",
+                            "speed": 12
+                        },
+                        {
+                            "block": "minecraft:bamboo",
+                            "speed": 8
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

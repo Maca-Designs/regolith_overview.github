@@ -1,0 +1,54 @@
+{
+    "$files": {
+        "array": "gear",
+        "fileName": "{{name ?? material}}_leggings.i"
+    },
+    "$template": {
+          "format_version": "1.21.70",
+            "minecraft:item": {
+                "description": {
+                "identifier": "maca_templ:{{name ?? material}}_leggings",
+                "menu_category": {
+                    "category": "equipment",
+                    "group": "minecraft:itemGroup.name.leggings"
+                }
+                },
+                "components": {
+                    "minecraft:tags": {
+                    "tags": [
+                        "minecraft:is_armour",
+                        "maca_templ:leggings"
+                    ]
+                },
+                "minecraft:max_stack_size": "{{stack}}",
+                "minecraft:icon": "maca_templ.{{name ?? material}}_leggings_item",
+                "minecraft:allow_off_hand": "{{=offhand ?? false}}",
+                "minecraft:glint": "{{=glint ?? false}}",
+                "minecraft:rarity": "{{=rarity ?? 'common'}}",
+                "minecraft:wearable": {
+                    "slot": "slot.armor.legs",
+                    "protection": "{{wearable.leggings}}"
+                },
+                "minecraft:enchantable": {
+                    "slot": "armor_legs",
+                    "value": 15
+                },
+                "minecraft:durability": {
+                    "max_durability": "{{durability}}"
+                },
+                "minecraft:repairable": {
+                    "repair_items": [
+                        {
+                            "items": ["maca_templ:{{name ? name+'_ingot' : material}}"],
+                            "repair_amount": "{{repair_amount}}"
+                        },
+                        {
+                            "items": ["maca_templ:{{name ?? material}}_leggings"],
+                            "repair_amount": "{{durability}}"
+                        }
+                    ]
+                }
+                }
+            }
+    }
+}

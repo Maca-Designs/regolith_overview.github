@@ -1,0 +1,14 @@
+{
+    "tools": [
+        {
+            "name": "bronze",
+            "trident": true, //if true makes a trident as well as all other tools/weapons
+            "dura": 2300,
+            "repair": "maca_templ:bronze_ingot",
+            "damage": 6,
+            "toolDamage": 3,
+            "diggerSpeed": 5,
+            "fireproof": true // used to make items flame resistant like netherite tools/armor
+        }
+    ]
+}

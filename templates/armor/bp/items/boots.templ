@@ -1,0 +1,54 @@
+{
+    "$files": {
+        "array": "gear",
+        "fileName": "{{name ?? material}}_boots.i"
+    },
+    "$template": {
+          "format_version": "1.21.50",
+            "minecraft:item": {
+                "description": {
+                "identifier": "maca_ve:{{name ?? material}}_boots",
+                "menu_category": {
+                    "category": "equipment",
+                    "group": "itemGroup.name.boots"
+                }
+                },
+                "components": {
+                    "minecraft:tags": {
+                    "tags": [
+                        "minecraft:is_armour",
+                        "maca_ve:boots"
+                    ]
+                },
+                "minecraft:max_stack_size": "{{stack}}",
+                "minecraft:icon": "maca_ve.{{name ?? material}}_boots_item",
+                "minecraft:allow_off_hand": "{{=offhand ?? false}}",
+                "minecraft:glint": "{{=glint ?? false}}",
+                "minecraft:rarity": "{{=rarity ?? 'common'}}",
+                "minecraft:wearable": {
+                    "slot": "slot.armor.feet",
+                    "protection": "{{wearable.boots}}"
+                },
+                "minecraft:enchantable": {
+                    "slot": "armor_feet",
+                    "value": 15
+                },
+                "minecraft:durability": {
+                    "max_durability": "{{durability}}"
+                },
+                "minecraft:repairable": {
+                    "repair_items": [
+                        {
+                            "items": ["maca_ve:{{name ? name+'_ingot' : material}}"],
+                            "repair_amount": "{{repair_amount}}"
+                        },
+                        {
+                            "items": ["maca_ve:{{name ?? material}}_boots"],
+                            "repair_amount": "{{durability}}"
+                        }
+                    ]
+                }
+                }
+            }
+    }
+}

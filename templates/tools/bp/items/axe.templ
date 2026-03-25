@@ -1,0 +1,68 @@
+{
+    "$files": {
+        "array": "tools",
+        "fileName": "{{name ?? material}}_axe.i"
+    },
+    "$template": {
+	"format_version": "1.21.120",
+	"minecraft:item": {
+		"description": {
+			"identifier": "maca_templ:{{name ?? material}}_axe",
+			"menu_category": {
+				"category": "equipment",
+				"group": "minecraft:itemGroup.name.axe"
+			}
+		},
+		"components": {
+			"minecraft:icon": "maca_templ.{{name ?? material}}_axe_item",
+			"minecraft:hand_equipped": true,
+			"minecraft:tags": {
+				"tags": [
+					"minecraft:transformable_items",
+					"maca_templ:is_tool",
+					"minecraft:is_tool",
+					"minecraft:digger",
+					"minecraft:is_axe",
+                    "minecraft:diamond_tier"
+				]
+			},
+            "maca_templ:mining": {},
+			"minecraft:max_stack_size": 1,
+			"minecraft:stacked_by_data": false,
+			"minecraft:durability": {
+				"max_durability": "{{dura}}"
+			},
+			"minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": ["{{repair}}"],
+                        "repair_amount": "q.max_durability * 0.25"
+                    },
+                    {
+                        "items": [
+                        "maca_templ:{{name ?? material}}_axe"
+                        ],
+                        "repair_amount": "q.max_durability"
+                    }
+                ]
+            },
+			"minecraft:damage": "{{toolDamage}}",
+			"minecraft:digger": {
+				"destroy_speeds": [
+					{
+						"block": {
+							"tags": "q.any_tag('wood', 'pumpkin', 'plant', 'minecraft:is_axe_item_destructible', 'axe_diggable', 'maca_templ:is_wood')"
+						},
+						"speed": "{{diggerSpeed}}"
+					}
+				],
+				"use_efficiency": true
+			},
+            "minecraft:fire_resistant": {
+                "value": "{{fireproof}}"
+            },
+			"minecraft:enchantable": {"slot": "axe", "value": "{{enchantability??10}}"}
+		}
+	}
+}
+}

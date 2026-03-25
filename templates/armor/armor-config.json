@@ -1,0 +1,7 @@
+{
+  "name": "Armor Template",
+  "description": "A template containing the files needed to generate a new set of armor. Includes Chestplate, Leggings, Helmet & Boots",
+  "version": "1.0.0",
+  "author": "Andrew Polmans",
+  "tags": ["equipment", "armor"]
+}

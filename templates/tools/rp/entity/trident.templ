@@ -1,0 +1,38 @@
+{
+    "$files": {
+        "array": "{{tools.filter(x => x?.trident)}}",
+        "fileName": "{{name}}_trident.ce"
+    },
+    "$extend": ["{{extraModulesRP ? extraModulesRP : []}}"],
+    "$template": {
+        "format_version": "1.12.0",
+        "minecraft:client_entity": {
+            "description": {
+                "identifier": "maca_templ:{{name}}_thrown_trident",
+                "geometry": {
+                    "default": "geometry.maca_templ.trident"
+                },
+                "textures": {
+                    "default": "textures/maca_templ/entity/attachable/{{name}}_thrown_trident"
+                },
+                "materials": {
+                    "default": "entity_alphatest"
+                },
+                "render_controllers": [
+                    "controller.render.thrown_trident"
+                ],
+                "animations": {
+                    "rotate": "animation.maca_templ.trident.rotate"
+                },
+                "scripts": {
+                    "pre_animation": [
+                        "variable.trident_initial_pitch = query.property('maca_templ:trident_pitch');"
+                    ],
+                    "animate": [
+                        "rotate"   
+                    ]
+                }
+            }
+        }
+    }
+}

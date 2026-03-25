@@ -1,0 +1,92 @@
+{
+    "$files": {
+        "array": "tools",
+        "fileName": "{{name ?? material}}_hoe.i"
+    },
+    "$template": {
+        "format_version": "1.21.120",
+
+        "minecraft:item": {
+            "description": {
+                "identifier": "maca_templ:{{name ?? material}}_hoe",
+                "menu_category": {
+                    "category": "equipment",
+                    "group": "minecraft:itemGroup.name.hoe"
+                }
+            },
+            "components": {
+                "minecraft:icon": "maca_templ.{{name ?? material}}_hoe_item",
+                "minecraft:hand_equipped": true,
+                "minecraft:tags": {
+                    "tags": [
+					    "maca_templ:is_tool",
+                        "minecraft:is_tool",
+                        "minecraft:digger",
+                        "minecraft:is_hoe",
+                        "minecraft:diamond_tier"
+                    ]
+                },
+                "minecraft:max_stack_size": 1,
+                "minecraft:stacked_by_data": false,
+                "minecraft:durability": {"max_durability": "{{dura}}"},
+                "minecraft:repairable": {
+                    "repair_items": [
+                        {
+                            "items": ["{{repair}}"],
+                            "repair_amount": "q.max_durability * 0.25"
+                        },
+                        {
+                            "items": [
+                            "maca_templ:{{name ?? material}}_hoe"
+                            ],
+                            "repair_amount": "q.max_durability"
+                        }
+                    ]
+                },
+                "maca_templ:mining": {},
+                "minecraft:damage": "{{toolDamage}}",
+                "minecraft:digger": {
+                    "destroy_speeds": [
+                        {
+                            "block": {
+                                "tags": "q.any_tag('hoe_diggable', 'minecraft:is_hoe_item_destructible')"
+                            },
+                            "speed": "{{diggerSpeed}}"
+                        },
+                        {"block": "minecraft:calibrated_sculk_sensor", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:moss_block", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:moss_carpet", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:nether_wart_block", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:sculk", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:sculk_catalyst", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:sculk_sensor", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:sculk_shrieker", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:sculk_vein", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:shroomlight", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:sponge", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:target", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:warped_wart_block", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:hay_block", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:dried_kelp_block", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:azalea_leaves", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:azalea_leaves_flowered", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:cherry_leaves", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:mangrove_leaves", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:oak_leaves", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:spruce_leaves", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:mangrove_leaves", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:acacia_leaves", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:birch_leaves", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:jungle_leaves", "speed": "{{diggerSpeed}}"},
+                        {"block": "minecraft:dark_oak_leaves", "speed": "{{diggerSpeed}}"}
+                    ],
+                    "use_efficiency": true
+                },
+                "minecraft:fire_resistant": {
+                    "value": "{{fireproof}}"
+                },
+                "minecraft:enchantable": {"slot": "hoe", "value": "{{enchantability??10}}"}
+            }
+        }
+    }
+}

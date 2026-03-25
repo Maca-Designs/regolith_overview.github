@@ -1,0 +1,69 @@
+{
+        "$files": {
+        "array": "tools",
+        "fileName": "{{name ?? material}}_pickaxe.i"
+    },
+    "$template": {
+        "format_version": "1.21.120",
+
+        "minecraft:item": {
+            "description": {
+                "identifier": "maca_templ:{{name ?? material}}_pickaxe",
+                "menu_category": {
+                    "category": "equipment",
+                    "group": "minecraft:itemGroup.name.pickaxe"
+                }
+            },
+            "components": {
+                "minecraft:icon": "maca_templ.{{name ?? material}}_pickaxe_item",
+                "minecraft:hand_equipped": true,
+                "minecraft:tags": {
+                    "tags": [
+					    "maca_templ:is_tool",
+                        "minecraft:transformable_items",
+                        "minecraft:is_tool",
+                        "minecraft:digger",
+                        "minecraft:is_pickaxe",
+                        "minecraft:diamond_tier"
+                    ]
+                },
+                "maca_templ:mining": {},
+                "minecraft:max_stack_size": 1,
+                "minecraft:stacked_by_data": false,
+                "minecraft:durability": {
+                    "max_durability": "{{dura}}"
+                },
+                "minecraft:repairable": {
+                    "repair_items": [
+                        {
+                            "items": ["{{repair}}"],
+                            "repair_amount": "q.max_durability * 0.25"
+                        },
+                        {
+                            "items": [
+                            "maca_templ:{{name ?? material}}_pickaxe"
+                            ],
+                            "repair_amount": "q.max_durability"
+                        }
+                    ]
+                },
+                "minecraft:fire_resistant": {
+                    "value": "{{fireproof}}"
+                },
+                "minecraft:damage": "{{toolDamage}}",
+                "minecraft:digger": {
+                    "destroy_speeds": [
+                        {
+                            "block": {
+                                "tags": "q.any_tag('stone', 'metal', 'netherite_pick_diggable', 'diamond_pick_diggable', 'gold_pick_diggable', 'iron_pick_diggable', 'stone_pick_diggable', 'wood_pick_diggable', 'minecraft:is_pickaxe_destructible', 'minecraft:is_pickaxe_item_destructible')"
+                            },
+                            "speed": "{{diggerSpeed}}"
+                        }
+                    ],
+                    "use_efficiency": true
+                },
+                "minecraft:enchantable": {"slot": "pickaxe", "value": "{{enchantability??10}}"}
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "$template": {
+        "resource_pack_name": "pack.name",
+        "texture_name": "atlas.items",
+        "texture_data": {
+            "{{#tools}}": {
+                "maca_templ.{{name}}_sword_item": {
+                    "textures": ["textures/maca_templ/items/{{name}}_sword"]
+                },
+                "maca_templ.{{name}}_hoe_item": {
+                    "textures": ["textures/maca_templ/items/{{name}}_hoe"]
+                },
+                "maca_templ.{{name}}_shovel_item": {
+                    "textures": ["textures/maca_templ/items/{{name}}_shovel"]
+                },
+                "maca_templ.{{name}}_axe_item": {
+                    "textures": ["textures/maca_templ/items/{{name}}_axe"]
+                },
+                "maca_templ.{{name}}_pickaxe_item": {
+                    "textures": ["textures/maca_templ/items/{{name}}_pickaxe"]
+                },
+                "maca_templ.{{name}}_spear_item": {
+                    "textures": ["textures/maca_templ/items/{{name}}_spear_item"]
+                },
+                "{{$trident == true}}": {
+                    "maca_templ.{{name}}_trident_icon": {
+                        "textures": ["textures/maca_templ/items/{{name}}_trident_icon"]
+                    }
+                }
+            }
+        }
+    }
+}

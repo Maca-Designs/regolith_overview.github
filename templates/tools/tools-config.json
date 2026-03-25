@@ -1,0 +1,7 @@
+{
+  "name": "Tools Template",
+  "description": "A template containing the files needed to generate a new set of tools & weapons. Includes Sword, Shovel, Pickaxe, Axe, Hoe, Spear, Trident & Shield",
+  "version": "1.0.0",
+  "author": "Andrew Polmans",
+  "tags": ["equipment", "tools"]
+}
