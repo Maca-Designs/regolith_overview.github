@@ -742,8 +742,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             //const fileCount = await getFileCount(folderData.name, org, repo);
             const card = createTemplateCard(folderData, async () => {
                 await downloadTemplateWithNamespace(folderData);
-            }, org, repo);  // Pass fileCount directly
-            console.warn(JSON.stringify(card.dataset))
+            }, org, repo);
             card.dataset.folderName = folderData.name;
             allCards.push(card);
             return card;
@@ -913,6 +912,7 @@ async function createTemplateCard(folderData, onDownloadClick, org, repo) {
         e.stopPropagation();
         onDownloadClick();
     });
+    console.warn(JSON.stringify(card))
     
     return card;
 }
