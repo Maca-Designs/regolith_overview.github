@@ -743,6 +743,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             const card = createTemplateCard(folderData, async () => {
                 await downloadTemplateWithNamespace(folderData);
             }, org, repo);
+            console.warn(JSON.stringify(card.dataset));
             card.dataset.folderName = folderData.name;
             allCards.push(card);
             return card;
@@ -888,21 +889,15 @@ async function getFileCount(folderName, org, repo) {
     }
 }
 
-async function createTemplateCard(folderData, onDownloadClick, org, repo) {
+function createTemplateCard(folderData, onDownloadClick, org, repo) {
     const card = document.createElement('a');
     card.className = 'template-card';
-    card.dataset.folderName = folderData.name; 
-    
-    const fileCountSpan = document.createElement('span');
-    fileCountSpan.className = 'total-files';
-    fileCountSpan.textContent = ``
-    fileCountSpan.dataset.folder = folderData.name;
+    card.dataset.folderName = folderData.name;
     
     card.innerHTML = `
         <h3>${folderData.config.name || folderData.name}</h3>
         <p>${folderData.config.description}</p>
         <div class="template-meta">
-            <span class="total-files"></span>
             <button class="download-btn namespace-download" data-folder="${folderData.name}">Download Pack</button>
         </div>
     `;
@@ -912,7 +907,6 @@ async function createTemplateCard(folderData, onDownloadClick, org, repo) {
         e.stopPropagation();
         onDownloadClick();
     });
-    console.warn(JSON.stringify(card))
     
     return card;
 }
