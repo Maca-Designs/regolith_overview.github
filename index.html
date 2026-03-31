@@ -738,6 +738,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         // 3. Create cards with file counts (parallel too!)
         const cardPromises = folderDataList.map(async (folderData) => {
+            console.warn(JSON.stringify(folderDataList));
             //const fileCount = await getFileCount(folderData.name, org, repo);
             const card = createTemplateCard(folderData, async () => {
                 await downloadTemplateWithNamespace(folderData);
