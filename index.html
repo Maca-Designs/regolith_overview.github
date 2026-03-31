@@ -737,10 +737,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         // 3. Create cards with file counts (parallel too!)
         const cardPromises = folderDataList.map(async (folderData) => {
-            const fileCount = await getFileCount(folderData.name, org, repo);
+            //const fileCount = await getFileCount(folderData.name, org, repo);
             const card = createTemplateCard(folderData, async () => {
                 await downloadTemplateWithNamespace(folderData);
-            }, org, repo, fileCount);  // Pass fileCount directly
+            }, org, repo);  // Pass fileCount directly
             
             card.dataset.folderName = folderData.name;
             allCards.push(card);
@@ -891,18 +891,17 @@ async function createTemplateCard(folderData, onDownloadClick, org, repo) {
     const card = document.createElement('a');
     card.className = 'template-card';
     card.dataset.folderName = folderData.name; 
-    const fileCount = await getFileCount(folderData.name, org, repo);
+    //const fileCount = await getFileCount(folderData.name, org, repo);
     
-    const fileCountSpan = document.createElement('span');
-    fileCountSpan.className = 'total-files';
-    fileCountSpan.textContent = `${fileCount} files`
-    fileCountSpan.dataset.folder = folderData.name;
+    //const fileCountSpan = document.createElement('span');
+    //fileCountSpan.className = 'total-files';
+    //fileCountSpan.textContent = `${fileCount} files`
+    //fileCountSpan.dataset.folder = folderData.name;
     
     card.innerHTML = `
         <h3>${folderData.config.name || folderData.name}</h3>
         <p>${folderData.config.description}</p>
         <div class="template-meta">
-            <span class="total-files">${fileCount} files</span>
             <button class="download-btn namespace-download" data-folder="${folderData.name}">Download Pack</button>
         </div>
     `;
