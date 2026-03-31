@@ -718,6 +718,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 if (!configResponse.ok) return null;
                 
                 const config = await configResponse.json();
+                console.warn(folder)
                 return {
                     name: folder,
                     config: config,
